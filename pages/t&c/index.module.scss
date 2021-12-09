@@ -1,0 +1,74 @@
+@import "../../styles/variables";
+
+.container {
+  height: 100vh;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.title {
+  margin: 0;
+}
+
+.picture {
+  display: flex;
+  justify-content: center;
+}
+
+.textContainer {
+  padding: 1rem;
+  height: 200px;
+  overflow-y: scroll;
+  background-color: $light-gray;
+  border-radius: 0.3rem;
+  border: solid $black 0.2rem;
+}
+
+.text {
+  margin: 0;
+}
+
+.textBold {
+  font-weight: bold;
+}
+
+.btnsContainer {
+  display: flex;
+  justify-content: space-between;
+}
+
+.btnDecline {
+  background-color: $gray;
+  font-size: 1.25rem;
+  font-weight: bold;
+  padding: 0.3rem 0.6rem 0.3rem 0.6rem;
+  border-radius: 0.3rem;
+  border: solid $black 0.2rem;
+  transition: all 0.3s;
+  width: 97px;
+}
+
+.btnDecline:hover {
+  cursor: pointer;
+  background-color: $red;
+  color: $light-gray;
+}
+
+.btnAgree {
+  background-color: $orange;
+  font-size: 1.25rem;
+  font-weight: bold;
+  padding: 0.3rem 0.6rem 0.3rem 0.6rem;
+  border-radius: 0.3rem;
+  border: solid $black 0.2rem;
+  transition: all 0.3s;
+  width: 97px;
+}
+
+.btnAgree:hover {
+  cursor: pointer;
+  background-color: $green;
+  color: $white;
+}

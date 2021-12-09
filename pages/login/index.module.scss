@@ -13,13 +13,13 @@
   font-size: 1.25rem;
   font-weight: bold;
   padding: 0.3rem 0.6rem 0.3rem 0.6rem;
-  border-radius: 0.2rem;
+  border-radius: 0.3rem;
   border: solid $black 0.2rem;
   transition: all 0.3s;
 }
 
 .btn:hover {
   cursor: pointer;
-  background-color: black;
+  background-color: $black;
   color: $orange;
 }
