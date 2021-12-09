@@ -1,23 +1,32 @@
 import Head from "next/head";
 import React from "react";
+import styles from "./index.module.scss";
 
-const Layout = ({ children }: any) => {
+const Layout = ({ children, title, description, hidden = false }: any) => {
   return (
-    <div>
+    <div className={styles.container}>
       <Head>
-        <title>Birthday App</title>
-        <meta name="description" content="App to remember birthday dates" />
+        <title>{title}</title>
+        <meta name="description" content={description} />
         <link rel="icon" href="/favicon.ico" />
+        <style>
+          @import
+          url('https://fonts.googleapis.com/css2?family=Baloo+Tamma+2:wght@400;500;600;700&display=swap');
+        </style>
       </Head>
-      <header>
-        <nav>
-          <h2>Nav Component</h2>
-        </nav>
-      </header>
+      {!hidden && (
+        <header>
+          <nav>
+            <h2>Nav Component</h2>
+          </nav>
+        </header>
+      )}
       <main>{children}</main>
-      <footer>
-        <h2>Footer Component</h2>
-      </footer>
+      {!hidden && (
+        <footer>
+          <h2>Footer Component</h2>
+        </footer>
+      )}
     </div>
   );
 };
