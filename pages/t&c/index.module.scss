@@ -1,8 +1,17 @@
 @import "../../styles/variables";
 
 .container {
-  height: 100vh;
-  padding: 2rem;
+  height: calc(100vh - 2rem);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.box {
+  height: calc(100vh - 2rem);
+  padding: 1rem;
+  border: solid $brown 0.2rem;
+  border-radius: 0.6rem;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -22,7 +31,7 @@
   height: 200px;
   overflow-y: scroll;
   background-color: $light-gray;
-  border-radius: 0.3rem;
+  border-radius: 0.6rem;
   border: solid $black 0.2rem;
 }
 
@@ -46,9 +55,12 @@
     justify-content: center;
   }
 
+  .box {
+    height: initial;
+  }
+
   .title {
     font-size: 1.75rem;
-    margin-top: 2rem;
   }
 
   .textContainer {

@@ -1,14 +1,14 @@
 import Head from "next/head";
 import React from "react";
 import styles from "./index.module.scss";
-import PropsLayout from "./interface";
+import LayoutProps from "./interface";
 
 const Layout = ({
   children,
   title,
   description,
   hidden = false,
-}: PropsLayout) => {
+}: LayoutProps) => {
   return (
     <div className={styles.container}>
       <Head>

@@ -1,8 +1,8 @@
-interface PropsLayout {
+interface LayoutProps {
   children: any;
   title: string;
   description: string;
   hidden: Boolean;
 }
 
-export default PropsLayout;
+export default LayoutProps;
