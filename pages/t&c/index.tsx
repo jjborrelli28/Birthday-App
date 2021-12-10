@@ -9,7 +9,7 @@ const index = () => {
   return (
     <Layout
       title="Birthday App | T&C"
-      description="Terms and conditions screen"
+      description="Terms and conditions page"
       hidden={true}
     >
       <div className={styles.container}>

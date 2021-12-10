@@ -7,11 +7,7 @@ import Button from "../../components/button";
 
 const index = () => {
   return (
-    <Layout
-      title="Birthday App | Login"
-      description="Login screen"
-      hidden={true}
-    >
+    <Layout title="Birthday App | Login" description="Login page" hidden={true}>
       <div className={styles.container}>
         <Image src={logo} alt="Logo" width={150} height={150} />
         <Button variant="primary" text="Login" />
