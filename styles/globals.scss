@@ -5,6 +5,8 @@ body {
   font-family: "Baloo Tamma 2";
 }
 
-* {
+*,
+*:before,
+*:after {
   box-sizing: border-box;
 }

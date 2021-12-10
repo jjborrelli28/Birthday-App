@@ -1,0 +1,39 @@
+@import "../../styles/variables";
+
+.primary {
+  background-color: $fuchsia;
+  color: $white;
+  font-size: 1.25rem;
+  font-weight: bold;
+  padding: 0.4rem 0.6rem 0.4rem 0.6rem;
+  width: 6rem;
+  border-radius: 0.3rem;
+  border: solid $fuchsia 0.1rem;
+  transition: all 0.3s;
+}
+
+.primary:hover {
+  cursor: pointer;
+  background-color: $white;
+  color: $fuchsia;
+  border: solid $fuchsia 0.1rem;
+}
+
+.secondary {
+  background-color: $dark-gray;
+  color: $white;
+  font-size: 1.25rem;
+  font-weight: bold;
+  padding: 0.4rem 0.6rem 0.4rem 0.6rem;
+  width: 6rem;
+  border-radius: 0.3rem;
+  border: solid $dark-gray 0.1rem;
+  transition: all 0.3s;
+}
+
+.secondary:hover {
+  cursor: pointer;
+  background-color: $white;
+  color: $dark-gray;
+  border: solid $dark-gray 0.1rem;
+}

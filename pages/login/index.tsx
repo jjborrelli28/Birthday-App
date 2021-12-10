@@ -3,6 +3,7 @@ import React from "react";
 import Layout from "../../components/layout";
 import styles from "./index.module.scss";
 import logo from "../../assets/logo.png";
+import Button from "../../components/button";
 
 const index = () => {
   return (
@@ -13,7 +14,7 @@ const index = () => {
     >
       <div className={styles.container}>
         <Image src={logo} alt="Logo" width={150} height={150} />
-        <button className={styles.btn}>Login</button>
+        <Button variant="primary" text="Login" />
       </div>
     </Layout>
   );
