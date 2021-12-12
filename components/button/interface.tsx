@@ -1,6 +1,6 @@
-interface BtnProps {
+interface PropsBtn {
   variant: string;
   text: string;
 }
 
-export default BtnProps;
+export default PropsBtn;

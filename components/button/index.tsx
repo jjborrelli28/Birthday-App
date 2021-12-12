@@ -1,8 +1,8 @@
 import React from "react";
 import styles from "./index.module.scss";
-import BtnProps from "./interface";
+import PropsBtn from "./interface";
 
-const Button = ({ variant, text }: BtnProps) => {
+const Button = ({ variant, text }: PropsBtn) => {
   return <button className={styles[variant]}>{text}</button>;
 };
 

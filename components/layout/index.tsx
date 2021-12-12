@@ -1,14 +1,15 @@
 import Head from "next/head";
 import React from "react";
 import styles from "./index.module.scss";
-import LayoutProps from "./interface";
+import PropsLayout from "./interface";
 
 const Layout = ({
   children,
   title,
   description,
-  hidden = false,
-}: LayoutProps) => {
+  hideHeader = false,
+  hideFooter = false,
+}: PropsLayout) => {
   return (
     <div className={styles.container}>
       <Head>
@@ -20,19 +21,17 @@ const Layout = ({
           url('https://fonts.googleapis.com/css2?family=Baloo+Tamma+2:wght@400;500;600;700&display=swap');
         </style>
       </Head>
-      {!hidden && (
-        <header>
-          <nav>
-            <h2>Nav Component</h2>
-          </nav>
-        </header>
-      )}
+      <header hidden={hideHeader}>
+        <nav>
+          <h2>Nav Component</h2>
+        </nav>
+      </header>
+
       <main>{children}</main>
-      {!hidden && (
-        <footer>
-          <h2>Footer Component</h2>
-        </footer>
-      )}
+
+      <footer hidden={hideFooter}>
+        <h2>Footer Component</h2>
+      </footer>
     </div>
   );
 };

@@ -1,8 +1,9 @@
-interface LayoutProps {
-  children: any;
+interface PropsLayout {
+  children: React.ReactNode;
   title: string;
   description: string;
-  hidden: Boolean;
+  hideHeader: boolean;
+  hideFooter: boolean;
 }
 
-export default LayoutProps;
+export default PropsLayout;

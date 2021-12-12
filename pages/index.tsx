@@ -1,30 +1,40 @@
 import Layout from "../components/layout";
 import { GetStaticProps } from "next";
 import styles from "./index.module.scss";
-import { datesGenerator } from "../helpers/datesGenerator";
+import { getDates } from "../helpers/getDates";
 import { formatDate } from "../helpers/formatDate";
 import Button from "../components/button";
 import BirthdaysProps, { BirthdayElement } from "./interface";
 import calendar from "../assets/calendar.png";
 import Image from "next/image";
-import { datesSorter } from "../helpers/datesSorter";
+import { sortDates } from "../helpers/sortDates";
+import { useMemo } from "react";
 
 const Home = ({ birthdays }: BirthdaysProps) => {
-  const { today, nextWeek } = datesGenerator();
+  const { today, nextWeek } = getDates();
 
-  const nextBirthdays = birthdays.filter(
-    (birthday: BirthdayElement) =>
-      formatDate(birthday.birthday) >= today &&
-      formatDate(birthday.birthday) <= nextWeek
+  const nextBirthdays = useMemo(
+    () =>
+      birthdays.filter(
+        (birthday: BirthdayElement) =>
+          formatDate(birthday.birthday) >= today &&
+          formatDate(birthday.birthday) <= nextWeek
+      ),
+    [birthdays]
   );
 
   return (
-    <Layout title="Birthday App | Home" description="Homepage" hidden={true}>
+    <Layout
+      title="Birthday App | Home"
+      description="Homepage"
+      hideHeader={true}
+      hideFooter={true}
+    >
       <div className={styles.container}>
         <h2 className={styles.title}>Next birthdays</h2>
         <div>
           {nextBirthdays.length > 0 ? (
-            datesSorter(nextBirthdays).map((birthday) => (
+            sortDates(nextBirthdays).map((birthday: BirthdayElement) => (
               <div className={styles.card} key={birthday.id}>
                 <div className={styles.dataContainer}>
                   <h3>

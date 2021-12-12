@@ -1,7 +1,7 @@
 import { BirthdayElement } from "../pages/interface";
 import { formatDate } from "./formatDate";
 
-export const datesSorter = (dates: BirthdayElement[]) => {
+export const sortDates = (dates: BirthdayElement[]) => {
   const datesSort = dates.sort((a, b) => {
     if (formatDate(a.birthday) > formatDate(b.birthday)) {
       return 1;
