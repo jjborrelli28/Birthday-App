@@ -48,24 +48,6 @@
   justify-content: space-between;
 }
 
-.btn {
-  font-size: 1.8rem;
-  font-weight: bold;
-  border: none;
-  background-color: $fuchsia;
-  color: $white;
-  border-radius: 50%;
-  width: 2.2rem;
-  position: absolute;
-  right: 0.6rem;
-  transition: all 0.3s;
-}
-
-.btn:hover {
-  cursor: pointer;
-  background-color: $pink;
-}
-
 .message {
   h3 {
     margin: 0;
@@ -91,6 +73,7 @@
 
   .title {
     font-size: 1.75rem;
+    border-bottom: solid $light-gray 0.2rem;
   }
 
   .menu {
@@ -98,6 +81,8 @@
     width: 100%;
     padding: 0rem 0 1rem 0;
     margin-bottom: 0;
+    justify-content: flex-end;
+    gap: 1rem;
   }
 }
 
@@ -121,11 +106,5 @@
     .dataContainer {
       padding: 0.5rem 1rem 0.5rem 1rem;
     }
-  }
-
-  .btn {
-    font-size: 2.2rem;
-    width: 2.6rem;
-    right: 1rem;
   }
 }

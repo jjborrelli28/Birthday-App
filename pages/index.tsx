@@ -17,7 +17,7 @@ const Home = ({ birthdays }: BirthdaysProps) => {
     () =>
       birthdays.filter(
         (birthday: BirthdayElement) =>
-          formatDate(birthday.birthday) >= today &&
+          formatDate(birthday.birthday) <= today &&
           formatDate(birthday.birthday) <= nextWeek
       ),
     [birthdays]
@@ -32,9 +32,13 @@ const Home = ({ birthdays }: BirthdaysProps) => {
     >
       <div className={styles.container}>
         <h2 className={styles.title}>Next birthdays</h2>
+        <div className={styles.menu}>
+          <Button variant="tertiary" text="List" />
+          <Button variant="primary" text="Add" />
+        </div>
         <div>
           {nextBirthdays.length > 0 ? (
-            sortDates(nextBirthdays).map((birthday: BirthdayElement) => (
+            sortDates(nextBirthdays).map((birthday) => (
               <div className={styles.card} key={birthday.id}>
                 <div className={styles.dataContainer}>
                   <h3>
@@ -43,7 +47,6 @@ const Home = ({ birthdays }: BirthdaysProps) => {
                   <p>Birthday date: {formatDate(birthday.birthday)}</p>
                   <p>E-mail: {birthday.email}</p>
                 </div>
-                <button className={styles.btn}>+</button>
               </div>
             ))
           ) : (
@@ -57,10 +60,6 @@ const Home = ({ birthdays }: BirthdaysProps) => {
               />
             </div>
           )}
-          <div className={styles.menu}>
-            <Button variant="tertiary" text="List" />
-            <Button variant="primary" text="Add" />
-          </div>
         </div>
       </div>
     </Layout>
