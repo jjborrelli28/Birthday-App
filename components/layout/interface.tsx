@@ -1,8 +1,9 @@
 interface PropsLayout {
-  children: any;
+  children: React.ReactNode;
   title: string;
   description: string;
-  hidden: Boolean;
+  hideHeader: boolean;
+  hideFooter: boolean;
 }
 
 export default PropsLayout;

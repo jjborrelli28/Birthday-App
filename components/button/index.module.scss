@@ -7,7 +7,7 @@
   font-weight: bold;
   padding: 0.4rem 0.6rem 0.4rem 0.6rem;
   width: 6rem;
-  border-radius: 0.3rem;
+  border-radius: 0.6rem;
   border: solid $fuchsia 0.1rem;
   transition: all 0.3s;
 }
@@ -26,7 +26,7 @@
   font-weight: bold;
   padding: 0.4rem 0.6rem 0.4rem 0.6rem;
   width: 6rem;
-  border-radius: 0.3rem;
+  border-radius: 0.6rem;
   border: solid $dark-gray 0.1rem;
   transition: all 0.3s;
 }
@@ -36,4 +36,23 @@
   background-color: $white;
   color: $dark-gray;
   border: solid $dark-gray 0.1rem;
+}
+
+.tertiary {
+  background-color: $brown;
+  color: $white;
+  font-size: 1.25rem;
+  font-weight: bold;
+  padding: 0.4rem 0.6rem 0.4rem 0.6rem;
+  width: 6rem;
+  border-radius: 0.6rem;
+  border: solid $brown 0.1rem;
+  transition: all 0.3s;
+}
+
+.tertiary:hover {
+  cursor: pointer;
+  background-color: $white;
+  color: $brown;
+  border: solid $brown 0.1rem;
 }
