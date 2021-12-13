@@ -9,6 +9,7 @@ import calendar from "../assets/calendar.png";
 import Image from "next/image";
 import { sortDates } from "../helpers/sortDates";
 import { useMemo } from "react";
+import { useRouter } from "next/router";
 
 const Home = ({ birthdays }: BirthdaysProps) => {
   const { today, nextWeek } = getDates();
@@ -17,11 +18,13 @@ const Home = ({ birthdays }: BirthdaysProps) => {
     () =>
       birthdays.filter(
         (birthday: BirthdayElement) =>
-          formatDate(birthday.birthday) <= today &&
+          formatDate(birthday.birthday) >= today &&
           formatDate(birthday.birthday) <= nextWeek
       ),
     [birthdays]
   );
+
+  const router = useRouter();
 
   return (
     <Layout
@@ -33,8 +36,16 @@ const Home = ({ birthdays }: BirthdaysProps) => {
       <div className={styles.container}>
         <h2 className={styles.title}>Next birthdays</h2>
         <div className={styles.menu}>
-          <Button variant="tertiary" text="List" />
-          <Button variant="primary" text="Add" />
+          <Button
+            variant="tertiary"
+            text="List"
+            onClick={() => router.push("/")}
+          />
+          <Button
+            variant="primary"
+            text="Add"
+            onClick={() => router.push("/addBirthday")}
+          />
         </div>
         <div>
           {nextBirthdays.length > 0 ? (
@@ -45,7 +56,12 @@ const Home = ({ birthdays }: BirthdaysProps) => {
                     {birthday.firstName} <span>{birthday.lastName}</span>
                   </h3>
                   <p>Birthday date: {formatDate(birthday.birthday)}</p>
-                  <p>E-mail: {birthday.email}</p>
+                  <p>
+                    E-mail:{" "}
+                    {birthday.email.length > 26
+                      ? `${birthday.email.slice(0, 26)}...`
+                      : birthday.email}
+                  </p>
                 </div>
               </div>
             ))
