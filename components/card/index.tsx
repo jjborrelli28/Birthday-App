@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./index.module.scss";
-import CardProps, { DateProps, EmailProps, NameProps } from "./interface";
+import CardProps, { DateProps, EmailProps, NameProps } from "./interfaces";
 
 const Card = ({ children, key }: CardProps) => {
   return (

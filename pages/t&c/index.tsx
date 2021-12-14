@@ -6,7 +6,7 @@ import { useRouter } from "next/router";
 import Title from "../../components/title";
 import Container from "../../components/container";
 import Text from "../../components/text";
-import Line from "../../components/hr";
+import Line from "../../components/line";
 import Picture from "../../components/picture";
 import logo from "../../assets/logo.png";
 

@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./index.module.scss";
-import PropsBtn from "./interface";
+import PropsBtn from "./interfaces";
 
 const Button = ({ variant, text, onClick }: PropsBtn) => {
   return (

@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./index.module.scss";
-import TextProps from "./interface";
+import TextProps from "./interfaces";
 
 const Text = ({ children, bold }: TextProps) => {
   return (

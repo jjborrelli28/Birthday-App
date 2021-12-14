@@ -3,11 +3,7 @@ import styles from "./index.module.scss";
 import LabelProps from "./interfaces";
 
 const Label = ({ children }: LabelProps) => {
-  return (
-    <label className={styles.label}>
-      <span className={styles.required}>*</span> {children}
-    </label>
-  );
+  return <label className={styles.label}>{children}</label>;
 };
 
 export default Label;

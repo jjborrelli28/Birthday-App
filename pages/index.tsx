@@ -4,7 +4,7 @@ import styles from "./index.module.scss";
 import { getDates } from "../helpers/getDates";
 import { formatDate } from "../helpers/formatDate";
 import Button from "../components/button";
-import BirthdaysProps, { BirthdayElement } from "./interface";
+import BirthdaysProps, { BirthdayElement } from "./interfaces";
 import { sortDates } from "../helpers/sortDates";
 import { useMemo } from "react";
 import { useRouter } from "next/router";
@@ -14,7 +14,7 @@ import Container from "../components/container";
 import Card from "../components/card";
 import Picture from "../components/picture";
 import calendar from "../assets/calendar.png";
-import Line from "../components/hr";
+import Line from "../components/line";
 
 const Home = ({ birthdays }: BirthdaysProps) => {
   const { today, nextWeek } = getDates();

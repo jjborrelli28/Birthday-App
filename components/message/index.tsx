@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./index.module.scss";
-import MessageProps from "./interface";
+import MessageProps from "./interfaces";
 
 const Message = ({ variant, text }: MessageProps) => {
   return (

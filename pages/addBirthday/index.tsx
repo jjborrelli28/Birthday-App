@@ -1,27 +1,36 @@
-import React from "react";
+import React, { useReducer } from "react";
 import Button from "../../components/button";
 import Layout from "../../components/layout";
 import styles from "./index.module.scss";
 import DatePicker from "sassy-datepicker";
 import format from "date-fns/format";
 import { useRouter } from "next/router";
-import useForm from "../../hooks/useForm";
 import Message from "../../components/message";
 import Title from "../../components/title";
 import Label from "../../components/label";
 import Input from "../../components/input";
 import Container from "../../components/container";
-import Line from "../../components/hr";
+import Line from "../../components/line";
+import formReducer from "./formReducer";
+import { initialState } from "./formReducer";
+import { TargetProps } from "./interfaces";
+import {
+  onChangeEmail,
+  onChangeFirstName,
+  onChangeLastName,
+  onChangeBirthday,
+} from "./actions";
 
 const index = () => {
   const router = useRouter();
 
-  const { values, handleInputChange, setDate } = useForm();
+  const [state, dispatch] = useReducer(formReducer, initialState);
 
-  const { email, firstName, lastName, birthday } = values;
+  const { email, firstName, lastName, birthday } = state;
 
+  console.log(state);
   const onChange = (date: Date) => {
-    setDate(`${format(date, "yyyy-MM-dd")}T00:00:00.000Z`);
+    dispatch(onChangeBirthday(format(date, "yyyy-MM-dd")));
   };
 
   const handleSubmit = (e: any) => {
@@ -51,7 +60,9 @@ const index = () => {
               name="firstName"
               placeholder="First name"
               value={firstName}
-              onChange={handleInputChange}
+              onChange={({ target }: TargetProps) => {
+                dispatch(onChangeFirstName(target));
+              }}
               minLength={3}
               maxLength={25}
               pattern="[A-Za-z ]*"
@@ -64,7 +75,9 @@ const index = () => {
               name="lastName"
               placeholder="Last name"
               value={lastName}
-              onChange={handleInputChange}
+              onChange={({ target }: TargetProps) => {
+                dispatch(onChangeLastName(target));
+              }}
               minLength={3}
               maxLength={25}
               pattern="[A-Za-z ]*"
@@ -77,7 +90,9 @@ const index = () => {
               name="email"
               placeholder="example@email.com"
               value={email}
-              onChange={handleInputChange}
+              onChange={({ target }: TargetProps) => {
+                dispatch(onChangeEmail(target));
+              }}
               pattern="^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$"
               required={true}
               lastItem={true}

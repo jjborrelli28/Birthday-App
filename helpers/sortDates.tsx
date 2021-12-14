@@ -1,4 +1,4 @@
-import { BirthdayElement } from "../pages/interface";
+import { BirthdayElement } from "../pages/interfaces";
 import { formatDate } from "./formatDate";
 
 export const sortDates = (dates: BirthdayElement[]) => {
