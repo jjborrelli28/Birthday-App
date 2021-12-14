@@ -1,9 +1,15 @@
 @import "../../styles/variables";
 
 .container {
-  height: 100vh;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
+  flex: 1;
+}
+
+@media (min-width: 480px) {
+}
+
+@media (min-width: 992px) {
 }

@@ -1,7 +1,7 @@
 interface PropsBtn {
   variant: string;
   text: string;
-  onClick: any;
+  onClick?: any;
 }
 
 export default PropsBtn;

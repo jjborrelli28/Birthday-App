@@ -1,0 +1,22 @@
+@import "../../styles/variables";
+
+.text {
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+.textBold {
+  font-weight: bold;
+}
+
+@media (min-width: 480px) {
+  .text {
+    font-size: 1rem;
+  }
+}
+
+@media (min-width: 992px) {
+  .text {
+    font-size: 1.1rem;
+  }
+}

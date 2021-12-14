@@ -11,28 +11,25 @@ const initialState = {
 const useForm = () => {
   const [values, setValues] = useState<ValuesProps>(initialState);
 
-  const refValues = useRef(values);
-
   const reset = () => {
     setValues(initialState);
   };
 
   const handleInputChange = ({ target }: any) => {
-    setValues({
-      ...values,
-      [target.name]: target.value,
+    setValues((state) => {
+      return {
+        ...state,
+        [target.name]: target.value,
+      };
     });
-
-    refValues.current = {
-      ...values,
-      [target.name]: target.value,
-    };
   };
 
   const setDate = (date: string) => {
-    setValues({
-      ...refValues.current,
-      birthday: date,
+    setValues((state) => {
+      return {
+        ...state,
+        birthday: date,
+      };
     });
   };
 

@@ -5,11 +5,16 @@ import { getDates } from "../helpers/getDates";
 import { formatDate } from "../helpers/formatDate";
 import Button from "../components/button";
 import BirthdaysProps, { BirthdayElement } from "./interface";
-import calendar from "../assets/calendar.png";
-import Image from "next/image";
 import { sortDates } from "../helpers/sortDates";
 import { useMemo } from "react";
 import { useRouter } from "next/router";
+import Message from "../components/message";
+import Title from "../components/title";
+import Container from "../components/container";
+import Card from "../components/card";
+import Picture from "../components/picture";
+import calendar from "../assets/calendar.png";
+import Line from "../components/hr";
 
 const Home = ({ birthdays }: BirthdaysProps) => {
   const { today, nextWeek } = getDates();
@@ -33,8 +38,9 @@ const Home = ({ birthdays }: BirthdaysProps) => {
       hideHeader={true}
       hideFooter={true}
     >
-      <div className={styles.container}>
-        <h2 className={styles.title}>Next birthdays</h2>
+      <Container>
+        <Title>Next birthdays</Title>
+        <Line />
         <div className={styles.menu}>
           <Button
             variant="tertiary"
@@ -50,34 +56,28 @@ const Home = ({ birthdays }: BirthdaysProps) => {
         <div>
           {nextBirthdays.length > 0 ? (
             sortDates(nextBirthdays).map((birthday) => (
-              <div className={styles.card} key={birthday.id}>
-                <div className={styles.dataContainer}>
-                  <h3>
-                    {birthday.firstName} <span>{birthday.lastName}</span>
-                  </h3>
-                  <p>Birthday date: {formatDate(birthday.birthday)}</p>
-                  <p>
-                    E-mail:{" "}
-                    {birthday.email.length > 26
-                      ? `${birthday.email.slice(0, 26)}...`
-                      : birthday.email}
-                  </p>
-                </div>
-              </div>
+              <Card key={birthday.id}>
+                <Card.Name
+                  name={birthday.firstName}
+                  surname={birthday.lastName}
+                />
+                <Card.Birthday>{formatDate(birthday.birthday)}</Card.Birthday>
+                <Card.Email>{birthday.email}</Card.Email>
+              </Card>
             ))
           ) : (
-            <div className={styles.message}>
-              <h3>No Birthdays coming soon</h3>
-              <Image
-                src={calendar}
-                alt="Calendar"
-                height="250px"
-                width="250px"
+            <div className={styles.messageContainer}>
+              <Message variant="warning" text="No Birthdays coming soon" />
+              <Picture
+                img={calendar}
+                alt="logo"
+                width={"250px"}
+                heigth={"250px"}
               />
             </div>
           )}
         </div>
-      </div>
+      </Container>
     </Layout>
   );
 };

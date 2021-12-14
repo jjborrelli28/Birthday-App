@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import Button from "../../components/button";
 import Layout from "../../components/layout";
 import styles from "./index.module.scss";
@@ -6,6 +6,12 @@ import DatePicker from "sassy-datepicker";
 import format from "date-fns/format";
 import { useRouter } from "next/router";
 import useForm from "../../hooks/useForm";
+import Message from "../../components/message";
+import Title from "../../components/title";
+import Label from "../../components/label";
+import Input from "../../components/input";
+import Container from "../../components/container";
+import Line from "../../components/hr";
 
 const index = () => {
   const router = useRouter();
@@ -22,9 +28,7 @@ const index = () => {
     e.preventDefault();
 
     if (birthday) {
-      console.log(values);
     } else {
-      console.log(values);
     }
   };
 
@@ -35,53 +39,57 @@ const index = () => {
       hideHeader={true}
       hideFooter={true}
     >
-      <div className={styles.container}>
+      <Container>
+        <Title>Add a new birthday</Title>
+        <Line />
         <form className={styles.form} onSubmit={handleSubmit}>
           <div>
-            <h2 className={styles.title}>Add a new birthday</h2>
-            <div className={styles.inputsContainer}>
-              <label className={styles.label}>First name</label>
-              <input
-                type="text"
-                id="firstName"
-                name="firstName"
-                placeholder="First name"
-                className={styles.input}
-                value={firstName}
-                onChange={handleInputChange}
-                minLength={3}
-                maxLength={25}
-                pattern="[A-Za-z ]*"
-                required
-              />
-              <label className={styles.label}>Last name</label>
-              <input
-                type="text"
-                id="lastName"
-                name="lastName"
-                placeholder="Last name"
-                className={styles.input}
-                value={lastName}
-                onChange={handleInputChange}
-                minLength={3}
-                maxLength={25}
-                pattern="[A-Za-z ]*"
-                required
-              />
-              <label className={styles.label}>E-mail</label>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                placeholder="example@email.com"
-                value={email}
-                onChange={handleInputChange}
-                className={styles.input}
-                pattern="^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$"
-                required
-              />
+            <Label>First name</Label>
+            <Input
+              type="text"
+              id="firstName"
+              name="firstName"
+              placeholder="First name"
+              value={firstName}
+              onChange={handleInputChange}
+              minLength={3}
+              maxLength={25}
+              pattern="[A-Za-z ]*"
+              required={true}
+            />
+            <Label>Last name</Label>
+            <Input
+              type="text"
+              id="lastName"
+              name="lastName"
+              placeholder="Last name"
+              value={lastName}
+              onChange={handleInputChange}
+              minLength={3}
+              maxLength={25}
+              pattern="[A-Za-z ]*"
+              required={true}
+            />
+            <Label>E-mail</Label>
+            <Input
+              type="email"
+              id="email"
+              name="email"
+              placeholder="example@email.com"
+              value={email}
+              onChange={handleInputChange}
+              pattern="^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$"
+              required={true}
+              lastItem={true}
+            />
+            <Label>Birthday date</Label>
+            <div className={styles.calendarContainer}>
               <DatePicker onChange={onChange} name="birthday" required />
             </div>
+            <Message
+              variant="warning"
+              text="All fields need to be completed before saving the changes"
+            />
           </div>
           <div className={styles.btnsContainer}>
             <Button
@@ -89,16 +97,16 @@ const index = () => {
               text="Cancel"
               onClick={() => router.push("/")}
             />
-            <input
-              type="submit"
-              id="submit"
-              name="submit"
-              value="Save"
-              className={styles.submit}
+            <Button
+              variant="primary"
+              text="Save"
+              onClick={() => {
+                console.log("click");
+              }}
             />
           </div>
         </form>
-      </div>
+      </Container>
     </Layout>
   );
 };

@@ -1,19 +1,25 @@
 @import "../../styles/variables";
 
-.primary {
-  background-color: $fuchsia;
-  color: $white;
-  font-size: 1.25rem;
+.button {
+  font-size: 1rem;
   font-weight: bold;
-  padding: 0.4rem 0.6rem 0.4rem 0.6rem;
-  width: 6rem;
+  padding: 0.3rem;
+  width: 5rem;
   border-radius: 0.6rem;
-  border: solid $fuchsia 0.1rem;
   transition: all 0.3s;
 }
 
-.primary:hover {
+.button:hover {
   cursor: pointer;
+}
+
+.primary {
+  background-color: $fuchsia;
+  color: $white;
+  border: solid $fuchsia 0.1rem;
+}
+
+.primary:hover {
   background-color: $white;
   color: $fuchsia;
   border: solid $fuchsia 0.1rem;
@@ -22,17 +28,11 @@
 .secondary {
   background-color: $dark-gray;
   color: $white;
-  font-size: 1.25rem;
-  font-weight: bold;
-  padding: 0.4rem 0.6rem 0.4rem 0.6rem;
-  width: 6rem;
-  border-radius: 0.6rem;
+
   border: solid $dark-gray 0.1rem;
-  transition: all 0.3s;
 }
 
 .secondary:hover {
-  cursor: pointer;
   background-color: $white;
   color: $dark-gray;
   border: solid $dark-gray 0.1rem;
@@ -41,18 +41,27 @@
 .tertiary {
   background-color: $brown;
   color: $white;
-  font-size: 1.25rem;
-  font-weight: bold;
-  padding: 0.4rem 0.6rem 0.4rem 0.6rem;
-  width: 6rem;
-  border-radius: 0.6rem;
   border: solid $brown 0.1rem;
-  transition: all 0.3s;
 }
 
 .tertiary:hover {
-  cursor: pointer;
   background-color: $white;
   color: $brown;
   border: solid $brown 0.1rem;
+}
+
+@media (min-width: 480px) {
+  .button {
+    font-size: 1.1rem;
+
+    width: 5.5rem;
+  }
+}
+
+@media (min-width: 992px) {
+  .button {
+    font-size: 1.2rem;
+
+    width: 6rem;
+  }
 }

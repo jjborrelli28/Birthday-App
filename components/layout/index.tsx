@@ -7,8 +7,8 @@ const Layout = ({
   children,
   title,
   description,
-  hideHeader = false,
-  hideFooter = false,
+  hideHeader,
+  hideFooter,
 }: PropsLayout) => {
   return (
     <div className={styles.container}>

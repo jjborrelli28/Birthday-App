@@ -1,0 +1,62 @@
+@import "../../styles/variables";
+
+.card {
+  display: flex;
+  border: solid $pink 0.2rem;
+  border-radius: 0.6rem;
+  justify-content: space-between;
+  align-items: center;
+  background-color: $light-gray;
+  position: relative;
+  margin-bottom: 1rem;
+}
+
+.card:last-child {
+  margin-bottom: 0rem;
+}
+
+.dataContainer {
+  padding: 0.3rem 0.6rem 0.3rem 0.6rem;
+}
+
+.title {
+  margin: 0;
+  font-size: 1rem;
+}
+
+.text {
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+.textBold {
+  font-weight: bold;
+}
+
+@media (min-width: 480px) {
+  .dataContainer {
+    padding: 0.4rem 0.8rem 0.3rem 0.8rem;
+  }
+
+  .title {
+    font-size: 1.1rem;
+  }
+
+  .text {
+    font-size: 1rem;
+  }
+}
+
+@media (min-width: 992px) {
+  .dataContainer {
+    padding: 0.5rem 1rem 0.5rem 1rem;
+  }
+
+  .title {
+    font-size: 1.2rem;
+  }
+
+  .text {
+    font-size: 1.1rem;
+  }
+}

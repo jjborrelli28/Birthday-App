@@ -1,0 +1,22 @@
+@import "../../styles/variables";
+
+.label {
+  display: none;
+}
+
+.required {
+  color: $red;
+  font-weight: bold;
+}
+
+@media (min-width: 480px) {
+  .label {
+    display: block;
+    text-align: initial;
+  }
+}
+
+@media (min-width: 992px) {
+  .label {
+  }
+}
