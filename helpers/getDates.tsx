@@ -10,7 +10,7 @@ export const getDates = () => {
   const currentYear = format(new Date(), "yyyy");
 
   const birthdayCurrentYear = (date: string) => {
-    return format(parseISO(date), `${currentYear}-MM-dd`);
+    return format(add(parseISO(date), { days: 1 }), `${currentYear}-MM-dd`);
   };
 
   const birthdayNextYear = (date: string) => {

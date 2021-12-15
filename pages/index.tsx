@@ -18,7 +18,7 @@ import { getBirthdays } from "../helpers/getBirthdays";
 
 const Home = ({ birthdays }: BirthdaysProps) => {
   const router = useRouter();
-  console.log(birthdays);
+
   return (
     <Layout
       title="Birthday App | Home"
@@ -44,14 +44,16 @@ const Home = ({ birthdays }: BirthdaysProps) => {
         <div>
           {birthdays.length > 0 ? (
             birthdays.map((birthday) => (
-              <Card id={birthday.id}>
-                <Card.Name
-                  name={birthday.firstName}
-                  surname={birthday.lastName}
-                />
-                <Card.Birthday>{birthday.birthday}</Card.Birthday>
-                <Card.Email>{birthday.email}</Card.Email>
-              </Card>
+              <div className={styles.cardContainer} key={birthday.id}>
+                <Card>
+                  <Card.Name
+                    name={birthday.firstName}
+                    surname={birthday.lastName}
+                  />
+                  <Card.Birthday>{birthday.birthday}</Card.Birthday>
+                  <Card.Email>{birthday.email}</Card.Email>
+                </Card>
+              </div>
             ))
           ) : (
             <div className={styles.messageContainer}>

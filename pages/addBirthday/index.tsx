@@ -43,7 +43,6 @@ const index = () => {
     initialMessage
   );
 
-  console.log(values);
   const onChange = (date: Date) => {
     console.log(date);
     const { today } = getDates();
@@ -56,10 +55,6 @@ const index = () => {
       dispatchMR(showDateMessage());
     }
   };
-
-  if (firstName == "[A-Za-z ]*") {
-    console.log("cumple");
-  }
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
@@ -86,7 +81,6 @@ const index = () => {
         dispatchMR(removeMessage());
       }, 1000);
     } else {
-      console.log("paso");
       dispatchMR(showFieldsMessage());
     }
   };
@@ -154,19 +148,16 @@ const index = () => {
             {show && <Message variant={variant} text={text} />}
           </div>
           <div className={styles.btnsContainer}>
-            <Button
-              variant="primary"
-              text="Save"
-              onSubmit={handleSubmit}
-              order={1}
-            />
-            <Button
-              variant="secondary"
-              text="Cancel"
-              onClick={() => router.push("/")}
-            />
+            <Button variant="primary" text="Save" onSubmit={handleSubmit} />
           </div>
         </form>
+        <div className={styles.btnCancel}>
+          <Button
+            variant="secondary"
+            text="Cancel"
+            onClick={() => router.push("/")}
+          />
+        </div>
       </Container>
     </Layout>
   );

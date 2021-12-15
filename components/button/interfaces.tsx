@@ -3,7 +3,6 @@ interface PropsBtn {
   text: string;
   onClick?: any;
   onSubmit?: any;
-  order?: number;
 }
 
 export default PropsBtn;
