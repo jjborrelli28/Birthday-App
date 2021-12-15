@@ -1,8 +1,12 @@
 const types = {
-  email: "email",
-  firstName: "firstName",
-  lastName: "lastName",
-  birthday: "birthday",
+  // formReducer
+  email: "EMAIL",
+  firstName: "FIRSTNAME",
+  lastName: "LASTNAME",
+  birthday: "BIRTHDAY",
+
+  // messageReducer
+  message: "MESSAGE",
 };
 
 export default types;

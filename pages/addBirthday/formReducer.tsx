@@ -1,7 +1,7 @@
-import { ActionProps, StateProps } from "./interfaces";
+import { ActionValuesProps, ValuesProps } from "./interfaces";
 import types from "./types";
 
-const formReducer = (state: StateProps, action: ActionProps) => {
+const formReducer = (state: ValuesProps, action: ActionValuesProps) => {
   switch (action.type) {
     case types.email:
       return {
@@ -31,7 +31,7 @@ const formReducer = (state: StateProps, action: ActionProps) => {
 
 export default formReducer;
 
-export const initialState = {
+export const initialValues = {
   email: "",
   firstName: "",
   lastName: "",

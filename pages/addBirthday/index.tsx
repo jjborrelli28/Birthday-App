@@ -1,4 +1,4 @@
-import React, { useReducer } from "react";
+import React, { useReducer, useState } from "react";
 import Button from "../../components/button";
 import Layout from "../../components/layout";
 import styles from "./index.module.scss";
@@ -12,39 +12,69 @@ import Input from "../../components/input";
 import Container from "../../components/container";
 import Line from "../../components/line";
 import formReducer from "./formReducer";
-import { initialState } from "./formReducer";
+import { initialValues } from "./formReducer";
 import { TargetProps } from "./interfaces";
 import { getDates } from "../../helpers/getDates";
+import messageReducer, { initialMessage } from "./messageReducer";
+import {
+  removeMessage,
+  showFieldsMessage,
+  showSuccessMessage,
+} from "./actions";
 import {
   changeEmail,
   changeFirstName,
   changeLastName,
   changeBirthday,
+  showDateMessage,
 } from "./actions";
 
 const index = () => {
   const router = useRouter();
 
-  const [state, dispatch] = useReducer(formReducer, initialState);
+  // Control form
+  const [values, dispatchFR] = useReducer(formReducer, initialValues);
 
-  const { email, firstName, lastName, birthday } = state;
+  const { email, firstName, lastName, birthday } = values;
 
-  console.log(state);
+  // Control message
+  const [{ show, variant, text }, dispatchMR] = useReducer(
+    messageReducer,
+    initialMessage
+  );
+
+  console.log(values);
   const onChange = (date: Date) => {
     const { today } = getDates();
-    const pickDate = format(date, "yyyy/MM/dd");
+    const selectDate = format(date, "yyyy-MM-dd");
+    console.log(today);
+    console.log(selectDate);
 
-    if (pickDate <= today) {
-      dispatch(changeBirthday(format(date, "yyyy-MM-dd")));
+    if (selectDate <= today) {
+      dispatchFR(changeBirthday(format(date, "yyyy-MM-dd")));
+      dispatchMR(removeMessage());
     } else {
+      dispatchMR(showDateMessage());
     }
   };
-
   const handleSubmit = (e: any) => {
     e.preventDefault();
-
-    if (birthday) {
+    if (firstName && lastName && email && birthday) {
+      dispatchMR(showSuccessMessage());
+      fetch("https://birthday-app-api.vercel.app/api/v1/john/birthdays/add", {
+        method: "POST",
+        body: JSON.stringify(values),
+      })
+        .then((res) => res.json())
+        .then((response) => console.log("Success:", response))
+        .catch((error) => console.error("Error:", error));
+      setTimeout(() => {
+        router.push("/");
+        dispatchMR(removeMessage());
+      }, 1000);
     } else {
+      console.log("paso");
+      dispatchMR(showFieldsMessage());
     }
   };
 
@@ -68,7 +98,7 @@ const index = () => {
               placeholder="First name"
               value={firstName}
               onChange={({ target }: TargetProps) => {
-                dispatch(changeFirstName(target));
+                dispatchFR(changeFirstName(target));
               }}
               minLength={3}
               maxLength={25}
@@ -83,7 +113,7 @@ const index = () => {
               placeholder="Last name"
               value={lastName}
               onChange={({ target }: TargetProps) => {
-                dispatch(changeLastName(target));
+                dispatchFR(changeLastName(target));
               }}
               minLength={3}
               maxLength={25}
@@ -98,7 +128,7 @@ const index = () => {
               placeholder="example@email.com"
               value={email}
               onChange={({ target }: TargetProps) => {
-                dispatch(changeEmail(target));
+                dispatchFR(changeEmail(target));
               }}
               pattern="^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$"
               required={true}
@@ -108,11 +138,7 @@ const index = () => {
             <div className={styles.calendarContainer}>
               <DatePicker onChange={onChange} name="birthday" required />
             </div>
-            <Message
-              variant="warning"
-              text="All fields need to be completed before saving the changes"
-              hidden={false}
-            />
+            {show && <Message variant={variant} text={text} />}
           </div>
           <div className={styles.btnsContainer}>
             <Button
@@ -120,13 +146,7 @@ const index = () => {
               text="Cancel"
               onClick={() => router.push("/")}
             />
-            <Button
-              variant="primary"
-              text="Save"
-              onClick={() => {
-                console.log("click");
-              }}
-            />
+            <Button variant="primary" text="Save" onClick={handleSubmit} />
           </div>
         </form>
       </Container>
