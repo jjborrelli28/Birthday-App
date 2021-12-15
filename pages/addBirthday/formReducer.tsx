@@ -1,24 +1,24 @@
-import { ActionProps } from "./interfaces";
+import { ActionProps, StateProps } from "./interfaces";
 import types from "./types";
 
-const formReducer = (state = initialState, action: ActionProps) => {
+const formReducer = (state: StateProps, action: ActionProps) => {
   switch (action.type) {
-    case types.onChangeEmail:
+    case types.email:
       return {
         ...state,
         email: action.payload,
       };
 
-    case types.onChangeFirstName:
+    case types.firstName:
       return { ...state, firstName: action.payload };
 
-    case types.onChangeLastName:
+    case types.lastName:
       return {
         ...state,
         lastName: action.payload,
       };
 
-    case types.onChangeBirthday:
+    case types.birthday:
       return {
         ...state,
         birthday: action.payload,

@@ -14,11 +14,12 @@ import Line from "../../components/line";
 import formReducer from "./formReducer";
 import { initialState } from "./formReducer";
 import { TargetProps } from "./interfaces";
+import { getDates } from "../../helpers/getDates";
 import {
-  onChangeEmail,
-  onChangeFirstName,
-  onChangeLastName,
-  onChangeBirthday,
+  changeEmail,
+  changeFirstName,
+  changeLastName,
+  changeBirthday,
 } from "./actions";
 
 const index = () => {
@@ -30,7 +31,13 @@ const index = () => {
 
   console.log(state);
   const onChange = (date: Date) => {
-    dispatch(onChangeBirthday(format(date, "yyyy-MM-dd")));
+    const { today } = getDates();
+    const pickDate = format(date, "yyyy/MM/dd");
+
+    if (pickDate <= today) {
+      dispatch(changeBirthday(format(date, "yyyy-MM-dd")));
+    } else {
+    }
   };
 
   const handleSubmit = (e: any) => {
@@ -61,7 +68,7 @@ const index = () => {
               placeholder="First name"
               value={firstName}
               onChange={({ target }: TargetProps) => {
-                dispatch(onChangeFirstName(target));
+                dispatch(changeFirstName(target));
               }}
               minLength={3}
               maxLength={25}
@@ -76,7 +83,7 @@ const index = () => {
               placeholder="Last name"
               value={lastName}
               onChange={({ target }: TargetProps) => {
-                dispatch(onChangeLastName(target));
+                dispatch(changeLastName(target));
               }}
               minLength={3}
               maxLength={25}
@@ -91,7 +98,7 @@ const index = () => {
               placeholder="example@email.com"
               value={email}
               onChange={({ target }: TargetProps) => {
-                dispatch(onChangeEmail(target));
+                dispatch(changeEmail(target));
               }}
               pattern="^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$"
               required={true}
@@ -104,6 +111,7 @@ const index = () => {
             <Message
               variant="warning"
               text="All fields need to be completed before saving the changes"
+              hidden={false}
             />
           </div>
           <div className={styles.btnsContainer}>

@@ -6,7 +6,7 @@ export interface StateProps {
 }
 
 export interface ActionProps {
-  type: any;
+  type: string;
   payload: string;
 }
 

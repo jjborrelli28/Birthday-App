@@ -1,29 +1,29 @@
 import types from "./types";
 
-export const onChangeEmail = (target: HTMLInputElement) => {
+export const changeEmail = (target: HTMLInputElement) => {
   return {
-    type: types.onChangeEmail,
+    type: types.email,
     payload: target.value,
   };
 };
 
-export const onChangeFirstName = (target: HTMLInputElement) => {
+export const changeFirstName = (target: HTMLInputElement) => {
   return {
-    type: types.onChangeFirstName,
+    type: types.firstName,
     payload: target.value,
   };
 };
 
-export const onChangeLastName = (target: HTMLInputElement) => {
+export const changeLastName = (target: HTMLInputElement) => {
   return {
-    type: types.onChangeLastName,
+    type: types.lastName,
     payload: target.value,
   };
 };
 
-export const onChangeBirthday = (date: string) => {
+export const changeBirthday = (date: string) => {
   return {
-    type: types.onChangeBirthday,
+    type: types.birthday,
     payload: date.concat("T00:00:00.000Z"),
   };
 };

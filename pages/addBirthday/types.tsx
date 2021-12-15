@@ -1,8 +1,8 @@
 const types = {
-  onChangeEmail: "onChangeEmail",
-  onChangeFirstName: "onChangeFirstName",
-  onChangeLastName: "onChangeLastName",
-  onChangeBirthday: "onChangeBirthday",
+  email: "email",
+  firstName: "firstName",
+  lastName: "lastName",
+  birthday: "birthday",
 };
 
 export default types;
