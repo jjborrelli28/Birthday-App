@@ -1,4 +1,4 @@
-import React, { useReducer, useState } from "react";
+import React, { useReducer } from "react";
 import Button from "../../components/button";
 import Layout from "../../components/layout";
 import styles from "./index.module.scss";
@@ -45,29 +45,42 @@ const index = () => {
 
   console.log(values);
   const onChange = (date: Date) => {
+    console.log(date);
     const { today } = getDates();
     const selectDate = format(date, "yyyy-MM-dd");
-    console.log(today);
-    console.log(selectDate);
 
     if (selectDate <= today) {
-      dispatchFR(changeBirthday(format(date, "yyyy-MM-dd")));
+      dispatchFR(changeBirthday(selectDate));
       dispatchMR(removeMessage());
     } else {
       dispatchMR(showDateMessage());
     }
   };
+
+  if (firstName == "[A-Za-z ]*") {
+    console.log("cumple");
+  }
+
   const handleSubmit = (e: any) => {
     e.preventDefault();
     if (firstName && lastName && email && birthday) {
       dispatchMR(showSuccessMessage());
       fetch("https://birthday-app-api.vercel.app/api/v1/john/birthdays/add", {
         method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
         body: JSON.stringify(values),
       })
-        .then((res) => res.json())
+        .then((res) => {
+          if (res.ok) {
+            return res.json();
+          }
+        })
         .then((response) => console.log("Success:", response))
         .catch((error) => console.error("Error:", error));
+
       setTimeout(() => {
         router.push("/");
         dispatchMR(removeMessage());
@@ -142,11 +155,16 @@ const index = () => {
           </div>
           <div className={styles.btnsContainer}>
             <Button
+              variant="primary"
+              text="Save"
+              onSubmit={handleSubmit}
+              order={1}
+            />
+            <Button
               variant="secondary"
               text="Cancel"
               onClick={() => router.push("/")}
             />
-            <Button variant="primary" text="Save" onClick={handleSubmit} />
           </div>
         </form>
       </Container>

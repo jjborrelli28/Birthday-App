@@ -23,7 +23,7 @@ export interface MessageProps {
 }
 
 export interface ActionMessageProps {
-  show: boolean;
+  show: boolean
   type: string;
   variant: string;
   text: string;

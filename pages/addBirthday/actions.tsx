@@ -1,5 +1,4 @@
 import types from "./types";
-import { initialMessage } from "./messageReducer";
 
 // formReducer
 export const changeEmail = (target: HTMLInputElement) => {
@@ -26,7 +25,8 @@ export const changeLastName = (target: HTMLInputElement) => {
 export const changeBirthday = (date: string) => {
   return {
     type: types.birthday,
-    payload: date.concat("T00:00:00.000Z"),
+    payload: date,
+    //"T00:00:00.000Z"
   };
 };
 

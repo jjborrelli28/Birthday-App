@@ -4,7 +4,7 @@ import { getDates } from "./getDates";
 export const getBirthdays = (data: BirthdaysProps) => {
   const { today, birthdayCurrentYear, birthdayNextYear } = getDates();
 
-  return data.birthdays?.map((item) => {
+  return data.birthdays.map((item) => {
     return {
       ...item,
       birthday:
