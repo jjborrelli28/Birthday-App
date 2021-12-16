@@ -2,26 +2,22 @@ import Layout from "../components/layout";
 import { GetStaticProps } from "next";
 import styles from "./index.module.scss";
 import { getDates } from "../helpers/getDates";
-import { formatDate } from "../helpers/formatDate";
 import Button from "../components/button";
-import BirthdaysProps, { BirthdayElement } from "./interface";
-import calendar from "../assets/calendar.png";
-import Image from "next/image";
+import BirthdaysProps from "./interfaces";
 import { sortDates } from "../helpers/sortDates";
-import { useMemo } from "react";
+import { useRouter } from "next/router";
+import Message from "../components/message";
+import Title from "../components/title";
+import Container from "../components/container";
+import Card from "../components/card";
+import Picture from "../components/picture";
+import calendar from "../assets/calendar.png";
+import Line from "../components/line";
+import { BirthdayElement } from "./interfaces";
+import { getBirthdays } from "../helpers/getBirthdays";
 
 const Home = ({ birthdays }: BirthdaysProps) => {
-  const { today, nextWeek } = getDates();
-
-  const nextBirthdays = useMemo(
-    () =>
-      birthdays.filter(
-        (birthday: BirthdayElement) =>
-          formatDate(birthday.birthday) <= today &&
-          formatDate(birthday.birthday) <= nextWeek
-      ),
-    [birthdays]
-  );
+  const router = useRouter();
 
   return (
     <Layout
@@ -30,49 +26,65 @@ const Home = ({ birthdays }: BirthdaysProps) => {
       hideHeader={true}
       hideFooter={true}
     >
-      <div className={styles.container}>
-        <h2 className={styles.title}>Next birthdays</h2>
+      <Container>
+        <Title>Next birthdays</Title>
+        <Line />
         <div className={styles.menu}>
-          <Button variant="tertiary" text="List" />
-          <Button variant="primary" text="Add" />
+          <Button
+            variant="tertiary"
+            text="List"
+            onClick={() => router.push("/")}
+          />
+          <Button
+            variant="primary"
+            text="Add"
+            onClick={() => router.push("/addBirthday")}
+          />
         </div>
         <div>
-          {nextBirthdays.length > 0 ? (
-            sortDates(nextBirthdays).map((birthday) => (
-              <div className={styles.card} key={birthday.id}>
-                <div className={styles.dataContainer}>
-                  <h3>
-                    {birthday.firstName} <span>{birthday.lastName}</span>
-                  </h3>
-                  <p>Birthday date: {formatDate(birthday.birthday)}</p>
-                  <p>E-mail: {birthday.email}</p>
-                </div>
-              </div>
+          {birthdays.length > 0 ? (
+            birthdays.map((birthday) => (
+              <Card key={birthday.id}>
+                <Card.Name
+                  name={birthday.firstName}
+                  surname={birthday.lastName}
+                />
+                <Card.Birthday>{birthday.birthday}</Card.Birthday>
+                <Card.Email>{birthday.email}</Card.Email>
+              </Card>
             ))
           ) : (
-            <div className={styles.message}>
-              <h3>No Birthdays coming soon</h3>
-              <Image
+            <div className={styles.messageContainer}>
+              <Message variant="warning" text="No Birthdays coming soon" />
+              <Picture
                 src={calendar}
-                alt="Calendar"
-                height="250px"
-                width="250px"
+                alt="logo"
+                width={"250px"}
+                heigth={"250px"}
               />
             </div>
           )}
         </div>
-      </div>
+      </Container>
     </Layout>
   );
 };
 
 export const getStaticProps: GetStaticProps = async () => {
+  const { today, nextWeek } = getDates();
+
   const res = await fetch(
     "https://birthday-app-api.vercel.app/api/v1/john/birthdays"
   );
-  const birthdays = await res.json();
+  const data = await res.json();
+
+  const birthdays = sortDates(getBirthdays(data)).filter(
+    (birthdays: BirthdayElement) =>
+      birthdays.birthday >= today && birthdays.birthday <= nextWeek
+  );
+
   return {
-    props: birthdays,
+    props: { birthdays },
   };
 };
 

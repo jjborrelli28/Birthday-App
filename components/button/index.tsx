@@ -1,9 +1,24 @@
 import React from "react";
 import styles from "./index.module.scss";
-import PropsBtn from "./interface";
+import ButtonProps from "./interfaces";
 
-const Button = ({ variant, text }: PropsBtn) => {
-  return <button className={styles[variant]}>{text}</button>;
+const Button = ({
+  variant = "primary",
+  type = "submit",
+  text,
+  onClick,
+  onSubmit,
+}: ButtonProps) => {
+  return (
+    <button
+      type={type}
+      className={`${styles.button} ${styles[variant]}`}
+      onClick={onClick}
+      onSubmit={onSubmit}
+    >
+      {text}
+    </button>
+  );
 };
 
 export default Button;

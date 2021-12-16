@@ -1,11 +1,27 @@
-import Image from "next/image";
 import React from "react";
 import Layout from "../../components/layout";
 import styles from "./index.module.scss";
-import logo from "../../assets/logo.png";
 import Button from "../../components/button";
+import { useRouter } from "next/router";
+import Title from "../../components/title";
+import Container from "../../components/container";
+import Text from "../../components/text";
+import Line from "../../components/line";
+import Picture from "../../components/picture";
+import logo from "../../assets/logo.png";
 
 const index = () => {
+  const router = useRouter();
+
+  const handleDecline = () => {
+    router.push("/login");
+  };
+
+  const handleAgree = () => {
+    localStorage.setItem("t&cAccepted", "true");
+    router.push("/");
+  };
+
   return (
     <Layout
       title="Birthday App | T&C"
@@ -13,25 +29,22 @@ const index = () => {
       hideHeader={true}
       hideFooter={true}
     >
-      <div className={styles.container}>
-        <div className={styles.box}>
+      <Container>
+        <div className={styles.container}>
           <div>
-            <h2 className={styles.title}>Terms and conditions</h2>
-            <picture className={styles.picture}>
-              <Image src={logo} alt="Logo" width={250} height={250} />
-            </picture>
+            <Title>Terms and conditions</Title>
+            <Line />
+            <Picture src={logo} alt="logo" width={"250px"} heigth={"250px"} />
             <div className={styles.textContainer}>
-              <p className={styles.text}>
-                <span className={styles.textBold}>Birthday App</span>
-              </p>
-              <p className={styles.text}>
+              <Text bold={true}>Birthday App</Text>
+              <Text>
                 This application allows you to schedule the birthday dates of
                 your loved ones. On your initial screen you can see all the
                 birthdays that you will have within the next 7 days, you can
                 also access a specific section where you can see the list of all
                 scheduled birthdays (which you can edit and delete).
-              </p>
-              <p className={styles.text}>
+              </Text>
+              <Text>
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus
                 excepturi eligendi error quisquam aperiam quod eum dolore,
                 consequuntur fugit culpa? Reiciendis modi earum deleniti
@@ -40,23 +53,21 @@ const index = () => {
                 eligendi error quisquam aperiam quod eum dolore, consequuntur
                 fugit culpa? Reiciendis modi earum deleniti temporibus, iusto
                 nobis numquam minus labore.
-              </p>
-              <p className={styles.text}>
-                <span className={styles.textBold}>
-                  Copyright © Juan Jose Borrelli
-                </span>
-              </p>
-              <p className={styles.text}>
-                <span className={styles.textBold}>All rights reserved.</span>
-              </p>
+              </Text>
+              <Text bold={true}>Copyright © Juan Jose Borrelli</Text>
+              <Text bold={true}>All rights reserved.</Text>
             </div>
           </div>
           <div className={styles.btnsContainer}>
-            <Button variant="secondary" text="Decline" />
-            <Button variant="primary" text="Agree" />
+            <Button
+              variant="secondary"
+              text="Decline"
+              onClick={handleDecline}
+            />
+            <Button variant="primary" text="Agree" onClick={handleAgree} />
           </div>
         </div>
-      </div>
+      </Container>
     </Layout>
   );
 };

@@ -1,41 +1,5 @@
 @import "../styles/variables";
 
-.container {
-  padding: 1rem;
-  padding-bottom: 0;
-  border: solid $light-gray 0.2rem;
-  border-radius: 0.6rem;
-  position: relative;
-  min-height: calc(100vh - 2rem);
-}
-
-.title {
-  margin: 0;
-  margin-bottom: 1rem;
-}
-
-.card {
-  display: flex;
-  border: solid $pink 0.2rem;
-  border-radius: 0.6rem;
-  justify-content: space-between;
-  align-items: center;
-  background-color: $light-gray;
-  position: relative;
-  margin-bottom: 1rem;
-
-  h3 {
-    margin: 0;
-  }
-  p {
-    margin: 0;
-  }
-}
-
-.dataContainer {
-  padding-left: 0.6rem;
-}
-
 .menu {
   position: fixed;
   bottom: 0;
@@ -48,34 +12,7 @@
   justify-content: space-between;
 }
 
-.message {
-  h3 {
-    margin: 0;
-    background-color: $orange;
-    padding: 0.5rem 1rem 0.5rem 1rem;
-    border-radius: 0.6rem;
-    border: solid $black 0.2rem;
-    text-align: center;
-    width: 100%;
-  }
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
 @media (min-width: 480px) {
-  .container {
-    width: 80%;
-    margin: auto;
-    min-height: initial;
-  }
-
-  .title {
-    font-size: 1.75rem;
-    border-bottom: solid $light-gray 0.2rem;
-  }
-
   .menu {
     position: initial;
     width: 100%;
@@ -83,28 +20,5 @@
     margin-bottom: 0;
     justify-content: flex-end;
     gap: 1rem;
-  }
-}
-
-@media (min-width: 992px) {
-  .container {
-    width: 792.8px;
-  }
-
-  .title {
-    font-size: 2rem;
-  }
-
-  .card {
-    h3 {
-      font-size: 1.3rem;
-    }
-    p {
-      font-size: 1.1rem;
-    }
-
-    .dataContainer {
-      padding: 0.5rem 1rem 0.5rem 1rem;
-    }
   }
 }

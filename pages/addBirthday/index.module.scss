@@ -1,0 +1,27 @@
+@import "../../styles/variables";
+
+.form {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex: 1;
+}
+
+.calendarContainer {
+  display: flex;
+  justify-content: center;
+}
+
+.btnsContainer {
+  display: flex;
+  justify-content: space-between;
+}
+
+@media (min-width: 480px) {
+  .calendarContainer {
+    margin-bottom: 1rem;
+  }
+}
+
+@media (min-width: 992px) {
+}
