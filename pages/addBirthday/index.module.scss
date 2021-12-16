@@ -14,26 +14,14 @@
 
 .btnsContainer {
   display: flex;
-  justify-content: flex-end;
-}
-
-.btnCancel {
-  position: absolute;
-  bottom: 1rem;
+  justify-content: space-between;
 }
 
 @media (min-width: 480px) {
   .calendarContainer {
     margin-bottom: 1rem;
   }
-
-  .btnCancel {
-    bottom: 1.5rem;
-  }
 }
 
 @media (min-width: 992px) {
-  .btnCancel {
-    bottom: 2rem;
-  }
 }

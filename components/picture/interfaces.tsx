@@ -1,5 +1,5 @@
 interface PictureProps {
-  img: any;
+  src: any;
   alt: string;
   width: string;
   heigth: string;

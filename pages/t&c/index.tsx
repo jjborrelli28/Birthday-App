@@ -34,7 +34,7 @@ const index = () => {
           <div>
             <Title>Terms and conditions</Title>
             <Line />
-            <Picture img={logo} alt="logo" width={"250px"} heigth={"250px"} />
+            <Picture src={logo} alt="logo" width={"250px"} heigth={"250px"} />
             <div className={styles.textContainer}>
               <Text bold={true}>Birthday App</Text>
               <Text>

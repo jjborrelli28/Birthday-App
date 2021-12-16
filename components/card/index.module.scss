@@ -8,6 +8,11 @@
   align-items: center;
   background-color: $light-gray;
   position: relative;
+  margin-bottom: 1rem;
+}
+
+.card:last-child {
+  margin-bottom: 0;
 }
 
 .dataContainer {

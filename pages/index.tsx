@@ -44,22 +44,20 @@ const Home = ({ birthdays }: BirthdaysProps) => {
         <div>
           {birthdays.length > 0 ? (
             birthdays.map((birthday) => (
-              <div className={styles.cardContainer} key={birthday.id}>
-                <Card>
-                  <Card.Name
-                    name={birthday.firstName}
-                    surname={birthday.lastName}
-                  />
-                  <Card.Birthday>{birthday.birthday}</Card.Birthday>
-                  <Card.Email>{birthday.email}</Card.Email>
-                </Card>
-              </div>
+              <Card key={birthday.id}>
+                <Card.Name
+                  name={birthday.firstName}
+                  surname={birthday.lastName}
+                />
+                <Card.Birthday>{birthday.birthday}</Card.Birthday>
+                <Card.Email>{birthday.email}</Card.Email>
+              </Card>
             ))
           ) : (
             <div className={styles.messageContainer}>
               <Message variant="warning" text="No Birthdays coming soon" />
               <Picture
-                img={calendar}
+                src={calendar}
                 alt="logo"
                 width={"250px"}
                 heigth={"250px"}

@@ -11,62 +11,56 @@ import Label from "../../components/label";
 import Input from "../../components/input";
 import Container from "../../components/container";
 import Line from "../../components/line";
-import formReducer from "./formReducer";
-import { initialValues } from "./formReducer";
+import reducer from "./reducer";
+import { initialState } from "./reducer";
 import { TargetProps } from "./interfaces";
 import { getDates } from "../../helpers/getDates";
-import messageReducer, { initialMessage } from "./messageReducer";
-import {
-  removeMessage,
-  showFieldsMessage,
-  showSuccessMessage,
-} from "./actions";
-import {
-  changeEmail,
-  changeFirstName,
-  changeLastName,
-  changeBirthday,
-  showDateMessage,
-} from "./actions";
+import { showMessage } from "./actions";
+import { changeValues, changeBirthday } from "./actions";
 
 const index = () => {
   const router = useRouter();
 
-  // Control form
-  const [values, dispatchFR] = useReducer(formReducer, initialValues);
+  const [{ form, message }, dispatch] = useReducer(reducer, initialState);
 
-  const { email, firstName, lastName, birthday } = values;
+  const { email, firstName, lastName, birthday } = form;
 
-  // Control message
-  const [{ show, variant, text }, dispatchMR] = useReducer(
-    messageReducer,
-    initialMessage
-  );
+  const { show, variant, text } = message;
+
+  console.log(form);
+  console.log(message);
 
   const onChange = (date: Date) => {
-    console.log(date);
     const { today } = getDates();
     const selectDate = format(date, "yyyy-MM-dd");
 
     if (selectDate <= today) {
-      dispatchFR(changeBirthday(selectDate));
-      dispatchMR(removeMessage());
+      dispatch(changeBirthday(selectDate));
+      dispatch(showMessage(false, "", ""));
     } else {
-      dispatchMR(showDateMessage());
+      dispatch(
+        showMessage(
+          true,
+          "warning",
+          "The selected date cannot be in the future"
+        )
+      );
     }
   };
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
     if (firstName && lastName && email && birthday) {
-      dispatchMR(showSuccessMessage());
+      dispatch(
+        showMessage(true, "success", "The birthday was saved successfully ✔")
+      );
       fetch("https://birthday-app-api.vercel.app/api/v1/john/birthdays/add", {
         method: "POST",
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(values),
+        body: JSON.stringify(form),
       })
         .then((res) => {
           if (res.ok) {
@@ -78,10 +72,16 @@ const index = () => {
 
       setTimeout(() => {
         router.push("/");
-        dispatchMR(removeMessage());
+        dispatch(showMessage(false, "", ""));
       }, 1000);
     } else {
-      dispatchMR(showFieldsMessage());
+      dispatch(
+        showMessage(
+          true,
+          "warning",
+          "All fields need to be completed before saving the changes"
+        )
+      );
     }
   };
 
@@ -105,7 +105,7 @@ const index = () => {
               placeholder="First name"
               value={firstName}
               onChange={({ target }: TargetProps) => {
-                dispatchFR(changeFirstName(target));
+                dispatch(changeValues(target));
               }}
               minLength={3}
               maxLength={25}
@@ -120,7 +120,7 @@ const index = () => {
               placeholder="Last name"
               value={lastName}
               onChange={({ target }: TargetProps) => {
-                dispatchFR(changeLastName(target));
+                dispatch(changeValues(target));
               }}
               minLength={3}
               maxLength={25}
@@ -135,7 +135,7 @@ const index = () => {
               placeholder="example@email.com"
               value={email}
               onChange={({ target }: TargetProps) => {
-                dispatchFR(changeEmail(target));
+                dispatch(changeValues(target));
               }}
               pattern="^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$"
               required={true}
@@ -148,16 +148,15 @@ const index = () => {
             {show && <Message variant={variant} text={text} />}
           </div>
           <div className={styles.btnsContainer}>
+            <Button
+              type="button"
+              variant="secondary"
+              text="Cancel"
+              onClick={() => router.push("/")}
+            />
             <Button variant="primary" text="Save" onSubmit={handleSubmit} />
           </div>
         </form>
-        <div className={styles.btnCancel}>
-          <Button
-            variant="secondary"
-            text="Cancel"
-            onClick={() => router.push("/")}
-          />
-        </div>
       </Container>
     </Layout>
   );

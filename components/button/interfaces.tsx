@@ -1,8 +1,9 @@
-interface PropsBtn {
-  variant: string;
+interface ButtonProps {
+  type?: "button" | "submit" | "reset" | undefined;
+  variant?: string;
   text: string;
   onClick?: any;
   onSubmit?: any;
 }
 
-export default PropsBtn;
+export default ButtonProps;
