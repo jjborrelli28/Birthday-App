@@ -33,7 +33,7 @@ const Home = ({ birthdays }: BirthdaysProps) => {
           <Button
             variant="tertiary"
             text="List"
-            onClick={() => router.push("/")}
+            onClick={() => router.push("/list")}
           />
           <Button
             variant="primary"

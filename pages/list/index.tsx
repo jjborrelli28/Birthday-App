@@ -6,12 +6,15 @@ import Container from "../../components/container";
 import Layout from "../../components/layout";
 import Line from "../../components/line";
 import Message from "../../components/message";
-import Picture from "../../components/picture";
 import Title from "../../components/title";
+import BirthdaysProps from "../interfaces";
 import styles from "./index.module.scss";
+import { GetStaticProps } from "next";
 
-const index = ({ birthdays }) => {
+const index = ({}: BirthdaysProps) => {
   const router = useRouter();
+
+  const birthdays: any = [];
 
   console.log(birthdays);
 
@@ -28,7 +31,7 @@ const index = ({ birthdays }) => {
         <div className={styles.menu}>
           <Button
             variant="tertiary"
-            text="Back"
+            text="Home"
             onClick={() => router.push("/")}
           />
         </div>
@@ -46,7 +49,10 @@ const index = ({ birthdays }) => {
             ))
           ) : (
             <div className={styles.messageContainer}>
-              <Message variant="warning" text="No Birthdays coming soon" />
+              <div className={styles.handContainer}>
+                <h2 className={styles.hand}>☝</h2>
+              </div>
+              <Message variant="warning" text="Set your Birthday reminders! " />
             </div>
           )}
         </div>

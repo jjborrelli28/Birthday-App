@@ -1,11 +1,13 @@
-export const changeValues = (target: HTMLInputElement) => {
+export const changeValues: ReturnType<() => any> = (
+  target: HTMLInputElement
+) => {
   return {
     type: target.name,
     payload: target.value,
   };
 };
 
-export const changeBirthday = (date: string | null) => {
+export const changeBirthday: ReturnType<() => any> = (date: string | null) => {
   return {
     type: "birthday",
     payload: date,
@@ -13,7 +15,11 @@ export const changeBirthday = (date: string | null) => {
   };
 };
 
-export const showMessage = (show: boolean, variant: string, text: string) => {
+export const showMessage: ReturnType<() => any> = (
+  show: boolean,
+  variant: string,
+  text: string
+) => {
   return {
     type: "message",
     payload: {
