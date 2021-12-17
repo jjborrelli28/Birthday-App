@@ -1,5 +1,6 @@
 interface CardProps {
   children: React.ReactNode;
+  variant?: string
 }
 
 export interface NameProps {

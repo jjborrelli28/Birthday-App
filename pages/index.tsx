@@ -38,7 +38,7 @@ const Home = ({ birthdays }: BirthdaysProps) => {
           <Button
             variant="primary"
             text="Add"
-            onClick={() => router.push("/addBirthday")}
+            onClick={() => router.push("/add")}
           />
         </div>
         <div>

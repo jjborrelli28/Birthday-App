@@ -2,9 +2,9 @@ import React from "react";
 import styles from "./index.module.scss";
 import CardProps, { DateProps, EmailProps, NameProps } from "./interfaces";
 
-const Card = ({ children }: CardProps) => {
+const Card = ({ children, variant = "primary" }: CardProps) => {
   return (
-    <div className={styles.card}>
+    <div className={`${styles.card} ${styles[variant]}`}>
       <div className={styles.dataContainer}>{children}</div>
     </div>
   );

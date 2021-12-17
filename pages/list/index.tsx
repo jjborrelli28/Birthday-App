@@ -11,12 +11,8 @@ import BirthdaysProps from "../interfaces";
 import styles from "./index.module.scss";
 import { GetStaticProps } from "next";
 
-const index = ({}: BirthdaysProps) => {
+const index = ({birthdays}: BirthdaysProps) => {
   const router = useRouter();
-
-  const birthdays: any = [];
-
-  console.log(birthdays);
 
   return (
     <Layout
@@ -30,15 +26,20 @@ const index = ({}: BirthdaysProps) => {
         <Line />
         <div className={styles.menu}>
           <Button
-            variant="tertiary"
-            text="Home"
+            variant="secondary"
+            text="« Back"
             onClick={() => router.push("/")}
+          />
+          <Button
+            variant="primary"
+            text="Add"
+            onClick={() => router.push("/add")}
           />
         </div>
         <div>
           {birthdays.length > 0 ? (
             birthdays.map((birthday) => (
-              <Card key={birthday.id}>
+              <Card key={birthday.id} variant="tertiary">
                 <Card.Name
                   name={birthday.firstName}
                   surname={birthday.lastName}
