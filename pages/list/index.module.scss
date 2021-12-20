@@ -1,0 +1,67 @@
+@import "../../styles/variables";
+
+.menu {
+  position: fixed;
+  bottom: 0;
+  width: calc(100% - 4.4rem);
+  z-index: 99;
+  padding: 0.8rem 0 0.8rem 0;
+  margin-bottom: 1.2rem;
+  background-color: rgba($color: $white, $alpha: 0.6);
+  display: flex;
+  justify-content: space-between;
+}
+
+.messageContainer {
+  position: relative;
+}
+
+.handContainer {
+  position: absolute;
+  right: 0;
+  width: initial;
+  height: 100%;
+  width: 3rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.hand {
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  font-size: 1rem;
+  transform: rotate(-180deg);
+  margin-bottom: 0.3rem;
+}
+
+@media (min-width: 480px) {
+  .menu {
+    position: initial;
+    width: 100%;
+    padding: 0rem 0 1rem 0;
+    margin-bottom: 0;
+    gap: 1rem;
+  }
+
+  .handContainer {
+    width: 5.5rem;
+  }
+
+  .hand {
+    font-size: 1.1rem;
+    transform: initial;
+    margin-bottom: initial;
+  }
+}
+
+@media (min-width: 992px) {
+  .handContainer {
+    width: 6rem;
+  }
+
+  .hand {
+    font-size: 1.2rem;
+  }
+}

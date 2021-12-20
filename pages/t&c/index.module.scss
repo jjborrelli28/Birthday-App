@@ -1,20 +1,10 @@
 @import "../../styles/variables";
 
 .container {
-  height: 100vh;
-  padding: 2rem;
   display: flex;
+  flex: 1;
   flex-direction: column;
   justify-content: space-between;
-}
-
-.title {
-  margin: 0;
-}
-
-.picture {
-  display: flex;
-  justify-content: center;
 }
 
 .textContainer {
@@ -22,16 +12,8 @@
   height: 200px;
   overflow-y: scroll;
   background-color: $light-gray;
-  border-radius: 0.3rem;
+  border-radius: 0.6rem;
   border: solid $black 0.2rem;
-}
-
-.text {
-  margin: 0;
-}
-
-.textBold {
-  font-weight: bold;
 }
 
 .btnsContainer {
@@ -40,28 +22,13 @@
 }
 
 @media (min-width: 480px) {
-  .container {
-    width: 80%;
-    margin: auto;
-    justify-content: center;
-  }
-
-  .title {
-    font-size: 1.75rem;
-    margin-top: 2rem;
-  }
-
   .textContainer {
-    margin-bottom: 2rem;
+    height: 300px;
   }
 }
 
 @media (min-width: 992px) {
-  .container {
-    width: 792.8px;
-  }
-
-  .title {
-    font-size: 2rem;
+  .textContainer {
+    height: 400px;
   }
 }
