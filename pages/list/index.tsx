@@ -10,16 +10,15 @@ import Title from "../../components/title";
 import BirthdaysProps from "../interfaces";
 import styles from "./index.module.scss";
 import { GetStaticProps } from "next";
+import { formatDate } from "../../helpers/formatDate";
 
-const index = ({birthdays}: BirthdaysProps) => {
+const index = ({ birthdays }: BirthdaysProps) => {
   const router = useRouter();
 
   return (
     <Layout
       title="Birthday App | Birthdays list"
       description="List birthdays list"
-      hideHeader={true}
-      hideFooter={true}
     >
       <Container>
         <Title>Birthdays list</Title>
@@ -44,7 +43,7 @@ const index = ({birthdays}: BirthdaysProps) => {
                   name={birthday.firstName}
                   surname={birthday.lastName}
                 />
-                <Card.Birthday>{birthday.birthday}</Card.Birthday>
+                <Card.Birthday>{formatDate(birthday.birthday)}</Card.Birthday>
                 <Card.Email>{birthday.email}</Card.Email>
               </Card>
             ))
