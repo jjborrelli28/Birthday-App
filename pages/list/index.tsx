@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import React from "react";
+import React, { useReducer } from "react";
 import Button from "../../components/button";
 import Card from "../../components/card";
 import Container from "../../components/container";
@@ -10,15 +10,25 @@ import Title from "../../components/title";
 import BirthdaysProps from "../interfaces";
 import styles from "./index.module.scss";
 import { GetStaticProps } from "next";
+import Pagination from "../../components/pagination";
+import { getList } from "../../helpers/getList";
+import { BirthdayElement } from "../interfaces";
+import reducer from "../../modules/pagination-management/reducer";
 import { formatDate } from "../../helpers/formatDate";
 
 const index = ({ birthdays }: BirthdaysProps) => {
   const router = useRouter();
 
+  const [page, dispatch] = useReducer(reducer, 1);
+
+  const { dobs, pages } = getList(birthdays, page);
+
   return (
     <Layout
       title="Birthday App | Birthdays list"
       description="List birthdays list"
+      hideHeader={true}
+      hideFooter={true}
     >
       <Container>
         <Title>Birthdays list</Title>
@@ -36,8 +46,8 @@ const index = ({ birthdays }: BirthdaysProps) => {
           />
         </div>
         <div>
-          {birthdays.length > 0 ? (
-            birthdays.map((birthday) => (
+          {dobs.length > 0 ? (
+            dobs.map((birthday: BirthdayElement) => (
               <Card key={birthday.id} variant="tertiary">
                 <Card.Name
                   name={birthday.firstName}
@@ -54,6 +64,14 @@ const index = ({ birthdays }: BirthdaysProps) => {
               </div>
               <Message variant="warning" text="Set your Birthday reminders! " />
             </div>
+          )}
+          {birthdays.length > 20 && (
+            <Pagination
+              variant="tertiary"
+              pages={pages}
+              page={page}
+              dispatch={dispatch}
+            />
           )}
         </div>
       </Container>

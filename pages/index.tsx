@@ -15,9 +15,19 @@ import calendar from "../assets/calendar.png";
 import Line from "../components/line";
 import { BirthdayElement } from "./interfaces";
 import { getBirthdays } from "../helpers/getBirthdays";
+import { useReducer } from "react";
+import { getList } from "../helpers/getList";
+import reducer from "../modules/pagination-management/reducer";
+import Pagination from "../components/pagination";
 
 const Home = ({ birthdays }: BirthdaysProps) => {
   const router = useRouter();
+
+  const [page, dispatch] = useReducer(reducer, 1);
+
+  const { dobs, pages } = getList(birthdays, page);
+
+  console.log(dobs);
 
   return (
     <Layout title="Birthday App | Home" description="Homepage">
@@ -38,7 +48,7 @@ const Home = ({ birthdays }: BirthdaysProps) => {
         </div>
         <div>
           {birthdays.length > 0 ? (
-            birthdays.map((birthday) => (
+            dobs.map((birthday) => (
               <Card key={birthday.id}>
                 <Card.Name
                   name={birthday.firstName}
@@ -58,6 +68,9 @@ const Home = ({ birthdays }: BirthdaysProps) => {
                 heigth={"250px"}
               />
             </div>
+          )}
+          {birthdays.length > 20 && (
+            <Pagination pages={pages} page={page} dispatch={dispatch} />
           )}
         </div>
       </Container>
