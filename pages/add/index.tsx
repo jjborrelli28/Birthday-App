@@ -11,15 +11,16 @@ import Label from "../../components/label";
 import Input from "../../components/input";
 import Container from "../../components/container";
 import Line from "../../components/line";
-import reducer from "./modules/birthday-management/reducer";
-import { initialState } from "./modules/birthday-management/reducer";
-import { TargetProps } from "./modules/birthday-management/interfaces";
 import { getDates } from "../../helpers/getDates";
-import { showMessage } from "./modules/birthday-management/actions";
+import reducer, {
+  initialState,
+} from "../../modules/birthday-management/reducer";
 import {
-  changeValues,
   changeBirthday,
-} from "./modules/birthday-management/actions";
+  changeValues,
+  showMessage,
+} from "../../modules/birthday-management/actions";
+import { TargetProps } from "../../modules/birthday-management/interfaces";
 
 const index = () => {
   const router = useRouter();
@@ -29,9 +30,6 @@ const index = () => {
   const { email, firstName, lastName, birthday } = form;
 
   const { show, variant, text } = message;
-
-  console.log(form);
-  console.log(message);
 
   const onChange = (date: Date) => {
     const { today } = getDates();
