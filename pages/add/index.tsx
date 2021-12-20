@@ -11,12 +11,16 @@ import Label from "../../components/label";
 import Input from "../../components/input";
 import Container from "../../components/container";
 import Line from "../../components/line";
-import reducer from "./reducer";
-import { initialState } from "./reducer";
-import { TargetProps } from "./interfaces";
 import { getDates } from "../../helpers/getDates";
-import { showMessage } from "./actions";
-import { changeValues, changeBirthday } from "./actions";
+import reducer, {
+  initialState,
+} from "../../modules/birthday-management/reducer";
+import {
+  changeBirthday,
+  changeValues,
+  showMessage,
+} from "../../modules/birthday-management/actions";
+import { TargetProps } from "../../modules/birthday-management/interfaces";
 
 const index = () => {
   const router = useRouter();
@@ -26,9 +30,6 @@ const index = () => {
   const { email, firstName, lastName, birthday } = form;
 
   const { show, variant, text } = message;
-
-  console.log(form);
-  console.log(message);
 
   const onChange = (date: Date) => {
     const { today } = getDates();
@@ -89,8 +90,6 @@ const index = () => {
     <Layout
       title="Birthday App | Add Birthday"
       description="Page to add birthdays"
-      hideHeader={true}
-      hideFooter={true}
     >
       <Container>
         <Title>Add a new birthday</Title>

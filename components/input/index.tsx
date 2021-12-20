@@ -1,6 +1,7 @@
 import React from "react";
 import styles from "./index.module.scss";
 import InputProps from "./interfaces";
+import { classConcatenator } from "../../helpers/classConcatenator";
 
 const Input = ({
   type,
@@ -13,11 +14,14 @@ const Input = ({
   maxLength,
   pattern,
   required,
-  lastItem,
+  lastItem = false,
 }: InputProps) => {
   return (
     <input
-      className={`${styles.input} ${lastItem && styles.lastItem}`}
+      className={classConcatenator([
+        { condition: true, class: styles.input },
+        { condition: lastItem, class: styles.lastItem },
+      ])}
       type={type}
       id={id}
       name={name}

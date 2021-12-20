@@ -19,12 +19,7 @@ const index = () => {
   };
 
   return (
-    <Layout
-      title="Birthday App | Login"
-      description="Login page"
-      hideHeader={true}
-      hideFooter={true}
-    >
+    <Layout title="Birthday App | Login" description="Login page">
       <Container>
         <div className={styles.container}>
           <Image src={logo} alt="Logo" width={150} height={150} />

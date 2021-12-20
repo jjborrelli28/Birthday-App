@@ -20,12 +20,7 @@ const Home = ({ birthdays }: BirthdaysProps) => {
   const router = useRouter();
 
   return (
-    <Layout
-      title="Birthday App | Home"
-      description="Homepage"
-      hideHeader={true}
-      hideFooter={true}
-    >
+    <Layout title="Birthday App | Home" description="Homepage">
       <Container>
         <Title>Next birthdays</Title>
         <Line />
@@ -33,12 +28,12 @@ const Home = ({ birthdays }: BirthdaysProps) => {
           <Button
             variant="tertiary"
             text="List"
-            onClick={() => router.push("/")}
+            onClick={() => router.push("/list")}
           />
           <Button
             variant="primary"
             text="Add"
-            onClick={() => router.push("/addBirthday")}
+            onClick={() => router.push("/add")}
           />
         </div>
         <div>

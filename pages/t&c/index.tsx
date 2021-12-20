@@ -23,12 +23,7 @@ const index = () => {
   };
 
   return (
-    <Layout
-      title="Birthday App | T&C"
-      description="Terms and conditions page"
-      hideHeader={true}
-      hideFooter={true}
-    >
+    <Layout title="Birthday App | T&C" description="Terms and conditions page">
       <Container>
         <div className={styles.container}>
           <div>

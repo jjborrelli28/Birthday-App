@@ -1,4 +1,5 @@
 import React from "react";
+import { classConcatenator } from "../../helpers/classConcatenator";
 import styles from "./index.module.scss";
 import ButtonProps from "./interfaces";
 
@@ -12,7 +13,10 @@ const Button = ({
   return (
     <button
       type={type}
-      className={`${styles.button} ${styles[variant]}`}
+      className={classConcatenator([
+        { condition: true, class: styles.button },
+        { condition: true, class: styles[variant] },
+      ])}
       onClick={onClick}
       onSubmit={onSubmit}
     >

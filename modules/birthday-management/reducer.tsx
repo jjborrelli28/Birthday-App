@@ -16,12 +16,6 @@ type ActionProps =
 
 const reducer = (state: StateProps, action: ActionProps) => {
   switch (action.type) {
-    case action.type:
-      return {
-        ...state,
-        form: { ...state.form, [action.type]: action.payload },
-      };
-
     case "message":
       return {
         ...state,
@@ -30,6 +24,12 @@ const reducer = (state: StateProps, action: ActionProps) => {
           variant: action.payload.variant,
           text: action.payload.text,
         },
+      };
+
+    case action.type:
+      return {
+        ...state,
+        form: { ...state.form, [action.type]: action.payload },
       };
 
     default:
