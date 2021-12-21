@@ -1,4 +1,3 @@
-export function cc() {
-  const args = Array.prototype.slice.call(arguments);
-  return args.join(" ");
+export function cc(...classNames: string[]) {
+  return classNames.join(" ");
 }
