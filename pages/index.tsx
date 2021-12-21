@@ -1,9 +1,9 @@
 import Layout from "../components/layout";
-import { GetStaticProps } from "next";
+import { GetServerSideProps } from "next";
 import styles from "./index.module.scss";
 import { getDates } from "../helpers/getDates";
 import Button from "../components/button";
-import BirthdaysProps from "./interfaces";
+import { DataProps } from "./interfaces";
 import { sortDates } from "../helpers/sortDates";
 import { useRouter } from "next/router";
 import Message from "../components/message";
@@ -15,19 +15,15 @@ import calendar from "../assets/calendar.png";
 import Line from "../components/line";
 import { BirthdayElement } from "./interfaces";
 import { getBirthdays } from "../helpers/getBirthdays";
-import { useReducer } from "react";
-import { getList } from "../helpers/getList";
-import reducer from "../modules/pagination-management/reducer";
+import { getPage } from "../helpers/getPage";
 import Pagination from "../components/pagination";
 
-const Home = ({ birthdays }: BirthdaysProps) => {
+const Home = ({ data }: DataProps) => {
+  const { dobs, page, pages } = data;
+
   const router = useRouter();
 
-  const [page, dispatch] = useReducer(reducer, 1);
-
-  const { dobs, pages } = getList(birthdays, page);
-
-  console.log(dobs);
+  console.log(data);
 
   return (
     <Layout title="Birthday App | Home" description="Homepage">
@@ -47,7 +43,7 @@ const Home = ({ birthdays }: BirthdaysProps) => {
           />
         </div>
         <div>
-          {birthdays.length > 0 ? (
+          {dobs.length > 0 ? (
             dobs.map((birthday) => (
               <Card key={birthday.id}>
                 <Card.Name
@@ -69,30 +65,36 @@ const Home = ({ birthdays }: BirthdaysProps) => {
               />
             </div>
           )}
-          {birthdays.length > 20 && (
-            <Pagination pages={pages} page={page} dispatch={dispatch} />
-          )}
+          {pages > 1 && <Pagination pages={pages} page={+page} />}
         </div>
       </Container>
     </Layout>
   );
 };
 
-export const getStaticProps: GetStaticProps = async () => {
+export const getServerSideProps: GetServerSideProps = async ({ query }) => {
   const { today, nextWeek } = getDates();
 
   const res = await fetch(
     "https://birthday-app-api.vercel.app/api/v1/john/birthdays"
   );
-  const data = await res.json();
+  const { birthdays } = await res.json();
 
-  const birthdays = sortDates(getBirthdays(data)).filter(
+  const page = query.page ?? "1";
+
+  const nextBirthdays = sortDates(getBirthdays(birthdays)).filter(
     (birthdays: BirthdayElement) =>
       birthdays.birthday >= today && birthdays.birthday <= nextWeek
   );
 
+  const data = {
+    dobs: getPage(nextBirthdays, +page, 20),
+    page,
+    pages: Math.ceil(nextBirthdays.length / 20),
+  };
+
   return {
-    props: { birthdays },
+    props: { data },
   };
 };
 

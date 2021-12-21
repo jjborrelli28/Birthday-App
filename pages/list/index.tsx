@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import React, { useReducer } from "react";
+import React from "react";
 import Button from "../../components/button";
 import Card from "../../components/card";
 import Container from "../../components/container";
@@ -7,21 +7,18 @@ import Layout from "../../components/layout";
 import Line from "../../components/line";
 import Message from "../../components/message";
 import Title from "../../components/title";
-import BirthdaysProps from "../interfaces";
 import styles from "./index.module.scss";
-import { GetStaticProps } from "next";
 import Pagination from "../../components/pagination";
-import { getList } from "../../helpers/getList";
+import { getPage } from "../../helpers/getPage";
 import { BirthdayElement } from "../interfaces";
-import reducer from "../../modules/pagination-management/reducer";
 import { formatDate } from "../../helpers/formatDate";
+import { GetServerSideProps } from "next";
+import { DataProps } from "./interfaces";
 
-const index = ({ birthdays }: BirthdaysProps) => {
+const index = ({ data }: DataProps) => {
+  const { dobs, page, pages } = data;
+
   const router = useRouter();
-
-  const [page, dispatch] = useReducer(reducer, 1);
-
-  const { dobs, pages } = getList(birthdays, page);
 
   return (
     <Layout
@@ -65,12 +62,12 @@ const index = ({ birthdays }: BirthdaysProps) => {
               <Message variant="warning" text="Set your Birthday reminders! " />
             </div>
           )}
-          {birthdays.length > 20 && (
+          {pages > 1 && (
             <Pagination
               variant="tertiary"
+              path="/list"
               pages={pages}
-              page={page}
-              dispatch={dispatch}
+              page={+page}
             />
           )}
         </div>
@@ -79,16 +76,22 @@ const index = ({ birthdays }: BirthdaysProps) => {
   );
 };
 
-export const getStaticProps: GetStaticProps = async () => {
+export const getServerSideProps: GetServerSideProps = async ({ query }) => {
   const res = await fetch(
     "https://birthday-app-api.vercel.app/api/v1/john/birthdays"
   );
-  const data = await res.json();
+  const { birthdays } = await res.json();
 
-  const birthdays = [...data.birthdays].reverse();
+  const page = query.page ?? "1";
+
+  const data = {
+    dobs: getPage([...birthdays].reverse(), +page, 20),
+    page,
+    pages: Math.ceil(birthdays.length / 20),
+  };
 
   return {
-    props: { birthdays },
+    props: { data },
   };
 };
 

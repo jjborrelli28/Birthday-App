@@ -1,10 +1,10 @@
-import BirthdaysProps from "../pages/interfaces";
+import { BirthdayElement } from "../pages/interfaces";
 import { getDates } from "./getDates";
 
-export const getBirthdays = (data: BirthdaysProps) => {
+export const getBirthdays = (data: BirthdayElement[]) => {
   const { today, birthdayCurrentYear, birthdayNextYear } = getDates();
 
-  return data.birthdays.map((item) => {
+  return data.map((item) => {
     return {
       ...item,
       birthday:
