@@ -1,16 +1,13 @@
 import React from "react";
-import { classConcatenator } from "../../helpers/classConcatenator";
+import { cc } from "../../helpers/classConcatenator";
 import styles from "./index.module.scss";
 import CardProps, { DateProps, EmailProps, NameProps } from "./interfaces";
 
 const Card = ({ children, variant = "primary" }: CardProps) => {
+  console.log(cc(styles.card, styles[variant]));
+
   return (
-    <div
-      className={classConcatenator([
-        { condition: true, class: styles.card },
-        { condition: true, class: styles[variant] },
-      ])}
-    >
+    <div className={cc(styles.card, styles[variant])}>
       <div className={styles.dataContainer}>{children}</div>
     </div>
   );
