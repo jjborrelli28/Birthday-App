@@ -1,4 +1,5 @@
 @import "../../styles/variables";
+@import "../../styles/media_queries";
 
 .button {
   font-size: 1rem;
@@ -50,14 +51,14 @@
   border: solid $brown 0.1rem;
 }
 
-@media (min-width: 480px) {
+@include tablet {
   .button {
     font-size: 1.1rem;
     width: 5.5rem;
   }
 }
 
-@media (min-width: 992px) {
+@include desktop {
   .button {
     font-size: 1.2rem;
     width: 6rem;

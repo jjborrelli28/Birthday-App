@@ -1,4 +1,5 @@
 @import "../../styles/variables";
+@import "../../styles/media_queries";
 
 .form {
   display: flex;
@@ -17,11 +18,8 @@
   justify-content: space-between;
 }
 
-@media (min-width: 480px) {
+@include desktop {
   .calendarContainer {
     margin-bottom: 1rem;
   }
-}
-
-@media (min-width: 992px) {
 }

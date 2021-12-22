@@ -41,6 +41,7 @@ const Pagination = ({
               page={item}
               variant={variant}
               select={item === page}
+              key={item}
             >
               {item}
             </Item>
