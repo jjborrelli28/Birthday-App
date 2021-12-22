@@ -4,8 +4,6 @@ import styles from "./index.module.scss";
 import CardProps, { DateProps, EmailProps, NameProps } from "./interfaces";
 
 const Card = ({ children, variant = "primary" }: CardProps) => {
-  console.log(cc(styles.card, styles[variant]));
-
   return (
     <div className={cc(styles.card, styles[variant])}>
       <div className={styles.dataContainer}>{children}</div>

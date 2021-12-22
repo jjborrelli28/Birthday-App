@@ -11,6 +11,8 @@ const index = () => {
   const router = useRouter();
 
   const handleLogin = () => {
+    localStorage.setItem("logged", "true");
+    
     if (localStorage.getItem("t&cAccepted")) {
       router.push("/");
     } else {

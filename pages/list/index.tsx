@@ -20,6 +20,15 @@ const index = ({ data }: DataProps) => {
 
   const router = useRouter();
 
+  //Login simulation(momentary)
+  if (typeof window !== "undefined") {
+    const logged = localStorage.getItem("logged") ?? false;
+
+    if (!logged) {
+      router.push("/login");
+    }
+  }
+
   return (
     <Layout
       title="Birthday App | Birthdays list"
@@ -63,12 +72,7 @@ const index = ({ data }: DataProps) => {
             </div>
           )}
           {pages > 1 && (
-            <Pagination
-              variant="tertiary"
-              path="/list"
-              pages={pages}
-              page={+page}
-            />
+            <Pagination variant="tertiary" pages={pages} page={+page} />
           )}
         </div>
       </Container>

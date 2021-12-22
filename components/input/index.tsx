@@ -15,6 +15,7 @@ const Input = ({
   pattern,
   required,
   lastItem = false,
+  max,
 }: InputProps) => {
   return (
     <input
@@ -29,6 +30,7 @@ const Input = ({
       maxLength={maxLength}
       pattern={pattern}
       required={required}
+      max={max}
     />
   );
 };

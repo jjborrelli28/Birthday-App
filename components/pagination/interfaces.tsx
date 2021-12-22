@@ -1,7 +1,6 @@
 import { Dispatch } from "react";
 
 export interface PaginationProps {
-  path?: string;
   pages: number;
   page: number;
   variant?: string;
@@ -15,7 +14,6 @@ type Action = {
 
 export interface ItemProps {
   children: React.ReactChild;
-  path: string;
   page: number;
   variant?: string;
   disabled?: boolean;

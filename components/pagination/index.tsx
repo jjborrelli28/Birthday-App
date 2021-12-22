@@ -9,12 +9,7 @@ import styles from "./index.module.scss";
 import { PaginationProps } from "./interfaces";
 import Item from "./item";
 
-const Pagination = ({
-  page,
-  pages,
-  path = "",
-  variant = "primary",
-}: PaginationProps) => {
+const Pagination = ({ page, pages, variant = "primary" }: PaginationProps) => {
   const totalPages = Array(pages)
     .fill(null)
     .map((_, index) => index + 1);
@@ -23,10 +18,10 @@ const Pagination = ({
 
   return (
     <div className={styles.container}>
-      <Item path={path} page={page - 1} variant={variant} disabled={page === 1}>
+      <Item page={page - 1} variant={variant} disabled={page === 1}>
         ‹
       </Item>
-      <Item path={path} page={1} variant={variant} select={page === 1}>
+      <Item page={1} variant={variant} select={page === 1}>
         {totalPages[0]}
       </Item>
 
@@ -37,7 +32,6 @@ const Pagination = ({
         .map((item) => {
           return (
             <Item
-              path={path}
               page={item}
               variant={variant}
               select={item === page}
@@ -51,7 +45,6 @@ const Pagination = ({
       {showLastElipsis(page, lastPage)}
 
       <Item
-        path={path}
         page={lastPage}
         variant={variant}
         select={page === lastPage}
@@ -59,12 +52,7 @@ const Pagination = ({
       >
         {lastPage}
       </Item>
-      <Item
-        path={path}
-        page={page + 1}
-        variant={variant}
-        disabled={page === lastPage}
-      >
+      <Item page={page + 1} variant={variant} disabled={page === lastPage}>
         ›
       </Item>
     </div>

@@ -23,7 +23,14 @@ const Home = ({ data }: DataProps) => {
 
   const router = useRouter();
 
-  console.log(data);
+  //Login simulation(momentary)
+  if (typeof window !== "undefined") {
+    const logged = localStorage.getItem("logged") ?? false;
+
+    if (!logged) {
+      router.push("/login");
+    }
+  }
 
   return (
     <Layout title="Birthday App | Home" description="Homepage">

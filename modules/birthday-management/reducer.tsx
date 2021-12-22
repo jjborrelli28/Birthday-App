@@ -44,7 +44,7 @@ export const initialState = {
     email: "",
     firstName: "",
     lastName: "",
-    birthday: null,
+    birthday: "",
   },
   message: {
     show: false,
