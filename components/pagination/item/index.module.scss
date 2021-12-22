@@ -1,0 +1,70 @@
+@import "../../../styles/variables";
+@import "../../../styles/media_queries";
+
+.item {
+  width: 2rem;
+  height: 2rem;
+  font-size: 0.8rem;
+  font-weight: bold;
+  border-radius: 50%;
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+}
+
+.item:hover {
+  cursor: pointer;
+}
+
+.primary {
+  background-color: $fuchsia;
+  color: $white;
+}
+
+.primary:hover {
+  background-color: $white;
+  color: $fuchsia;
+  border: solid $fuchsia 0.1rem;
+}
+
+.tertiary {
+  background-color: $brown;
+  color: $white;
+}
+
+.tertiary:hover {
+  background-color: $white;
+  color: $brown;
+  border: solid $brown 0.1rem;
+}
+
+.select {
+  border: solid $black 0.2rem;
+}
+
+.select:hover {
+  border: solid $black 0.2rem;
+}
+
+.disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+@include tablet {
+  .item {
+    width: 2.1rem;
+    height: 2.1rem;
+    font-size: 0.9rem;
+  }
+}
+
+@include desktop {
+  .item {
+    width: 2.2rem;
+    height: 2.2rem;
+    font-size: 1rem;
+  }
+}

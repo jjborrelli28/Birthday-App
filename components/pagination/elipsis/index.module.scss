@@ -1,0 +1,28 @@
+@import "../../../styles/variables";
+@import "../../../styles/media_queries";
+
+.elipsis {
+  width: 0.8rem;
+  height: 1.8rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1 rem;
+  font-weight: bolder;
+}
+
+@include tablet {
+  .elipsis {
+    width: 0.9rem;
+    height: 1.9rem;
+    font-size: 1.1rem;
+  }
+}
+
+@include desktop {
+  .elipsis {
+    width: 1rem;
+    height: 2rem;
+    font-size: 1.2rem;
+  }
+}

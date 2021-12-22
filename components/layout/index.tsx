@@ -11,7 +11,7 @@ const Layout = ({
   hideFooter = true,
 }: PropsLayout) => {
   return (
-    <div className={styles.container}>
+    <div>
       <Head>
         <title>{title}</title>
         <meta name="description" content={description} />

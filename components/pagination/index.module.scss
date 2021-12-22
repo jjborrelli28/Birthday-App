@@ -1,0 +1,15 @@
+@import "../../styles/variables";
+@import "../../styles/media_queries";
+
+.container {
+  display: flex;
+  justify-content: center;
+  gap: 0.2rem;
+  margin-bottom: 2.75rem;
+}
+
+@include tablet {
+  .container {
+    margin-bottom: initial;
+  }
+}

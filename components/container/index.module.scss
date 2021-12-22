@@ -1,4 +1,5 @@
 @import "../../styles/variables";
+@import "../../styles/media_queries";
 
 .container {
   padding: 1rem;
@@ -10,7 +11,7 @@
   position: relative;
 }
 
-@media (min-width: 480px) {
+@include tablet {
   .container {
     padding: 1.5rem;
     max-width: 600px;
@@ -18,7 +19,7 @@
   }
 }
 
-@media (min-width: 992px) {
+@include desktop {
   .container {
     padding: 2rem;
     width: 792.8px;
