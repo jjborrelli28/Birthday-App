@@ -1,4 +1,4 @@
-import { BirthdayElement } from "../pages/interfaces";
+import { BirthdayElement } from "../modules/home-management/interfaces";
 
 export const getPage = (
   birthdays: BirthdayElement[],

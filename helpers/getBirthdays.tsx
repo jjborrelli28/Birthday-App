@@ -1,4 +1,4 @@
-import { BirthdayElement } from "../pages/interfaces";
+import { BirthdayElement } from "../modules/home-management/interfaces";
 import { getDates } from "./getDates";
 
 export const getBirthdays = (data: BirthdayElement[]) => {

@@ -10,12 +10,12 @@ import Title from "../../components/title";
 import styles from "./index.module.scss";
 import Pagination from "../../components/pagination";
 import { getPage } from "../../helpers/getPage";
-import { BirthdayElement } from "../interfaces";
+import { BirthdayElement } from "../../modules/home-management/interfaces";
 import { formatDate } from "../../helpers/formatDate";
 import { GetServerSideProps } from "next";
-import { DataProps } from "./interfaces";
+import { DataProps } from "../../modules/list-management/interfaces";
 
-const index = ({ data }: DataProps) => {
+const List = ({ data }: DataProps) => {
   const { dobs, page, pages } = data;
 
   const router = useRouter();
@@ -99,4 +99,4 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
   };
 };
 
-export default index;
+export default List;

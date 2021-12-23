@@ -12,14 +12,14 @@ import Line from "../../components/line";
 import { getDates } from "../../helpers/getDates";
 import reducer, {
   initialState,
-} from "../../modules/birthday-management/reducer";
+} from "../../modules/add-management/reducer";
 import {
   changeValues,
   showMessage,
-} from "../../modules/birthday-management/actions";
-import { TargetProps } from "../../modules/birthday-management/interfaces";
+} from "../../modules/add-management/actions";
+import { TargetProps } from "../../modules/add-management/interfaces";
 
-const index = () => {
+const Add = () => {
   const [{ form, message }, dispatch] = useReducer(reducer, initialState);
 
   const { email, firstName, lastName, birthday } = form;
@@ -160,4 +160,4 @@ const index = () => {
   );
 };
 
-export default index;
+export default Add;
