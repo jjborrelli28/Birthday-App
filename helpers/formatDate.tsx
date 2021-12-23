@@ -1,5 +1,5 @@
-import { format, parseISO } from "date-fns";
+import { formatInTimeZone } from "date-fns-tz";
 
-export const formatDate = (date: string) => {
-  return format(parseISO(date), "yyyy-MM-dd");
+export const formatDate = (date: string, year = "yyyy") => {
+  return formatInTimeZone(date, "Europe/Stockholm", `${year}-MM-dd`);
 };
