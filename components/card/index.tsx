@@ -30,7 +30,8 @@ export const Birthday = ({ children }: DateProps) => {
 export const Email = ({ children }: EmailProps) => {
   return (
     <p className={styles.text}>
-      <span className={styles.textBold}>Email:</span> {children}
+      <span className={styles.textBold}>Email:</span>{" "}
+      {children.length < 29 ? children : children.slice(0, 28).concat("...")}
     </p>
   );
 };

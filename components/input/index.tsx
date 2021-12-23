@@ -14,12 +14,11 @@ const Input = ({
   maxLength,
   pattern,
   required,
-  lastItem = false,
   max,
 }: InputProps) => {
   return (
     <input
-      className={cc(styles.input, lastItem && styles.lastItem)}
+      className={cc(styles.input)}
       type={type}
       id={id}
       name={name}

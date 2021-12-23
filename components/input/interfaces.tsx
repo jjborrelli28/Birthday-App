@@ -10,7 +10,6 @@ interface InputProps {
   max?: string;
   pattern?: string;
   required?: boolean;
-  lastItem?: boolean;
 }
 
 export default InputProps;

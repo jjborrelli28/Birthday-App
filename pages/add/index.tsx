@@ -10,9 +10,7 @@ import Input from "../../components/input";
 import Container from "../../components/container";
 import Line from "../../components/line";
 import { getDates } from "../../helpers/getDates";
-import reducer, {
-  initialState,
-} from "../../modules/add-management/reducer";
+import reducer, { initialState } from "../../modules/add-management/reducer";
 import {
   changeValues,
   showMessage,
@@ -141,7 +139,6 @@ const Add = () => {
               }
               max={today}
               required={true}
-              lastItem={true}
             />
             {show && <Message variant={variant} text={text} />}
           </div>

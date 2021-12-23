@@ -19,10 +19,6 @@
   font-size: 0.9rem;
 }
 
-.lastItem {
-  margin-bottom: 0;
-}
-
 @include tablet {
   .input {
     font-size: 1.1rem;
@@ -35,10 +31,6 @@
 
   .input[type="date"] {
     font-size: 1.1rem;
-  }
-
-  .lastItem {
-    margin-bottom: 1rem;
   }
 }
 
