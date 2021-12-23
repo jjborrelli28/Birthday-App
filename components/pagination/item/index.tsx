@@ -6,7 +6,6 @@ import styles from "./index.module.scss";
 
 const Item = ({
   children,
-  path,
   page,
   variant = "primary",
   disabled = false,
@@ -21,7 +20,7 @@ const Item = ({
       {children}
     </span>
   ) : (
-    <Link href={`${path}?page=${page}`}>
+    <Link href={`?page=${page}`}>
       <a
         className={cc(styles.item, styles[variant], select && styles.select)}
         hidden={hidden}

@@ -7,10 +7,12 @@ import Button from "../../components/button";
 import { useRouter } from "next/router";
 import Container from "../../components/container";
 
-const index = () => {
+const Login = () => {
   const router = useRouter();
 
   const handleLogin = () => {
+    localStorage.setItem("logged", "true");
+    
     if (localStorage.getItem("t&cAccepted")) {
       router.push("/");
     } else {
@@ -30,4 +32,4 @@ const index = () => {
   );
 };
 
-export default index;
+export default Login;

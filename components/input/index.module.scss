@@ -14,8 +14,9 @@
   color: $gray;
 }
 
-.lastItem {
-  margin-bottom: 0;
+.input[type="date"] {
+  width: 50%;
+  font-size: 0.9rem;
 }
 
 @include tablet {
@@ -28,8 +29,8 @@
     color: $white;
   }
 
-  .lastItem {
-    margin-bottom: 1rem;
+  .input[type="date"] {
+    font-size: 1.1rem;
   }
 }
 
@@ -37,5 +38,9 @@
   .input {
     font-size: 1.2rem;
     padding-left: 0.4rem;
+  }
+
+  .input[type="date"] {
+    font-size: 1.2rem;
   }
 }

@@ -10,11 +10,21 @@ import Line from "../../components/line";
 import Picture from "../../components/picture";
 import logo from "../../assets/logo.png";
 
-const index = () => {
+const TermsAndConditions = () => {
   const router = useRouter();
+
+  //Login simulation(momentary)
+  if (typeof window !== "undefined") {
+    const logged = localStorage.getItem("logged") ?? false;
+
+    if (!logged) {
+      router.push("/login");
+    }
+  }
 
   const handleDecline = () => {
     router.push("/login");
+    localStorage.removeItem("logged");
   };
 
   const handleAgree = () => {
@@ -67,4 +77,4 @@ const index = () => {
   );
 };
 
-export default index;
+export default TermsAndConditions;

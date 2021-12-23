@@ -17,6 +17,7 @@
 
 .dataContainer {
   padding: 0.3rem 0.6rem 0.3rem 0.6rem;
+  max-width: 100%;
 }
 
 .title {
@@ -27,6 +28,8 @@
 .text {
   margin: 0;
   font-size: 0.9rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .textBold {

@@ -3,7 +3,7 @@ import { GetServerSideProps } from "next";
 import styles from "./index.module.scss";
 import { getDates } from "../helpers/getDates";
 import Button from "../components/button";
-import { DataProps } from "./interfaces";
+import { DataProps } from "../modules/home-management/interfaces";
 import { sortDates } from "../helpers/sortDates";
 import { useRouter } from "next/router";
 import Message from "../components/message";
@@ -13,7 +13,7 @@ import Card from "../components/card";
 import Picture from "../components/picture";
 import calendar from "../assets/calendar.png";
 import Line from "../components/line";
-import { BirthdayElement } from "./interfaces";
+import { BirthdayElement } from "../modules/home-management/interfaces";
 import { getBirthdays } from "../helpers/getBirthdays";
 import { getPage } from "../helpers/getPage";
 import Pagination from "../components/pagination";
@@ -23,7 +23,14 @@ const Home = ({ data }: DataProps) => {
 
   const router = useRouter();
 
-  console.log(data);
+  //Login simulation(momentary)
+  if (typeof window !== "undefined") {
+    const logged = localStorage.getItem("logged") ?? false;
+
+    if (!logged) {
+      router.push("/login");
+    }
+  }
 
   return (
     <Layout title="Birthday App | Home" description="Homepage">

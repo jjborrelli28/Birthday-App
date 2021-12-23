@@ -7,9 +7,9 @@ interface InputProps {
   onChange?: any;
   minLength?: number;
   maxLength?: number;
+  max?: string;
   pattern?: string;
   required?: boolean;
-  lastItem?: boolean;
 }
 
 export default InputProps;

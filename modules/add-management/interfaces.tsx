@@ -7,7 +7,7 @@ export interface StateProps {
     email: string;
     firstName: string;
     lastName: string;
-    birthday: null | string;
+    birthday: string;
   };
   message: {
     show: boolean;
@@ -16,16 +16,11 @@ export interface StateProps {
   };
 }
 
-export type ActionProps = PersonalAction | BirthdayAction | MessageAction;
+export type ActionProps = PersonalAction | MessageAction;
 
 export type PersonalAction = {
-  type: "email" | "firstName" | "lastName";
+  type: "email" | "firstName" | "lastName" | "birthday";
   payload: string;
-};
-
-export type BirthdayAction = {
-  type: "birthday";
-  payload: null | string;
 };
 
 export type MessageAction = {
