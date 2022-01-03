@@ -16,8 +16,8 @@
 }
 
 .dataContainer {
-  padding: 0.3rem 0.6rem 0.3rem 0.6rem;
-  max-width: 100%;
+  padding: 0.3rem 0 0.3rem 0.6rem;
+  max-width: calc(100% - 3.2rem);
 }
 
 .title {
@@ -42,6 +42,41 @@
 
 .tertiary {
   border: solid $brown 0.2rem;
+}
+
+.btnContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  padding: 0.6rem;
+}
+
+.btn {
+  font-size: 1rem;
+  font-weight: bold;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 0.6rem;
+  border: none;
+}
+
+.edit {
+  background-color: $orange;
+}
+
+.edit:hover {
+  cursor: pointer;
+  background-color: lighten($color: $orange, $amount: 5);
+}
+
+.delete {
+  background-color: $red;
+  color: white;
+}
+
+.delete:hover {
+  cursor: pointer;
+  background-color: lighten($color: $red, $amount: 5);
 }
 
 @include tablet {

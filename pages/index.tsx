@@ -52,7 +52,7 @@ const Home = ({ data }: DataProps) => {
         <div>
           {dobs.length > 0 ? (
             dobs.map((birthday) => (
-              <Card key={birthday.id}>
+              <Card key={birthday.id} id={birthday.id}>
                 <Card.Name
                   name={birthday.firstName}
                   surname={birthday.lastName}

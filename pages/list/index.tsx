@@ -54,7 +54,7 @@ const List = ({ data }: DataProps) => {
         <div>
           {dobs.length > 0 ? (
             dobs.map((birthday: BirthdayElement) => (
-              <Card key={birthday.id} variant="tertiary">
+              <Card key={birthday.id} variant="tertiary" id={birthday.id}>
                 <Card.Name
                   name={birthday.firstName}
                   surname={birthday.lastName}

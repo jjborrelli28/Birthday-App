@@ -3,10 +3,18 @@ import { cc } from "../../helpers/classConcatenator";
 import styles from "./index.module.scss";
 import CardProps, { DateProps, EmailProps, NameProps } from "./interfaces";
 
-const Card = ({ children, variant = "primary" }: CardProps) => {
+const Card = ({ children, variant = "primary", id }: CardProps) => {
   return (
     <div className={cc(styles.card, styles[variant])}>
       <div className={styles.dataContainer}>{children}</div>
+      <div className={styles.btnContainer}>
+        <button className={cc(styles.btn, styles.edit)}>
+          <i className="fas fa-pencil-alt"></i>
+        </button>
+        <button className={cc(styles.btn, styles.delete)}>
+          <i className="fas fa-trash-alt"></i>
+        </button>
+      </div>
     </div>
   );
 };
