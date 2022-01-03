@@ -2,7 +2,7 @@ import { Dispatch } from "react";
 import {
   MessageProps,
   ValuesProps,
-} from "../../modules/add-management/interfaces";
+} from "../../modules/form-management/interfaces";
 
 export interface FormProps {
   title: string;

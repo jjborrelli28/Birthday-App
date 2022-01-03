@@ -5,10 +5,9 @@ import Input from "../input";
 import Label from "../label";
 import Line from "../line";
 import Title from "../title";
-import { TargetProps } from "../../modules/add-management/interfaces";
-import { changeValues } from "../../modules/add-management/actions";
+import { TargetProps } from "../../modules/form-management/interfaces";
+import { changeValues } from "../../modules/form-management/actions";
 import Message from "../message";
-import { useRouter } from "next/router";
 import { FormProps } from "./interface";
 import { getDates } from "../../helpers/getDates";
 

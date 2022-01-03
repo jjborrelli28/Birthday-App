@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
-import { showMessage } from "./actions";
-import { PostProps } from "./interfaces";
+import { showMessage } from "../form-management/actions";
+import { PostProps } from "../form-management/interfaces";
 
 export const postBirthday = ({ e, values, dispatch }: PostProps) => {
   e.preventDefault();
