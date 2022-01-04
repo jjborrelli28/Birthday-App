@@ -5,8 +5,6 @@ import Input from "../input";
 import Label from "../label";
 import Line from "../line";
 import Title from "../title";
-import { TargetProps } from "../../modules/form-management/interfaces";
-import { changeValues } from "../../modules/form-management/actions";
 import Message from "../message";
 import { FormProps } from "./interface";
 import { getDates } from "../../helpers/getDates";
@@ -18,7 +16,7 @@ export const Form: React.FC<FormProps> = ({
   values,
   message,
   handleSubmit,
-  dispatch,
+  onChange,
   router,
 }) => {
   return (
@@ -34,9 +32,7 @@ export const Form: React.FC<FormProps> = ({
             name="firstName"
             placeholder="First name"
             value={values.firstName}
-            onChange={({ target }: TargetProps) => {
-              dispatch(changeValues(target));
-            }}
+            onChange={onChange}
             minLength={3}
             maxLength={25}
             pattern="[A-Za-z ]*"
@@ -49,9 +45,7 @@ export const Form: React.FC<FormProps> = ({
             name="lastName"
             placeholder="Last name"
             value={values.lastName}
-            onChange={({ target }: TargetProps) => {
-              dispatch(changeValues(target));
-            }}
+            onChange={onChange}
             minLength={3}
             maxLength={25}
             pattern="[A-Za-z ]*"
@@ -64,9 +58,7 @@ export const Form: React.FC<FormProps> = ({
             name="email"
             placeholder="example@email.com"
             value={values.email}
-            onChange={({ target }: TargetProps) => {
-              dispatch(changeValues(target));
-            }}
+            onChange={onChange}
             pattern="^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$"
             required={true}
           />
@@ -76,9 +68,7 @@ export const Form: React.FC<FormProps> = ({
             id="birthday"
             name="birthday"
             value={values.birthday}
-            onChange={({ target }: TargetProps) =>
-              dispatch(changeValues(target))
-            }
+            onChange={onChange}
             max={today}
             required={true}
           />

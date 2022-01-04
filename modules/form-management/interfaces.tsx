@@ -1,5 +1,3 @@
-import { DispatchWithoutAction } from "react";
-
 export interface TargetProps {
   target: HTMLInputElement;
 }
@@ -37,9 +35,3 @@ export type MessageAction = {
 };
 
 export type ActionProps = PersonalAction | MessageAction;
-
-export interface PostProps {
-  e: any;
-  values: ValuesProps;
-  dispatch: any;
-}

@@ -1,4 +1,4 @@
-import { Dispatch } from "react";
+import { NextRouter } from "next/router";
 import {
   MessageProps,
   ValuesProps,
@@ -8,7 +8,7 @@ export interface FormProps {
   title: string;
   values: ValuesProps;
   message: MessageProps;
-  handleSubmit: any;
-  dispatch: Dispatch<any>;
-  router: any;
+  handleSubmit: React.FormEventHandler<HTMLFormElement>;
+  onChange: React.FormEvent;
+  router: NextRouter;
 }

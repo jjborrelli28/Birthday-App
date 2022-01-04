@@ -3,12 +3,15 @@ import { cc } from "../../helpers/classConcatenator";
 import styles from "./index.module.scss";
 import CardProps, { DateProps, EmailProps, NameProps } from "./interfaces";
 
-const Card = ({ children, variant = "primary", id }: CardProps) => {
+const Card = ({ children, variant = "primary", id, router }: CardProps) => {
   return (
     <div className={cc(styles.card, styles[variant])}>
       <div className={styles.dataContainer}>{children}</div>
       <div className={styles.btnContainer}>
-        <button className={cc(styles.btn, styles.edit)}>
+        <button
+          className={cc(styles.btn, styles.edit)}
+          onClick={() => router.push(`/edit?id=${id}`)}
+        >
           <i className="fas fa-pencil-alt"></i>
         </button>
         <button className={cc(styles.btn, styles.delete)}>

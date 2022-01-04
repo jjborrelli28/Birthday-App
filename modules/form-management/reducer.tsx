@@ -29,7 +29,7 @@ const reducer = (state: StateProps, action: ActionProps) => {
     case action.type:
       return {
         ...state,
-        form: { ...state.values, [action.type]: action.payload },
+        values: { ...state.values, [action.type]: action.payload },
       };
 
     default:

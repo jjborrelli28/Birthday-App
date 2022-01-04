@@ -9,18 +9,12 @@ import Text from "../../components/text";
 import Line from "../../components/line";
 import Picture from "../../components/picture";
 import logo from "../../assets/logo.png";
+import { redirect } from "../../temporal/redirect";
 
 const TermsAndConditions = () => {
   const router = useRouter();
 
-  //Login simulation(momentary)
-  if (typeof window !== "undefined") {
-    const logged = localStorage.getItem("logged") ?? false;
-
-    if (!logged) {
-      router.push("/login");
-    }
-  }
+  redirect(router);
 
   const handleDecline = () => {
     router.push("/login");

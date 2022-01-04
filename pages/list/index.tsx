@@ -14,20 +14,14 @@ import { BirthdayElement } from "../../modules/home-management/interfaces";
 import { formatDate } from "../../helpers/formatDate";
 import { GetServerSideProps } from "next";
 import { DataProps } from "../../modules/list-management/interfaces";
+import { redirect } from "../../temporal/redirect";
 
 const List = ({ data }: DataProps) => {
   const { dobs, page, pages } = data;
 
   const router = useRouter();
 
-  //Login simulation(momentary)
-  if (typeof window !== "undefined") {
-    const logged = localStorage.getItem("logged") ?? false;
-
-    if (!logged) {
-      router.push("/login");
-    }
-  }
+  redirect(router);
 
   return (
     <Layout
@@ -54,7 +48,12 @@ const List = ({ data }: DataProps) => {
         <div>
           {dobs.length > 0 ? (
             dobs.map((birthday: BirthdayElement) => (
-              <Card key={birthday.id} variant="tertiary" id={birthday.id}>
+              <Card
+                key={birthday.id}
+                variant="tertiary"
+                id={birthday.id}
+                router={router}
+              >
                 <Card.Name
                   name={birthday.firstName}
                   surname={birthday.lastName}
