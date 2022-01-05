@@ -28,7 +28,7 @@ const Home = ({ data }: DataProps) => {
 
   redirect(router);
 
-  const { active, payload } = useContexts("modal");
+  const { active, text, variant, payload } = useContexts("modal");
 
   return (
     <Layout title="Birthday App | Home" description="Homepage">
@@ -50,18 +50,21 @@ const Home = ({ data }: DataProps) => {
         <div>
           {dobs.length > 0 ? (
             dobs.map((birthday) => (
-              <Card
-                key={birthday.id}
-                id={birthday.id}
-                name={`${birthday.firstName} ${birthday.lastName}`}
-                router={router}
-              >
-                <Card.Name
-                  name={birthday.firstName}
-                  surname={birthday.lastName}
+              <Card key={birthday.id}>
+                <Card.Avatar />
+                <Card.Data>
+                  <Card.Name
+                    name={birthday.firstName}
+                    surname={birthday.lastName}
+                  />
+                  <Card.Birthday>{birthday.birthday}</Card.Birthday>
+                  <Card.Email>{birthday.email}</Card.Email>
+                </Card.Data>
+                <Card.Comands
+                  id={birthday.id}
+                  name={`${birthday.firstName} ${birthday.lastName}`}
+                  router={router}
                 />
-                <Card.Birthday>{birthday.birthday}</Card.Birthday>
-                <Card.Email>{birthday.email}</Card.Email>
               </Card>
             ))
           ) : (
@@ -78,11 +81,9 @@ const Home = ({ data }: DataProps) => {
           {pages > 1 && <Pagination pages={pages} page={+page} />}
         </div>
         <Modal show={active}>
-          <Modal.Header>{`Removing birthday from: ${payload}`}</Modal.Header>
+          <Modal.Header>{`Removing birthday from: ${payload.name}`}</Modal.Header>
           <Modal.Body>
-            <Message variant="warning">
-              {"Do you want to delete this birthday?"}
-            </Message>
+            <Message variant={variant}>{text}</Message>
           </Modal.Body>
           <Modal.Footer />
         </Modal>

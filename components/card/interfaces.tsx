@@ -1,10 +1,12 @@
 import { NextRouter } from "next/router";
-interface CardProps {
+
+export interface CardProps {
   children: React.ReactNode;
   variant?: string;
-  id: string;
-  name: string;
-  router: NextRouter;
+}
+
+export interface DataProps {
+  children: React.ReactNode;
 }
 
 export interface NameProps {
@@ -18,6 +20,12 @@ export interface DateProps {
 
 export interface EmailProps {
   children: string;
+}
+
+export interface ComandsProps {
+  id: string;
+  name: string;
+  router: NextRouter;
 }
 
 export default CardProps;

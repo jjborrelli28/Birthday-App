@@ -15,6 +15,8 @@ import { formatDate } from "../../helpers/formatDate";
 import { GetServerSideProps } from "next";
 import { DataProps } from "../../modules/list-management/interfaces";
 import { redirect } from "../../temporal/redirect";
+import { Modal } from "../../components/modal";
+import { useContexts } from "../../hooks/useContexts";
 
 const List = ({ data }: DataProps) => {
   const { dobs, page, pages } = data;
@@ -22,6 +24,8 @@ const List = ({ data }: DataProps) => {
   const router = useRouter();
 
   redirect(router);
+
+  const { active, text, variant, payload } = useContexts("modal");
 
   return (
     <Layout
@@ -48,19 +52,21 @@ const List = ({ data }: DataProps) => {
         <div>
           {dobs.length > 0 ? (
             dobs.map((birthday: BirthdayElement) => (
-              <Card
-                key={birthday.id}
-                variant="tertiary"
-                id={birthday.id}
-                name={`${birthday.firstName} ${birthday.lastName}`}
-                router={router}
-              >
-                <Card.Name
-                  name={birthday.firstName}
-                  surname={birthday.lastName}
+              <Card variant="tertiary" key={birthday.id}>
+                <Card.Avatar />
+                <Card.Data>
+                  <Card.Name
+                    name={birthday.firstName}
+                    surname={birthday.lastName}
+                  />
+                  <Card.Birthday>{formatDate(birthday.birthday)}</Card.Birthday>
+                  <Card.Email>{birthday.email}</Card.Email>
+                </Card.Data>
+                <Card.Comands
+                  id={birthday.id}
+                  name={`${birthday.firstName} ${birthday.lastName}`}
+                  router={router}
                 />
-                <Card.Birthday>{formatDate(birthday.birthday)}</Card.Birthday>
-                <Card.Email>{birthday.email}</Card.Email>
               </Card>
             ))
           ) : (
@@ -75,6 +81,13 @@ const List = ({ data }: DataProps) => {
             <Pagination variant="tertiary" pages={pages} page={+page} />
           )}
         </div>
+        <Modal show={active}>
+          <Modal.Header>{`Removing birthday from: ${payload.name}`}</Modal.Header>
+          <Modal.Body>
+            <Message variant={variant}>{text}</Message>
+          </Modal.Body>
+          <Modal.Footer />
+        </Modal>
       </Container>
     </Layout>
   );

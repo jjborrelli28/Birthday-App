@@ -1,6 +1,6 @@
 interface MessageProps {
-  variant: string;
   children: string;
+  variant?: string;
 }
 
 export default MessageProps;

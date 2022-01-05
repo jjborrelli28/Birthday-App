@@ -28,7 +28,39 @@ export const Body = ({ children }: ChildrenProps) => {
 };
 
 export const Footer = () => {
-  const { setModal } = useContexts("modal");
+  const modal = useContexts("modal");
+
+  const { setModal, payload } = modal;
+
+  const deleteBirthday = (e: Event, id: string) => {
+    e.preventDefault();
+
+    fetch(
+      `https://birthday-app-api.vercel.app/api/v1/john/birthdays/${payload.id}`,
+      {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    )
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        }
+      })
+      .then((response) => console.log("Success:", response))
+      .catch((error) => console.error("Error:", error));
+
+    setModal({
+      ...modal,
+      text: "The birthday was removed ✔",
+      variant: "success",
+    });
+    setTimeout(() => {
+      location.reload();
+    }, 1500);
+  };
 
   return (
     <div className={styles.footer}>
@@ -36,13 +68,18 @@ export const Footer = () => {
         variant="secondary"
         type="button"
         text="Cancel"
-        onClick={() => setModal({ active: false, text: "" })}
+        onClick={() =>
+          setModal({
+            ...modal,
+            active: false,
+          })
+        }
       />
       <Button
         variant="danger"
         type="button"
         text="Delete"
-        onClick={() => console.log("click delete")}
+        onClick={deleteBirthday}
       />
     </div>
   );

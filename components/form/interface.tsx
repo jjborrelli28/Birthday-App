@@ -8,7 +8,7 @@ export interface FormProps {
   title: string;
   values: ValuesProps;
   message: MessageProps;
-  handleSubmit: React.FormEventHandler<HTMLFormElement>;
-  onChange: React.FormEvent;
+  handleSubmit: any;
+  onChange: any;
   router: NextRouter;
 }

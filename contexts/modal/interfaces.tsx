@@ -1,5 +1,7 @@
 export interface ModalContextProps {
   active: boolean;
-  payload?: string;
+  text: string;
+  variant: string;
+  payload: { id: string; name: string };
   setModal?: any;
 }
