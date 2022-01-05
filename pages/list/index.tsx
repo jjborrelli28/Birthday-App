@@ -101,11 +101,22 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
 
   const page = query.page ?? "1";
 
+  const pages = Math.ceil(birthdays.length / 20);
+
   const data = {
     dobs: getPage([...birthdays].reverse(), +page, 20),
     page,
-    pages: Math.ceil(birthdays.length / 20),
+    pages,
   };
+
+  if (+page > pages) {
+    return {
+      redirect: {
+        destination: "/list",
+        permanent: false,
+      },
+    };
+  }
 
   return {
     props: { data },

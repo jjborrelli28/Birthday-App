@@ -107,11 +107,22 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
       birthdays.birthday >= today && birthdays.birthday <= nextWeek
   );
 
+  const pages = Math.ceil(nextBirthdays.length / 20);
+
   const data = {
     dobs: getPage(nextBirthdays, +page, 20),
     page,
-    pages: Math.ceil(nextBirthdays.length / 20),
+    pages,
   };
+
+  if (+page > pages) {
+    return {
+      redirect: {
+        destination: "/list",
+        permanent: false,
+      },
+    };
+  }
 
   return {
     props: { data },
