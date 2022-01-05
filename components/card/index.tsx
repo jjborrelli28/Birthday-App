@@ -1,9 +1,18 @@
 import React from "react";
 import { cc } from "../../helpers/classConcatenator";
+import { useContexts } from "../../hooks/useContexts";
 import styles from "./index.module.scss";
 import CardProps, { DateProps, EmailProps, NameProps } from "./interfaces";
 
-const Card = ({ children, variant = "primary", id, router }: CardProps) => {
+const Card = ({
+  children,
+  variant = "primary",
+  id,
+  name,
+  router,
+}: CardProps) => {
+  const { setModal } = useContexts("modal");
+
   return (
     <div className={cc(styles.card, styles[variant])}>
       <div className={styles.dataContainer}>{children}</div>
@@ -14,7 +23,17 @@ const Card = ({ children, variant = "primary", id, router }: CardProps) => {
         >
           <i className="fas fa-pencil-alt"></i>
         </button>
-        <button className={cc(styles.btn, styles.delete)}>
+        <button
+          className={cc(styles.btn, styles.delete)}
+          onClick={() =>
+            setModal({
+              active: true,
+              text: "Queres borrar?",
+              payload: name,
+              setModal,
+            })
+          }
+        >
           <i className="fas fa-trash-alt"></i>
         </button>
       </div>

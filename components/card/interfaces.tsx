@@ -3,6 +3,7 @@ interface CardProps {
   children: React.ReactNode;
   variant?: string;
   id: string;
+  name: string;
   router: NextRouter;
 }
 

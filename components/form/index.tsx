@@ -73,7 +73,7 @@ export const Form: React.FC<FormProps> = ({
             required={true}
           />
           {message.show && (
-            <Message variant={message.variant} text={message.text} />
+            <Message variant={message.variant}>{message.text}</Message>
           )}
         </div>
         <div className={styles.btnsContainer}>

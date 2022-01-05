@@ -52,6 +52,7 @@ const List = ({ data }: DataProps) => {
                 key={birthday.id}
                 variant="tertiary"
                 id={birthday.id}
+                name={`${birthday.firstName} ${birthday.lastName}`}
                 router={router}
               >
                 <Card.Name
@@ -67,7 +68,7 @@ const List = ({ data }: DataProps) => {
               <div className={styles.handContainer}>
                 <h2 className={styles.hand}>☝</h2>
               </div>
-              <Message variant="warning" text="Set your Birthday reminders! " />
+              <Message variant="warning">Set your Birthday reminders!</Message>
             </div>
           )}
           {pages > 1 && (

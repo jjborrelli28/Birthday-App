@@ -18,6 +18,8 @@ import { getBirthdays } from "../helpers/getBirthdays";
 import { getPage } from "../helpers/getPage";
 import Pagination from "../components/pagination";
 import { redirect } from "../temporal/redirect";
+import { Modal } from "../components/modal";
+import { useContexts } from "../hooks/useContexts";
 
 const Home = ({ data }: DataProps) => {
   const { dobs, page, pages } = data;
@@ -25,6 +27,8 @@ const Home = ({ data }: DataProps) => {
   const router = useRouter();
 
   redirect(router);
+
+  const { active, payload } = useContexts("modal");
 
   return (
     <Layout title="Birthday App | Home" description="Homepage">
@@ -46,7 +50,12 @@ const Home = ({ data }: DataProps) => {
         <div>
           {dobs.length > 0 ? (
             dobs.map((birthday) => (
-              <Card key={birthday.id} id={birthday.id} router={router}>
+              <Card
+                key={birthday.id}
+                id={birthday.id}
+                name={`${birthday.firstName} ${birthday.lastName}`}
+                router={router}
+              >
                 <Card.Name
                   name={birthday.firstName}
                   surname={birthday.lastName}
@@ -57,7 +66,7 @@ const Home = ({ data }: DataProps) => {
             ))
           ) : (
             <div className={styles.messageContainer}>
-              <Message variant="warning" text="No Birthdays coming soon" />
+              <Message variant="warning">No Birthdays coming soon</Message>
               <Picture
                 src={calendar}
                 alt="logo"
@@ -68,6 +77,15 @@ const Home = ({ data }: DataProps) => {
           )}
           {pages > 1 && <Pagination pages={pages} page={+page} />}
         </div>
+        <Modal show={active}>
+          <Modal.Header>{`Removing birthday from: ${payload}`}</Modal.Header>
+          <Modal.Body>
+            <Message variant="warning">
+              {"Do you want to delete this birthday?"}
+            </Message>
+          </Modal.Body>
+          <Modal.Footer />
+        </Modal>
       </Container>
     </Layout>
   );

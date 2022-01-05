@@ -82,7 +82,7 @@ const Edit = ({ birthdaySelect }: BirthdaySelectProps) => {
       description="Page to edit birthdays"
     >
       <Form
-        title="Edit birthday of"
+        title={`Edit birthday of ${firstName} ${lastName}`}
         values={values}
         message={message}
         handleSubmit={editBirthday}
