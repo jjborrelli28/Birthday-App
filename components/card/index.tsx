@@ -13,6 +13,8 @@ import Image from "next/image";
 import { DataProps } from "./interfaces";
 import { FaUserEdit } from "react-icons/fa";
 import { FaUserSlash } from "react-icons/fa";
+import { getDates } from "../../helpers/getDates";
+import { HiOutlineMailOpen } from "react-icons/hi";
 
 const Card = ({ children, variant = "primary" }: CardProps) => {
   return <div className={cc(styles.card, styles[variant])}>{children}</div>;
@@ -56,10 +58,12 @@ export const Email = ({ children }: EmailProps) => {
   );
 };
 
-export const Comands = ({ id, name, router }: ComandsProps) => {
+export const Comands = ({ id, name, router, birthday }: ComandsProps) => {
   const modal = useModalContext();
 
   const { setModal } = modal;
+
+  const { today } = getDates();
 
   return (
     <div className={styles.comands}>
@@ -83,6 +87,11 @@ export const Comands = ({ id, name, router }: ComandsProps) => {
       >
         <FaUserSlash />
       </button>
+      {birthday == today && (
+        <button className={styles.btn}>
+          <HiOutlineMailOpen />
+        </button>
+      )}
     </div>
   );
 };

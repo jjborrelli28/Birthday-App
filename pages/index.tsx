@@ -22,6 +22,7 @@ import { Modal } from "../components/modal";
 import { useModalContext } from "../hooks/useModalContext";
 import { formatName } from "../helpers/formatName";
 import { useEffect } from "react";
+import { formatDate } from "../helpers/formatDate";
 
 const Home = ({ data }: DataProps) => {
   const router = useRouter();
@@ -75,6 +76,7 @@ const Home = ({ data }: DataProps) => {
                   id={birthday.id}
                   name={formatName(birthday.firstName, birthday.lastName)}
                   router={router}
+                  birthday={birthday.birthday}
                 />
               </Card>
             ))
@@ -131,7 +133,7 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
       redirect: {
         destination: "/list",
         permanent: false,
-        notFound: true
+        notFound: true,
       },
     };
   }
