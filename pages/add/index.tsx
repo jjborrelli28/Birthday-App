@@ -1,44 +1,26 @@
 import React, { useReducer } from "react";
-import Button from "../../components/button";
-import Layout from "../../components/layout";
-import styles from "./index.module.scss";
 import { useRouter } from "next/router";
-import Message from "../../components/message";
-import Title from "../../components/title";
-import Label from "../../components/label";
-import Input from "../../components/input";
-import Container from "../../components/container";
-import Line from "../../components/line";
-import { getDates } from "../../helpers/getDates";
-import reducer, { initialState } from "../../modules/add-management/reducer";
+import reducer, { initialState } from "../../modules/form-management/reducer";
+import { Form } from "../../components/form";
+import Layout from "../../components/layout";
 import {
   changeValues,
   showMessage,
-} from "../../modules/add-management/actions";
-import { TargetProps } from "../../modules/add-management/interfaces";
+} from "../../modules/form-management/actions";
+import { TargetProps } from "../../modules/form-management/interfaces";
+import { useLoginRedirect } from "../../temporal/useLoginRedirect";
 
 const Add = () => {
-  const [{ form, message }, dispatch] = useReducer(reducer, initialState);
-
-  const { email, firstName, lastName, birthday } = form;
-
-  const { show, variant, text } = message;
-
-  const { today } = getDates();
+  const [{ values, message }, dispatch] = useReducer(reducer, initialState);
 
   const router = useRouter();
 
-  //Login simulation(momentary)
-  if (typeof window !== "undefined") {
-    const logged = localStorage.getItem("logged") ?? false;
+  useLoginRedirect(router);
 
-    if (!logged) {
-      router.push("/login");
-    }
-  }
-
-  const handleSubmit = (e: any) => {
+  const addBirthday = (e: Event) => {
     e.preventDefault();
+
+    const { email, firstName, lastName, birthday } = values;
 
     if (firstName && lastName && email && birthday) {
       dispatch(
@@ -50,7 +32,7 @@ const Add = () => {
           Accept: "application/json",
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(form),
+        body: JSON.stringify(values),
       })
         .then((res) => {
           if (res.ok) {
@@ -80,79 +62,14 @@ const Add = () => {
       title="Birthday App | Add Birthday"
       description="Page to add birthdays"
     >
-      <Container>
-        <Title>Add a new birthday</Title>
-        <Line />
-        <form className={styles.form} onSubmit={handleSubmit}>
-          <div>
-            <Label>First name</Label>
-            <Input
-              type="text"
-              id="firstName"
-              name="firstName"
-              placeholder="First name"
-              value={firstName}
-              onChange={({ target }: TargetProps) => {
-                dispatch(changeValues(target));
-              }}
-              minLength={3}
-              maxLength={25}
-              pattern="[A-Za-z ]*"
-              required={true}
-            />
-            <Label>Last name</Label>
-            <Input
-              type="text"
-              id="lastName"
-              name="lastName"
-              placeholder="Last name"
-              value={lastName}
-              onChange={({ target }: TargetProps) => {
-                dispatch(changeValues(target));
-              }}
-              minLength={3}
-              maxLength={25}
-              pattern="[A-Za-z ]*"
-              required={true}
-            />
-            <Label>E-mail</Label>
-            <Input
-              type="email"
-              id="email"
-              name="email"
-              placeholder="example@email.com"
-              value={email}
-              onChange={({ target }: TargetProps) => {
-                dispatch(changeValues(target));
-              }}
-              pattern="^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$"
-              required={true}
-            />
-            <Label>Birthday date</Label>
-            <Input
-              type="date"
-              id="birthday"
-              name="birthday"
-              value={birthday}
-              onChange={({ target }: TargetProps) =>
-                dispatch(changeValues(target))
-              }
-              max={today}
-              required={true}
-            />
-            {show && <Message variant={variant} text={text} />}
-          </div>
-          <div className={styles.btnsContainer}>
-            <Button
-              type="button"
-              variant="secondary"
-              text="Cancel"
-              onClick={() => router.push("/")}
-            />
-            <Button variant="primary" text="Save" onSubmit={handleSubmit} />
-          </div>
-        </form>
-      </Container>
+      <Form
+        title="Add a new birthday"
+        values={values}
+        message={message}
+        onSubmit={addBirthday}
+        onChange={({ target }: TargetProps) => dispatch(changeValues(target))}
+        router={router}
+      />
     </Layout>
   );
 };

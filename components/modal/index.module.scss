@@ -1,0 +1,64 @@
+@import "../../styles/variables";
+@import "../../styles/media_queries";
+
+.modal {
+  width: 100%;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 99;
+  background-color: rgba($color: $black, $alpha: 0.75);
+  display: none;
+  justify-content: center;
+  align-items: center;
+}
+
+.container {
+  max-width: calc(100% - 2rem);
+  background-color: white;
+  border: solid $gray 0.2rem;
+  border-radius: 0.6rem;
+  padding: 1rem;
+}
+
+.header {
+  margin: 0.5rem 0 0.5rem 0;
+  font-size: 1.5rem;
+  line-height: 1.75rem;
+}
+
+.body {
+  padding: 0.5rem;
+}
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+}
+
+.modalOpen {
+  display: flex;
+}
+
+.modalClose {
+  display: none;
+}
+
+@include tablet {
+  .container {
+    max-width: calc(100% - 3rem);
+    padding: 1.5rem;
+  }
+
+  .header {
+    font-size: 1.75rem;
+  }
+}
+
+@include desktop {
+  .container {
+    max-width: 600px;
+    padding: 2rem;
+  }
+}

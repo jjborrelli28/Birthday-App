@@ -51,6 +51,18 @@
   border: solid $brown 0.1rem;
 }
 
+.danger {
+  background-color: $red;
+  color: $white;
+  border: solid $red 0.1rem;
+}
+
+.danger:hover {
+  background-color: $white;
+  color: $red;
+  border: solid $red 0.1rem;
+}
+
 @include tablet {
   .button {
     font-size: 1.1rem;

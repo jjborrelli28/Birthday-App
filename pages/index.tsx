@@ -17,20 +17,29 @@ import { BirthdayElement } from "../modules/home-management/interfaces";
 import { getBirthdays } from "../helpers/getBirthdays";
 import { getPage } from "../helpers/getPage";
 import Pagination from "../components/pagination";
+import { useLoginRedirect } from "../temporal/useLoginRedirect";
+import { Modal } from "../components/modal";
+import { useModalContext } from "../hooks/useModalContext";
+import { formatName } from "../helpers/formatName";
+import { useEffect } from "react";
 
 const Home = ({ data }: DataProps) => {
-  const { dobs, page, pages } = data;
-
   const router = useRouter();
 
-  //Login simulation(momentary)
-  if (typeof window !== "undefined") {
-    const logged = localStorage.getItem("logged") ?? false;
+  useLoginRedirect(router);
 
-    if (!logged) {
-      router.push("/login");
-    }
+  const modal = useModalContext();
+
+  const { active, text, variant, payload, isRefreshing, setModal } = modal;
+  if (isRefreshing) {
+    router.replace(router.asPath);
   }
+
+  const { dobs, page, pages } = data;
+
+  useEffect(() => {
+    setModal({ ...modal, isRefreshing: false });
+  }, [data]);
 
   return (
     <Layout title="Birthday App | Home" description="Homepage">
@@ -53,17 +62,25 @@ const Home = ({ data }: DataProps) => {
           {dobs.length > 0 ? (
             dobs.map((birthday) => (
               <Card key={birthday.id}>
-                <Card.Name
-                  name={birthday.firstName}
-                  surname={birthday.lastName}
+                <Card.Avatar />
+                <Card.Data>
+                  <Card.Name
+                    name={birthday.firstName}
+                    surname={birthday.lastName}
+                  />
+                  <Card.Birthday>{birthday.birthday}</Card.Birthday>
+                  <Card.Email>{birthday.email}</Card.Email>
+                </Card.Data>
+                <Card.Comands
+                  id={birthday.id}
+                  name={formatName(birthday.firstName, birthday.lastName)}
+                  router={router}
                 />
-                <Card.Birthday>{birthday.birthday}</Card.Birthday>
-                <Card.Email>{birthday.email}</Card.Email>
               </Card>
             ))
           ) : (
             <div className={styles.messageContainer}>
-              <Message variant="warning" text="No Birthdays coming soon" />
+              <Message variant="warning">No Birthdays coming soon</Message>
               <Picture
                 src={calendar}
                 alt="logo"
@@ -74,6 +91,13 @@ const Home = ({ data }: DataProps) => {
           )}
           {pages > 1 && <Pagination pages={pages} page={+page} />}
         </div>
+        <Modal show={active}>
+          <Modal.Header>{`Removing birthday from: ${payload.name}`}</Modal.Header>
+          <Modal.Body>
+            <Message variant={variant}>{text}</Message>
+          </Modal.Body>
+          <Modal.Footer />
+        </Modal>
       </Container>
     </Layout>
   );
@@ -94,11 +118,19 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
       birthdays.birthday >= today && birthdays.birthday <= nextWeek
   );
 
+  const pages = Math.ceil(nextBirthdays.length / 20);
+
   const data = {
     dobs: getPage(nextBirthdays, +page, 20),
     page,
-    pages: Math.ceil(nextBirthdays.length / 20),
+    pages,
   };
+
+  if (+page > pages) {
+    return {
+      notFound: true,
+    };
+  }
 
   return {
     props: { data },

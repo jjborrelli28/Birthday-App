@@ -2,21 +2,23 @@ export interface TargetProps {
   target: HTMLInputElement;
 }
 
-export interface StateProps {
-  form: {
-    email: string;
-    firstName: string;
-    lastName: string;
-    birthday: string;
-  };
-  message: {
-    show: boolean;
-    variant: string;
-    text: string;
-  };
-}
+export type ValuesProps = {
+  email: string;
+  firstName: string;
+  lastName: string;
+  birthday: string;
+};
 
-export type ActionProps = PersonalAction | MessageAction;
+export type MessageProps = {
+  show: boolean;
+  variant: string;
+  text: string;
+};
+
+export interface StateProps {
+  values: ValuesProps;
+  message: MessageProps;
+}
 
 export type PersonalAction = {
   type: "email" | "firstName" | "lastName" | "birthday";
@@ -31,3 +33,5 @@ export type MessageAction = {
     text: string;
   };
 };
+
+export type ActionProps = PersonalAction | MessageAction;

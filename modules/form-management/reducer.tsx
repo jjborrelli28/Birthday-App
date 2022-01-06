@@ -29,7 +29,7 @@ const reducer = (state: StateProps, action: ActionProps) => {
     case action.type:
       return {
         ...state,
-        form: { ...state.form, [action.type]: action.payload },
+        values: { ...state.values, [action.type]: action.payload },
       };
 
     default:
@@ -40,7 +40,7 @@ const reducer = (state: StateProps, action: ActionProps) => {
 export default reducer;
 
 export const initialState = {
-  form: {
+  values: {
     email: "",
     firstName: "",
     lastName: "",
