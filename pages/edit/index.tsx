@@ -104,10 +104,7 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
 
   if (!id) {
     return {
-      redirect: {
-        destination: "/",
-        permanent: false,
-      },
+      notFound: true,
     };
   }
 

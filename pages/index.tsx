@@ -130,11 +130,7 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
 
   if (+page > pages) {
     return {
-      redirect: {
-        destination: "/list",
-        permanent: false,
-        notFound: true,
-      },
+      notFound: true,
     };
   }
 
