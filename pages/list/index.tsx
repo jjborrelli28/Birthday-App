@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import React from "react";
+import React, { useEffect } from "react";
 import Button from "../../components/button";
 import Card from "../../components/card";
 import Container from "../../components/container";
@@ -14,18 +14,28 @@ import { BirthdayElement } from "../../modules/home-management/interfaces";
 import { formatDate } from "../../helpers/formatDate";
 import { GetServerSideProps } from "next";
 import { DataProps } from "../../modules/list-management/interfaces";
-import { redirect } from "../../temporal/redirect";
+import { useLoginRedirect } from "../../temporal/useLoginRedirect";
 import { Modal } from "../../components/modal";
-import { useContexts } from "../../hooks/useContexts";
+import { useModalContext } from "../../hooks/useModalContext";
+import { formatName } from "../../helpers/formatName";
 
 const List = ({ data }: DataProps) => {
+  const router = useRouter();
+  useLoginRedirect(router);
+
+  const modal = useModalContext();
+
+  const { active, text, variant, payload, isRefreshing, setModal } = modal;
+
+  if (isRefreshing) {
+    router.replace(router.asPath);
+  }
+
   const { dobs, page, pages } = data;
 
-  const router = useRouter();
-
-  redirect(router);
-
-  const { active, text, variant, payload } = useContexts("modal");
+  useEffect(() => {
+    setModal({ ...modal, isRefreshing: false });
+  }, [data]);
 
   return (
     <Layout
@@ -64,7 +74,7 @@ const List = ({ data }: DataProps) => {
                 </Card.Data>
                 <Card.Comands
                   id={birthday.id}
-                  name={`${birthday.firstName} ${birthday.lastName}`}
+                  name={formatName(birthday.firstName, birthday.lastName)}
                   router={router}
                 />
               </Card>
@@ -114,6 +124,7 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
       redirect: {
         destination: "/list",
         permanent: false,
+        notFound: true,
       },
     };
   }

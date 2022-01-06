@@ -9,12 +9,12 @@ import Text from "../../components/text";
 import Line from "../../components/line";
 import Picture from "../../components/picture";
 import logo from "../../assets/logo.png";
-import { redirect } from "../../temporal/redirect";
+import { useLoginRedirect } from "../../temporal/useLoginRedirect";
 
 const TermsAndConditions = () => {
   const router = useRouter();
 
-  redirect(router);
+  useLoginRedirect(router);
 
   const handleDecline = () => {
     router.push("/login");

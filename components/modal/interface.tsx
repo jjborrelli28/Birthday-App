@@ -6,3 +6,8 @@ export interface ModalProps {
 export interface ChildrenProps {
   children: React.ReactNode;
 }
+
+export interface HeaderProps {
+  children: string;
+  level?: number;
+}

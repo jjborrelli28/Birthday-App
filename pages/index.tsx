@@ -17,18 +17,29 @@ import { BirthdayElement } from "../modules/home-management/interfaces";
 import { getBirthdays } from "../helpers/getBirthdays";
 import { getPage } from "../helpers/getPage";
 import Pagination from "../components/pagination";
-import { redirect } from "../temporal/redirect";
+import { useLoginRedirect } from "../temporal/useLoginRedirect";
 import { Modal } from "../components/modal";
-import { useContexts } from "../hooks/useContexts";
+import { useModalContext } from "../hooks/useModalContext";
+import { formatName } from "../helpers/formatName";
+import { useEffect } from "react";
 
 const Home = ({ data }: DataProps) => {
-  const { dobs, page, pages } = data;
-
   const router = useRouter();
 
-  redirect(router);
+  useLoginRedirect(router);
 
-  const { active, text, variant, payload } = useContexts("modal");
+  const modal = useModalContext();
+
+  const { active, text, variant, payload, isRefreshing, setModal } = modal;
+  if (isRefreshing) {
+    router.replace(router.asPath);
+  }
+
+  const { dobs, page, pages } = data;
+
+  useEffect(() => {
+    setModal({ ...modal, isRefreshing: false });
+  }, [data]);
 
   return (
     <Layout title="Birthday App | Home" description="Homepage">
@@ -62,7 +73,7 @@ const Home = ({ data }: DataProps) => {
                 </Card.Data>
                 <Card.Comands
                   id={birthday.id}
-                  name={`${birthday.firstName} ${birthday.lastName}`}
+                  name={formatName(birthday.firstName, birthday.lastName)}
                   router={router}
                 />
               </Card>
@@ -120,6 +131,7 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
       redirect: {
         destination: "/list",
         permanent: false,
+        notFound: true
       },
     };
   }

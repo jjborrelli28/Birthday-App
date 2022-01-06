@@ -8,14 +8,14 @@ import {
   showMessage,
 } from "../../modules/form-management/actions";
 import { TargetProps } from "../../modules/form-management/interfaces";
-import { redirect } from "../../temporal/redirect";
+import { useLoginRedirect } from "../../temporal/useLoginRedirect";
 
 const Add = () => {
   const [{ values, message }, dispatch] = useReducer(reducer, initialState);
 
   const router = useRouter();
 
-  redirect(router);
+  useLoginRedirect(router);
 
   const addBirthday = (e: Event) => {
     e.preventDefault();
@@ -66,7 +66,7 @@ const Add = () => {
         title="Add a new birthday"
         values={values}
         message={message}
-        handleSubmit={addBirthday}
+        onSubmit={addBirthday}
         onChange={({ target }: TargetProps) => dispatch(changeValues(target))}
         router={router}
       />

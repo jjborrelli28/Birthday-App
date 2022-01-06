@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { initialState, ModalContext } from "./ModalContex";
+import { initialState, ModalContext } from "./ModalContext";
 import { ChildrenProps } from "../../components/modal/interface";
 
 export const ModalControler = ({ children }: ChildrenProps) => {

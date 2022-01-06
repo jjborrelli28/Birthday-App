@@ -8,11 +8,12 @@ import {
   showMessage,
 } from "../../modules/form-management/actions";
 import reducer from "../../modules/form-management/reducer";
-import { redirect } from "../../temporal/redirect";
+import { useLoginRedirect } from "../../temporal/useLoginRedirect";
 import { formatDate } from "../../helpers/formatDate";
 import { BirthdayElement } from "../../modules/home-management/interfaces";
 import { BirthdaySelectProps } from "../../modules/edit-management/interfaces";
 import { TargetProps } from "../../modules/form-management/interfaces";
+import { formatName } from "../../helpers/formatName";
 
 const Edit = ({ birthdaySelect }: BirthdaySelectProps) => {
   const { email, firstName, lastName, birthday, id } = birthdaySelect;
@@ -35,7 +36,7 @@ const Edit = ({ birthdaySelect }: BirthdaySelectProps) => {
 
   const router = useRouter();
 
-  redirect(router);
+  useLoginRedirect(router);
 
   const editBirthday = (e: Event) => {
     e.preventDefault();
@@ -82,10 +83,10 @@ const Edit = ({ birthdaySelect }: BirthdaySelectProps) => {
       description="Page to edit birthdays"
     >
       <Form
-        title={`Edit birthday of ${firstName} ${lastName}`}
+        title={`Edit birthday of ${formatName(firstName, lastName)}`}
         values={values}
         message={message}
-        handleSubmit={editBirthday}
+        onSubmit={editBirthday}
         onChange={({ target }: TargetProps) => dispatch(changeValues(target))}
         router={router}
       />

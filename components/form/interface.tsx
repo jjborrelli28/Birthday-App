@@ -8,7 +8,7 @@ export interface FormProps {
   title: string;
   values: ValuesProps;
   message: MessageProps;
-  handleSubmit: any;
+  onSubmit: any;
   onChange: any;
   router: NextRouter;
 }

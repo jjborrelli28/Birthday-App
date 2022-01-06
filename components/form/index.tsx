@@ -9,21 +9,21 @@ import Message from "../message";
 import { FormProps } from "./interface";
 import { getDates } from "../../helpers/getDates";
 
-const { today } = getDates();
-
 export const Form: React.FC<FormProps> = ({
   title,
   values,
   message,
-  handleSubmit,
+  onSubmit,
   onChange,
   router,
 }) => {
+  const { today } = getDates();
+
   return (
     <Container>
       <Title>{title}</Title>
       <Line />
-      <form className={styles.form} onSubmit={handleSubmit}>
+      <form className={styles.form} onSubmit={onSubmit}>
         <div>
           <Label>First name</Label>
           <Input
@@ -83,7 +83,7 @@ export const Form: React.FC<FormProps> = ({
             text="Cancel"
             onClick={() => router.push("/")}
           />
-          <Button variant="primary" text="Save" onSubmit={handleSubmit} />
+          <Button variant="primary" text="Save" onSubmit={onSubmit} />
         </div>
       </form>
     </Container>

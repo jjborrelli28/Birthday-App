@@ -1,7 +1,8 @@
 export interface ModalContextProps {
   active: boolean;
   text: string;
-  variant: string;
+  variant: "warning" | "success";
   payload: { id: string; name: string };
   setModal?: any;
+  isRefreshing: boolean;
 }

@@ -1,6 +1,6 @@
 import React from "react";
 import { cc } from "../../helpers/classConcatenator";
-import { useContexts } from "../../hooks/useContexts";
+import { useModalContext } from "../../hooks/useModalContext";
 import styles from "./index.module.scss";
 import CardProps, {
   ComandsProps,
@@ -11,6 +11,8 @@ import CardProps, {
 import avatar from "../../assets/avatar.png";
 import Image from "next/image";
 import { DataProps } from "./interfaces";
+import { FaUserEdit } from "react-icons/fa";
+import { FaUserSlash } from "react-icons/fa";
 
 const Card = ({ children, variant = "primary" }: CardProps) => {
   return <div className={cc(styles.card, styles[variant])}>{children}</div>;
@@ -55,7 +57,7 @@ export const Email = ({ children }: EmailProps) => {
 };
 
 export const Comands = ({ id, name, router }: ComandsProps) => {
-  const modal = useContexts("modal");
+  const modal = useModalContext();
 
   const { setModal } = modal;
 
@@ -65,7 +67,7 @@ export const Comands = ({ id, name, router }: ComandsProps) => {
         className={cc(styles.btn, styles.edit)}
         onClick={() => router.push(`/edit?id=${id}`)}
       >
-        <i className="fas fa-pencil-alt"></i>
+        <FaUserEdit />
       </button>
       <button
         className={cc(styles.btn, styles.delete)}
@@ -79,7 +81,7 @@ export const Comands = ({ id, name, router }: ComandsProps) => {
           })
         }
       >
-        <i className="fas fa-trash-alt"></i>
+        <FaUserSlash />
       </button>
     </div>
   );

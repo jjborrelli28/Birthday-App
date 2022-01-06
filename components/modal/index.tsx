@@ -1,9 +1,9 @@
 import React from "react";
 import { cc } from "../../helpers/classConcatenator";
-import { useContexts } from "../../hooks/useContexts";
+import { useModalContext } from "../../hooks/useModalContext";
 import Button from "../button";
 import styles from "./index.module.scss";
-import { ChildrenProps, ModalProps } from "./interface";
+import { ChildrenProps, HeaderProps, ModalProps } from "./interface";
 
 export const Modal = ({ children, show }: ModalProps) => {
   return (
@@ -19,8 +19,23 @@ export const Modal = ({ children, show }: ModalProps) => {
   );
 };
 
-export const Header = ({ children }: ChildrenProps) => {
-  return <h2 className={styles.header}>{children}</h2>;
+export const Header = ({ children, level = 2 }: HeaderProps) => {
+  switch (level) {
+    case 1:
+      return <h1 className={styles.header}>{children}</h1>;
+    case 2:
+      return <h2 className={styles.header}>{children}</h2>;
+    case 3:
+      return <h3 className={styles.header}>{children}</h3>;
+    case 4:
+      return <h4 className={styles.header}>{children}</h4>;
+    case 5:
+      return <h5 className={styles.header}>{children}</h5>;
+    case 6:
+      return <h6 className={styles.header}>{children}</h6>;
+    default:
+      return <h2 className={styles.header}>{children}</h2>;
+  }
 };
 
 export const Body = ({ children }: ChildrenProps) => {
@@ -28,11 +43,11 @@ export const Body = ({ children }: ChildrenProps) => {
 };
 
 export const Footer = () => {
-  const modal = useContexts("modal");
+  const modal = useModalContext();
 
   const { setModal, payload } = modal;
 
-  const deleteBirthday = (e: Event, id: string) => {
+  const deleteBirthday = (e: Event) => {
     e.preventDefault();
 
     fetch(
@@ -58,7 +73,11 @@ export const Footer = () => {
       variant: "success",
     });
     setTimeout(() => {
-      location.reload();
+      setModal({
+        ...modal,
+        active: false,
+        isRefreshing: true,
+      });
     }, 1500);
   };
 

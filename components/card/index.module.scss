@@ -64,12 +64,15 @@
 }
 
 .btn {
-  font-size: 1rem;
+  font-size: 1.25rem;
   font-weight: bold;
   width: 2rem;
   height: 2rem;
   border-radius: 0.6rem;
   border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .edit {

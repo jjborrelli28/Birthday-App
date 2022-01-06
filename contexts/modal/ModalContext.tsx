@@ -1,7 +1,7 @@
 import { createContext } from "react";
 import { ModalContextProps } from "./interfaces";
 
-export const initialState = {
+export const initialState: ModalContextProps = {
   active: false,
   text: "",
   variant: "warning",
@@ -9,6 +9,7 @@ export const initialState = {
     id: "",
     name: "",
   },
+  isRefreshing: false,
 };
 
-export const ModalContext = createContext<ModalContextProps>(initialState);
+export const ModalContext = createContext(initialState);
