@@ -27,7 +27,7 @@ const Data = ({ children }: DataProps) => {
 export const Avatar = () => {
   return (
     <picture className={styles.avatar}>
-      <Image src={avatar} />
+      <Image src={avatar} alt="avatar" />
     </picture>
   );
 };

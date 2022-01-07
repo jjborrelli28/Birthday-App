@@ -18,7 +18,7 @@ import { BirthdayElement } from "../../modules/home-management/interfaces";
 import { useLoginRedirect } from "../../temporal/useLoginRedirect";
 import styles from "./index.module.scss";
 
-const eCard = ({ birthdaySelect }: BirthdaySelectProps) => {
+const ECard = ({ birthdaySelect }: BirthdaySelectProps) => {
   const { email, firstName, lastName, birthday } = birthdaySelect;
 
   const fullName = `${firstName} ${lastName}`;
@@ -153,4 +153,4 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
   };
 };
 
-export default eCard;
+export default ECard;
