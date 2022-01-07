@@ -34,11 +34,6 @@
   text-overflow: ellipsis;
 }
 
-.title {
-  margin: 0;
-  font-size: 1rem;
-}
-
 .text {
   margin: 0;
   font-size: 0.9rem;
@@ -94,15 +89,21 @@
   background-color: lighten($color: $red, $amount: 5);
 }
 
+.eCard {
+  background-color: $light-blue;
+  color: $white;
+}
+
+.eCard:hover {
+  cursor: pointer;
+  background-color: lighten($color: $light-blue, $amount: 5);
+}
+
 @include tablet {
   .avatar {
     min-width: 65px;
     max-width: 65px;
     margin: 0.75rem;
-  }
-
-  .title {
-    font-size: 1.1rem;
   }
 
   .text {
@@ -120,10 +121,6 @@
     min-width: 80px;
     max-width: 80px;
     margin: 1rem;
-  }
-
-  .title {
-    font-size: 1.2rem;
   }
 
   .text {

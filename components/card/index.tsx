@@ -34,10 +34,10 @@ export const Avatar = () => {
 
 export const Name = ({ name, surname }: NameProps) => {
   return (
-    <h3 className={styles.title}>
+    <p className={cc(styles.text, styles.textBold)}>
       {name.charAt(0).toUpperCase() + name.slice(1)}{" "}
       {surname.charAt(0).toUpperCase() + surname.slice(1)}
-    </h3>
+    </p>
   );
 };
 
@@ -88,7 +88,7 @@ export const Comands = ({ id, name, router, birthday }: ComandsProps) => {
         <FaUserSlash />
       </button>
       {birthday == today && (
-        <button className={styles.btn}>
+        <button className={cc(styles.btn, styles.eCard)}>
           <HiOutlineMailOpen />
         </button>
       )}
