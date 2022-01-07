@@ -8,6 +8,11 @@
   background-color: $light-gray;
   position: relative;
   margin-bottom: 1rem;
+  transition: transform 0.5s;
+}
+
+.card:hover {
+  transform: scale(1.05);
 }
 
 .card:last-child {
@@ -70,6 +75,14 @@
   align-items: center;
 }
 
+.btn:hover {
+  transition: transform 0.5s;
+}
+
+.btn:hover {
+  transform: scale(1.1);
+}
+
 .edit {
   background-color: $orange;
 }
@@ -90,13 +103,13 @@
 }
 
 .eCard {
-  background-color: $light-blue;
+  background-color: $blue;
   color: $white;
 }
 
 .eCard:hover {
   cursor: pointer;
-  background-color: lighten($color: $light-blue, $amount: 5);
+  background-color: lighten($color: $blue, $amount: 5);
 }
 
 @include tablet {

@@ -4,9 +4,11 @@ export interface TargetProps {
 
 export type ValuesProps = {
   email: string;
-  firstName: string;
-  lastName: string;
+  firstName?: string;
+  lastName?: string;
   birthday: string;
+  fullName?: string;
+  greeting?: string;
 };
 
 export type MessageProps = {
@@ -21,7 +23,13 @@ export interface StateProps {
 }
 
 export type PersonalAction = {
-  type: "email" | "firstName" | "lastName" | "birthday";
+  type:
+    | "email"
+    | "firstName"
+    | "lastName"
+    | "birthday"
+    | "fullName"
+    | "greeting";
   payload: string;
 };
 

@@ -63,6 +63,18 @@
   border: solid $red 0.1rem;
 }
 
+.email {
+  background-color: $blue;
+  color: $white;
+  border: solid $blue 0.1rem;
+}
+
+.email:hover {
+  background-color: $white;
+  color: $blue;
+  border: solid $blue 0.1rem;
+}
+
 @include tablet {
   .button {
     font-size: 1.1rem;

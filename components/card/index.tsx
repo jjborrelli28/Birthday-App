@@ -88,7 +88,10 @@ export const Comands = ({ id, name, router, birthday }: ComandsProps) => {
         <FaUserSlash />
       </button>
       {birthday == today && (
-        <button className={cc(styles.btn, styles.eCard)}>
+        <button
+          className={cc(styles.btn, styles.eCard)}
+          onClick={() => router.push(`/eCard?id=${id}`)}
+        >
           <HiOutlineMailOpen />
         </button>
       )}

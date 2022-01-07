@@ -25,7 +25,9 @@ export const Form: React.FC<FormProps> = ({
       <Line />
       <form className={styles.form} onSubmit={onSubmit}>
         <div>
-          <Label>First name</Label>
+          <Label required={true} bold={true}>
+            First name
+          </Label>
           <Input
             type="text"
             id="firstName"
@@ -38,7 +40,9 @@ export const Form: React.FC<FormProps> = ({
             pattern="[A-Za-z ]*"
             required={true}
           />
-          <Label>Last name</Label>
+          <Label required={true} bold={true}>
+            Last name
+          </Label>
           <Input
             type="text"
             id="lastName"
@@ -51,7 +55,9 @@ export const Form: React.FC<FormProps> = ({
             pattern="[A-Za-z ]*"
             required={true}
           />
-          <Label>E-mail</Label>
+          <Label required={true} bold={true}>
+            E-mail
+          </Label>
           <Input
             type="email"
             id="email"
@@ -62,7 +68,9 @@ export const Form: React.FC<FormProps> = ({
             pattern="^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$"
             required={true}
           />
-          <Label>Birthday date</Label>
+          <Label required={true} bold={true}>
+            Birthday date
+          </Label>
           <Input
             type="date"
             id="birthday"
@@ -81,7 +89,7 @@ export const Form: React.FC<FormProps> = ({
             type="button"
             variant="secondary"
             text="Cancel"
-            onClick={() => router.push("/")}
+            onClick={() => router.back()}
           />
           <Button variant="primary" text="Save" onSubmit={onSubmit} />
         </div>

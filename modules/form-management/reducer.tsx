@@ -2,7 +2,13 @@ import { StateProps } from "./interfaces";
 
 type ActionProps =
   | {
-      type: "email" | "firstName" | "lastName" | "birthday";
+      type:
+        | "email"
+        | "firstName"
+        | "lastName"
+        | "birthday"
+        | "fullName"
+        | "greeting";
       payload: string;
     }
   | {

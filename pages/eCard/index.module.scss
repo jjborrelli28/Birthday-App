@@ -1,0 +1,18 @@
+@import "../../styles/variables";
+@import "../../styles/media_queries";
+
+.bold {
+  font-weight: bold;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex: 1;
+}
+
+.btnsContainer {
+  display: flex;
+  justify-content: space-between;
+}

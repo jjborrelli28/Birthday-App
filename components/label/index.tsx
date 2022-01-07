@@ -1,11 +1,24 @@
 import React from "react";
+import { cc } from "../../helpers/classConcatenator";
 import styles from "./index.module.scss";
 import LabelProps from "./interfaces";
 
-const Label = ({ children }: LabelProps) => {
+const Label = ({
+  children,
+  required = false,
+  bold = false,
+  mobileHidden = true,
+}: LabelProps) => {
   return (
-    <label className={styles.label}>
-      <span className={styles.required}>*</span> {children}
+    <label
+      className={cc(
+        styles.label,
+        bold && styles.bold,
+        mobileHidden && styles.mobileHidden
+      )}
+    >
+      {required && <span className={styles.required}>* </span>}
+      {children}
     </label>
   );
 };
