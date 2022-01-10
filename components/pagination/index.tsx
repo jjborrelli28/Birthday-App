@@ -9,7 +9,12 @@ import styles from "./index.module.scss";
 import { PaginationProps } from "./interfaces";
 import Item from "./item";
 
-const Pagination = ({ page, pages, variant = "primary" }: PaginationProps) => {
+const Pagination = ({
+  page,
+  pages,
+  variant = "primary",
+  query,
+}: PaginationProps) => {
   const totalPages = Array(pages)
     .fill(null)
     .map((_, index) => index + 1);
@@ -18,10 +23,15 @@ const Pagination = ({ page, pages, variant = "primary" }: PaginationProps) => {
 
   return (
     <div className={styles.container}>
-      <Item page={page - 1} variant={variant} disabled={page === 1}>
+      <Item
+        page={page - 1}
+        variant={variant}
+        disabled={page === 1}
+        query={query}
+      >
         ‹
       </Item>
-      <Item page={1} variant={variant} select={page === 1}>
+      <Item page={1} variant={variant} select={page === 1} query={query}>
         {totalPages[0]}
       </Item>
 
@@ -36,6 +46,7 @@ const Pagination = ({ page, pages, variant = "primary" }: PaginationProps) => {
               variant={variant}
               select={item === page}
               key={item}
+              query={query}
             >
               {item}
             </Item>
@@ -49,10 +60,16 @@ const Pagination = ({ page, pages, variant = "primary" }: PaginationProps) => {
         variant={variant}
         select={page === lastPage}
         hidden={lastPage === 1}
+        query={query}
       >
         {lastPage}
       </Item>
-      <Item page={page + 1} variant={variant} disabled={page === lastPage}>
+      <Item
+        page={page + 1}
+        variant={variant}
+        disabled={page === lastPage}
+        query={query}
+      >
         ›
       </Item>
     </div>

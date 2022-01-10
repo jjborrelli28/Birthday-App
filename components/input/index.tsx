@@ -15,10 +15,11 @@ const Input = ({
   pattern,
   required,
   max,
+  readOnly = false,
 }: InputProps) => {
   return (
     <input
-      className={cc(styles.input)}
+      className={cc(styles.input, readOnly && styles.readOnly)}
       type={type}
       id={id}
       name={name}
@@ -30,6 +31,7 @@ const Input = ({
       pattern={pattern}
       required={required}
       max={max}
+      readOnly={readOnly}
     />
   );
 };

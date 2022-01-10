@@ -1,0 +1,31 @@
+@import "../../styles/variables";
+@import "../../styles/media_queries";
+
+.container {
+  display: flex;
+  justify-content: center;
+}
+
+.textarea {
+  height: 200px;
+  width: 100%;
+  font-size: 0.9rem;
+  padding: 0.4rem;
+  border-radius: 0.6rem;
+  border: solid $gray 0.2rem;
+  margin-bottom: 1rem;
+}
+
+@include tablet {
+  .textarea {
+    height: 250px;
+    font-size: 1rem;
+  }
+}
+
+@include desktop {
+  .textarea {
+    height: 300px;
+    font-size: 1.1rem;
+  }
+}

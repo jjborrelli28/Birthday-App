@@ -9,11 +9,12 @@ const Button = ({
   text,
   onClick,
   onSubmit,
+  long = false,
 }: ButtonProps) => {
   return (
     <button
       type={type}
-      className={cc(styles.button, styles[variant])}
+      className={cc(styles.button, styles[variant], long && styles.long)}
       onClick={onClick}
       onSubmit={onSubmit}
     >

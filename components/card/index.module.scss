@@ -8,10 +8,11 @@
   background-color: $light-gray;
   position: relative;
   margin-bottom: 1rem;
+  transition: transform 0.5s;
 }
 
-.card:last-child {
-  margin-bottom: 0;
+.card:hover {
+  transform: scale(1.05);
 }
 
 .avatar {
@@ -32,11 +33,6 @@
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
-}
-
-.title {
-  margin: 0;
-  font-size: 1rem;
 }
 
 .text {
@@ -75,6 +71,14 @@
   align-items: center;
 }
 
+.btn:hover {
+  transition: transform 0.5s;
+}
+
+.btn:hover {
+  transform: scale(1.1);
+}
+
 .edit {
   background-color: $orange;
 }
@@ -94,15 +98,21 @@
   background-color: lighten($color: $red, $amount: 5);
 }
 
+.eCard {
+  background-color: $blue;
+  color: $white;
+}
+
+.eCard:hover {
+  cursor: pointer;
+  background-color: lighten($color: $blue, $amount: 5);
+}
+
 @include tablet {
   .avatar {
     min-width: 65px;
     max-width: 65px;
     margin: 0.75rem;
-  }
-
-  .title {
-    font-size: 1.1rem;
   }
 
   .text {
@@ -120,10 +130,6 @@
     min-width: 80px;
     max-width: 80px;
     margin: 1rem;
-  }
-
-  .title {
-    font-size: 1.2rem;
   }
 
   .text {

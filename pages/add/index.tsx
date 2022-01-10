@@ -43,7 +43,7 @@ const Add = () => {
         .catch((error) => console.error("Error:", error));
 
       setTimeout(() => {
-        router.push("/");
+        router.back();
         dispatch(showMessage(false, "", ""));
       }, 1500);
     } else {

@@ -19,6 +19,14 @@
   font-size: 0.9rem;
 }
 
+.readOnly {
+  border: solid $white 0.2rem;
+}
+
+.readOnly:focus {
+  outline: thin dotted;
+}
+
 @include tablet {
   .input {
     font-size: 1.1rem;

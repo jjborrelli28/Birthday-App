@@ -2,7 +2,7 @@
 @import "../../styles/media_queries";
 
 .label {
-  display: none;
+  font-size: 1rem;
 }
 
 .required {
@@ -10,14 +10,26 @@
   font-weight: bold;
 }
 
+.bold {
+  font-weight: bold;
+}
+
+.mobileHidden {
+  display: none;
+}
+
 @include tablet {
   .label {
+    font-size: 1.1rem;
+  }
+
+  .mobileHidden {
     display: block;
-    text-align: initial;
   }
 }
 
 @include desktop {
   .label {
+    font-size: 1.2rem;
   }
 }

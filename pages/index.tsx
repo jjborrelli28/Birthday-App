@@ -22,6 +22,8 @@ import { Modal } from "../components/modal";
 import { useModalContext } from "../hooks/useModalContext";
 import { formatName } from "../helpers/formatName";
 import { useEffect } from "react";
+import { HiCake } from "react-icons/hi";
+import { GiExtraTime } from "react-icons/gi";
 
 const Home = ({ data }: DataProps) => {
   const router = useRouter();
@@ -41,6 +43,8 @@ const Home = ({ data }: DataProps) => {
     setModal({ ...modal, isRefreshing: false });
   }, [data]);
 
+  const { today } = getDates();
+
   return (
     <Layout title="Birthday App | Home" description="Homepage">
       <Container>
@@ -50,7 +54,7 @@ const Home = ({ data }: DataProps) => {
           <Button
             variant="tertiary"
             text="List"
-            onClick={() => router.push("/list")}
+            onClick={() => router.push("/list?sortBy=recent-additions")}
           />
           <Button
             variant="primary"
@@ -60,24 +64,72 @@ const Home = ({ data }: DataProps) => {
         </div>
         <div>
           {dobs.length > 0 ? (
-            dobs.map((birthday) => (
-              <Card key={birthday.id}>
-                <Card.Avatar />
-                <Card.Data>
-                  <Card.Name
-                    name={birthday.firstName}
-                    surname={birthday.lastName}
-                  />
-                  <Card.Birthday>{birthday.birthday}</Card.Birthday>
-                  <Card.Email>{birthday.email}</Card.Email>
-                </Card.Data>
-                <Card.Comands
-                  id={birthday.id}
-                  name={formatName(birthday.firstName, birthday.lastName)}
-                  router={router}
-                />
-              </Card>
-            ))
+            <>
+              {dobs.find((dob) => dob.birthday === today) && (
+                <div>
+                  <Title level={6}>
+                    {"Today's birthday"} <HiCake />
+                  </Title>
+                  {dobs
+                    .filter((dob) => dob.birthday === today)
+                    .map((birthday) => (
+                      <Card key={birthday.id}>
+                        <Card.Avatar />
+                        <Card.Data>
+                          <Card.Name
+                            name={birthday.firstName}
+                            surname={birthday.lastName}
+                          />
+                          <Card.Birthday>{birthday.birthday}</Card.Birthday>
+                          <Card.Email>{birthday.email}</Card.Email>
+                        </Card.Data>
+                        <Card.Comands
+                          id={birthday.id}
+                          name={formatName(
+                            birthday.firstName,
+                            birthday.lastName
+                          )}
+                          router={router}
+                          birthday={birthday.birthday}
+                        />
+                      </Card>
+                    ))}
+                  <Line />
+                </div>
+              )}
+
+              {dobs.find((dob) => dob.birthday !== today) && (
+                <div>
+                  <Title level={6}>
+                    {"Upcoming birthdays"} <GiExtraTime />
+                  </Title>
+                  {dobs
+                    .filter((dob) => dob.birthday !== today)
+                    .map((birthday) => (
+                      <Card key={birthday.id}>
+                        <Card.Avatar />
+                        <Card.Data>
+                          <Card.Name
+                            name={birthday.firstName}
+                            surname={birthday.lastName}
+                          />
+                          <Card.Birthday>{birthday.birthday}</Card.Birthday>
+                          <Card.Email>{birthday.email}</Card.Email>
+                        </Card.Data>
+                        <Card.Comands
+                          id={birthday.id}
+                          name={formatName(
+                            birthday.firstName,
+                            birthday.lastName
+                          )}
+                          router={router}
+                          birthday={birthday.birthday}
+                        />
+                      </Card>
+                    ))}
+                </div>
+              )}
+            </>
           ) : (
             <div className={styles.messageContainer}>
               <Message variant="warning">No Birthdays coming soon</Message>

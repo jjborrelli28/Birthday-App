@@ -1,18 +1,4 @@
-import { StateProps } from "./interfaces";
-
-type ActionProps =
-  | {
-      type: "email" | "firstName" | "lastName" | "birthday";
-      payload: string;
-    }
-  | {
-      type: "message";
-      payload: {
-        show: boolean;
-        variant: string;
-        text: string;
-      };
-    };
+import { ActionProps, StateProps } from "./interfaces";
 
 const reducer = (state: StateProps, action: ActionProps) => {
   switch (action.type) {

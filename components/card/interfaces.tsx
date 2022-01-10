@@ -26,6 +26,7 @@ export interface ComandsProps {
   id: string;
   name: string;
   router: NextRouter;
+  birthday?: string
 }
 
 export default CardProps;

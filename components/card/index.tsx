@@ -13,6 +13,8 @@ import Image from "next/image";
 import { DataProps } from "./interfaces";
 import { FaUserEdit } from "react-icons/fa";
 import { FaUserSlash } from "react-icons/fa";
+import { getDates } from "../../helpers/getDates";
+import { HiOutlineMailOpen } from "react-icons/hi";
 
 const Card = ({ children, variant = "primary" }: CardProps) => {
   return <div className={cc(styles.card, styles[variant])}>{children}</div>;
@@ -25,17 +27,17 @@ const Data = ({ children }: DataProps) => {
 export const Avatar = () => {
   return (
     <picture className={styles.avatar}>
-      <Image src={avatar} />
+      <Image src={avatar} alt="avatar" />
     </picture>
   );
 };
 
 export const Name = ({ name, surname }: NameProps) => {
   return (
-    <h3 className={styles.title}>
+    <p className={cc(styles.text, styles.textBold)}>
       {name.charAt(0).toUpperCase() + name.slice(1)}{" "}
       {surname.charAt(0).toUpperCase() + surname.slice(1)}
-    </h3>
+    </p>
   );
 };
 
@@ -56,10 +58,12 @@ export const Email = ({ children }: EmailProps) => {
   );
 };
 
-export const Comands = ({ id, name, router }: ComandsProps) => {
+export const Comands = ({ id, name, router, birthday }: ComandsProps) => {
   const modal = useModalContext();
 
   const { setModal } = modal;
+
+  const { today } = getDates();
 
   return (
     <div className={styles.comands}>
@@ -83,6 +87,14 @@ export const Comands = ({ id, name, router }: ComandsProps) => {
       >
         <FaUserSlash />
       </button>
+      {birthday == today && (
+        <button
+          className={cc(styles.btn, styles.eCard)}
+          onClick={() => router.push(`/eCard?id=${id}`)}
+        >
+          <HiOutlineMailOpen />
+        </button>
+      )}
     </div>
   );
 };

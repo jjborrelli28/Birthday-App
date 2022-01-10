@@ -10,6 +10,7 @@ interface InputProps {
   max?: string;
   pattern?: string;
   required?: boolean;
+  readOnly?: boolean;
 }
 
 export default InputProps;

@@ -21,6 +21,13 @@ import { formatName } from "../../helpers/formatName";
 
 const List = ({ data }: DataProps) => {
   const router = useRouter();
+
+  const { sortBy } = router.query;
+
+  const classification =
+    typeof sortBy === "string" &&
+    (sortBy.charAt(0).toUpperCase() + sortBy.slice(1)).replace("-", " ");
+
   useLoginRedirect(router);
 
   const modal = useModalContext();
@@ -36,6 +43,14 @@ const List = ({ data }: DataProps) => {
   useEffect(() => {
     setModal({ ...modal, isRefreshing: false });
   }, [data]);
+
+  const toggleOrder = () => {
+    if (sortBy === "last-added") {
+      router.push("/list?sortBy=recent-additions");
+    } else {
+      router.push("/list?sortBy=last-added");
+    }
+  };
 
   return (
     <Layout
@@ -57,6 +72,15 @@ const List = ({ data }: DataProps) => {
             variant="primary"
             text="Add"
             onClick={() => router.push("/add")}
+          />
+        </div>
+        <div className={styles.sortBy}>
+          <Button
+            variant="tertiary"
+            type="button"
+            text={`Sort by: ${classification}`}
+            long={true}
+            onClick={toggleOrder}
           />
         </div>
         <div>
@@ -88,7 +112,12 @@ const List = ({ data }: DataProps) => {
             </div>
           )}
           {pages > 1 && (
-            <Pagination variant="tertiary" pages={pages} page={+page} />
+            <Pagination
+              variant="tertiary"
+              pages={pages}
+              page={+page}
+              query={`sortBy=${sortBy}&`}
+            />
           )}
         </div>
         <Modal show={active}>
@@ -107,17 +136,29 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
   const res = await fetch(
     "https://birthday-app-api.vercel.app/api/v1/john/birthdays"
   );
-  const { birthdays } = await res.json();
+  let { birthdays } = await res.json();
+
+  const sortBy = query.sortBy;
 
   const page = query.page ?? "1";
 
   const pages = Math.ceil(birthdays.length / 20);
 
+  if (sortBy === "recent-additions") {
+    birthdays = [...birthdays].reverse();
+  }
+
   const data = {
-    dobs: getPage([...birthdays].reverse(), +page, 20),
+    dobs: getPage(birthdays, +page, 20),
     page,
     pages,
   };
+
+  if (sortBy !== "recent-additions" && sortBy !== "last-added") {
+    return {
+      notFound: true,
+    };
+  }
 
   if (+page > pages) {
     return {
