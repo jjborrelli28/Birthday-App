@@ -11,6 +11,7 @@ const Item = ({
   disabled = false,
   select = false,
   hidden = false,
+  query = "",
 }: ItemProps) => {
   return disabled ? (
     <span
@@ -20,7 +21,7 @@ const Item = ({
       {children}
     </span>
   ) : (
-    <Link href={`?page=${page}`}>
+    <Link href={`?${query}page=${page}`}>
       <a
         className={cc(styles.item, styles[variant], select && styles.select)}
         hidden={hidden}

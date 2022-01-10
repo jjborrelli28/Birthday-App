@@ -54,7 +54,7 @@ const Home = ({ data }: DataProps) => {
           <Button
             variant="tertiary"
             text="List"
-            onClick={() => router.push("/list")}
+            onClick={() => router.push("/list?sortBy=recent-additions")}
           />
           <Button
             variant="primary"
@@ -190,30 +190,3 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
 };
 
 export default Home;
-
-/*
-<div>
-              <h3 style={{ margin: "0" }}>{"Today's birthday"}</h3>
-              {dobs
-                .filter((dob) => dob.birthday === today)
-                .map((birthday) => (
-                  <Card key={birthday.id}>
-                    <Card.Avatar />
-                    <Card.Data>
-                      <Card.Name
-                        name={birthday.firstName}
-                        surname={birthday.lastName}
-                      />
-                      <Card.Birthday>{birthday.birthday}</Card.Birthday>
-                      <Card.Email>{birthday.email}</Card.Email>
-                      </Card.Data>
-                    <Card.Comands
-                      id={birthday.id}
-                      name={formatName(birthday.firstName, birthday.lastName)}
-                      router={router}
-                      birthday={birthday.birthday}
-                    />
-                  </Card>
-                  ))}
-                  <Line />
-            </div>*/

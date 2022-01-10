@@ -5,6 +5,7 @@ export interface PaginationProps {
   page: number;
   variant?: string;
   dispatch?: Dispatch<Action>;
+  query?: string;
 }
 
 type Action = {
@@ -19,4 +20,5 @@ export interface ItemProps {
   disabled?: boolean;
   select?: boolean;
   hidden?: boolean;
+  query?: string;
 }
