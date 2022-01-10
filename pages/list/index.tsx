@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import React, { useEffect } from "react";
+import React, { useEffect, useReducer } from "react";
 import Button from "../../components/button";
 import Card from "../../components/card";
 import Container from "../../components/container";
@@ -18,11 +18,15 @@ import { useLoginRedirect } from "../../temporal/useLoginRedirect";
 import { Modal } from "../../components/modal";
 import { useModalContext } from "../../hooks/useModalContext";
 import { formatName } from "../../helpers/formatName";
+import Label from "../../components/label";
+import reducer, { initialState } from "../../modules/search-management/reducer";
+import { changeValues } from "../../modules/search-management/actions";
+import { FaArrowCircleUp } from "react-icons/fa";
 
 const List = ({ data }: DataProps) => {
   const router = useRouter();
 
-  const { sortBy } = router.query;
+  const { sortBy, search } = router.query;
 
   const classification =
     typeof sortBy === "string" &&
@@ -46,11 +50,22 @@ const List = ({ data }: DataProps) => {
 
   const toggleOrder = () => {
     if (sortBy === "last-added") {
-      router.push("/list?sortBy=recent-additions");
+      router.push("/list?sortBy=recently-added");
     } else {
       router.push("/list?sortBy=last-added");
     }
   };
+
+  const [{ value, message }, dispatch] = useReducer(reducer, initialState);
+
+  const handleSearch = (e: any) => {
+    e.preventDefault();
+    router.push(`/list?sortBy=${sortBy}&search=${value}`);
+  };
+
+  const birthdays = dobs.filter((birthday) =>
+    birthday.firstName.includes(value)
+  );
 
   return (
     <Layout
@@ -62,6 +77,19 @@ const List = ({ data }: DataProps) => {
       <Container>
         <Title>Birthdays list</Title>
         <Line />
+        <form onSubmit={handleSearch}>
+          <Label bold={true}>Search:</Label>
+          <input
+            type="text"
+            id="search"
+            name="search"
+            placeholder="Search by name, surname or email"
+            onChange={({ target }: any) => dispatch(changeValues(target))}
+            value={value}
+          />
+          <button onSubmit={handleSearch}>Search</button>
+          <Line />
+        </form>
         <div className={styles.menu}>
           <Button
             variant="secondary"
@@ -105,10 +133,16 @@ const List = ({ data }: DataProps) => {
             ))
           ) : (
             <div className={styles.messageContainer}>
-              <div className={styles.handContainer}>
-                <h2 className={styles.hand}>☝</h2>
-              </div>
-              <Message variant="warning">Set your Birthday reminders!</Message>
+              {!search && (
+                <div className={styles.arrowContainer}>
+                  <FaArrowCircleUp className={styles.arrow} />
+                </div>
+              )}
+              <Message variant="warning">
+                {search
+                  ? "No results found for the search"
+                  : "Set your Birthday reminders!"}
+              </Message>
             </div>
           )}
           {pages > 1 && (
@@ -116,7 +150,7 @@ const List = ({ data }: DataProps) => {
               variant="tertiary"
               pages={pages}
               page={+page}
-              query={`sortBy=${sortBy}&`}
+              query={`sortBy=${sortBy}&${search ? `search=${search}&` : ``}`}
             />
           )}
         </div>
@@ -140,11 +174,24 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
 
   const sortBy = query.sortBy;
 
+  const search = query.search;
+
+  if (search) {
+    birthdays =
+      typeof search === "string" &&
+      birthdays.filter(
+        (birthday: BirthdayElement) =>
+          birthday.firstName.includes(search) ||
+          birthday.lastName.includes(search) ||
+          birthday.email.includes(search)
+      );
+  }
+
   const page = query.page ?? "1";
 
-  const pages = Math.ceil(birthdays.length / 20);
+  const pages = Math.ceil(birthdays.length === 0 ? 1 : birthdays.length / 20);
 
-  if (sortBy === "recent-additions") {
+  if (sortBy === "recently-added") {
     birthdays = [...birthdays].reverse();
   }
 
@@ -154,7 +201,7 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
     pages,
   };
 
-  if (sortBy !== "recent-additions" && sortBy !== "last-added") {
+  if (sortBy !== "recently-added" && sortBy !== "last-added") {
     return {
       notFound: true,
     };

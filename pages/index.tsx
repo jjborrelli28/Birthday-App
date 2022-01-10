@@ -54,7 +54,7 @@ const Home = ({ data }: DataProps) => {
           <Button
             variant="tertiary"
             text="List"
-            onClick={() => router.push("/list?sortBy=recent-additions")}
+            onClick={() => router.push("/list?sortBy=recently-added")}
           />
           <Button
             variant="primary"
