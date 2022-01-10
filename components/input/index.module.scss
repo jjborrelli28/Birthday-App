@@ -20,12 +20,11 @@
 }
 
 .readOnly {
-  border: none;
+  border: solid $white 0.2rem;
 }
 
 .readOnly:focus {
-  border: none;
-  outline: none;
+  outline: thin dotted;
 }
 
 @include tablet {
