@@ -6,14 +6,3 @@ export const changeValues = (target: HTMLInputElement) => {
     payload: target.value,
   };
 };
-
-export const showMessage = (show: boolean, variant: string, text: string) => {
-  return {
-    type: "message" as MessageAction["type"],
-    payload: {
-      show,
-      variant,
-      text,
-    },
-  };
-};
