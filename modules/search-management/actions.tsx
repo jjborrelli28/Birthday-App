@@ -1,4 +1,4 @@
-import { MessageAction, ValueProps } from "./interfaces";
+import { ValueProps } from "./interfaces";
 
 export const changeValues = (target: HTMLInputElement) => {
   return {
