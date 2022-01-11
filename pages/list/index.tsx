@@ -22,6 +22,7 @@ import reducer from "../../modules/search-management/reducer";
 import { changeValues } from "../../modules/search-management/actions";
 import { FaArrowCircleUp } from "react-icons/fa";
 import { FormSearch } from "../../components/form-search";
+import { searchFilter } from "../../helpers/searchFilter";
 
 const List = ({ data }: DataProps) => {
   const router = useRouter();
@@ -169,14 +170,7 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
   const search = query.search;
 
   if (search) {
-    birthdays =
-      typeof search === "string" &&
-      birthdays.filter(
-        (birthday: BirthdayElement) =>
-          birthday.firstName.includes(search) ||
-          birthday.lastName.includes(search) ||
-          birthday.email.includes(search)
-      );
+    birthdays = typeof search === "string" && searchFilter(birthdays, search);
   }
 
   const page = query.page ?? "1";

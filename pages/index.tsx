@@ -21,12 +21,18 @@ import { useLoginRedirect } from "../temporal/useLoginRedirect";
 import { Modal } from "../components/modal";
 import { useModalContext } from "../hooks/useModalContext";
 import { formatName } from "../helpers/formatName";
-import { useEffect } from "react";
+import { useEffect, useReducer } from "react";
 import { HiCake } from "react-icons/hi";
 import { GiExtraTime } from "react-icons/gi";
+import reducer from "../modules/search-management/reducer";
+import { FormSearch } from "../components/form-search";
+import { changeValues } from "../modules/search-management/actions";
+import { searchFilter } from "../helpers/searchFilter";
 
 const Home = ({ data }: DataProps) => {
   const router = useRouter();
+
+  const { search } = router.query;
 
   useLoginRedirect(router);
 
@@ -45,10 +51,26 @@ const Home = ({ data }: DataProps) => {
 
   const { today } = getDates();
 
+  const [{ value }, dispatch] = useReducer(reducer, {
+    value: typeof search === "string" ? search : "",
+  });
+
+  const handleSearch = (e: any) => {
+    e.preventDefault();
+    router.push(`/?search=${value}`);
+  };
+
   return (
     <Layout title="Birthday App | Home" description="Homepage">
       <Container>
         <Title>Next birthdays</Title>
+        <Line />
+        <FormSearch
+          onSubmit={handleSearch}
+          onChange={({ target }: any) => dispatch(changeValues(target))}
+          value={value}
+          variant="primary"
+        />
         <Line />
         <div className={styles.menu}>
           <Button
@@ -132,16 +154,28 @@ const Home = ({ data }: DataProps) => {
             </>
           ) : (
             <div className={styles.messageContainer}>
-              <Message variant="warning">No Birthdays coming soon</Message>
-              <Picture
-                src={calendar}
-                alt="logo"
-                width={"250px"}
-                heigth={"250px"}
-              />
+              <Message variant="warning">
+                {search
+                  ? "No results found for the search"
+                  : "No Birthdays coming soon"}
+              </Message>
+              {!search && (
+                <Picture
+                  src={calendar}
+                  alt="logo"
+                  width={"250px"}
+                  heigth={"250px"}
+                />
+              )}
             </div>
           )}
-          {pages > 1 && <Pagination pages={pages} page={+page} />}
+          {pages > 1 && (
+            <Pagination
+              pages={pages}
+              page={+page}
+              query={search ? `search=${search}&` : ``}
+            />
+          )}
         </div>
         <Modal show={active}>
           <Modal.Header>{`Removing birthday from: ${payload.name}`}</Modal.Header>
@@ -161,7 +195,13 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
   const res = await fetch(
     "https://birthday-app-api.vercel.app/api/v1/john/birthdays"
   );
-  const { birthdays } = await res.json();
+  let { birthdays } = await res.json();
+
+  const search = query.search;
+
+  if (search) {
+    birthdays = typeof search === "string" && searchFilter(birthdays, search);
+  }
 
   const page = query.page ?? "1";
 
@@ -170,7 +210,9 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
       birthdays.birthday >= today && birthdays.birthday <= nextWeek
   );
 
-  const pages = Math.ceil(nextBirthdays.length / 20);
+  const pages = Math.ceil(
+    nextBirthdays.length === 0 ? 1 : nextBirthdays.length / 20
+  );
 
   const data = {
     dobs: getPage(nextBirthdays, +page, 20),
