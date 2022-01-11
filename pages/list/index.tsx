@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import React, { useEffect, useReducer } from "react";
+import React, { useEffect, useReducer, useState } from "react";
 import Button from "../../components/button";
 import Card from "../../components/card";
 import Container from "../../components/container";
@@ -23,6 +23,8 @@ import { changeValues } from "../../modules/search-management/actions";
 import { FaArrowCircleUp } from "react-icons/fa";
 import { FormSearch } from "../../components/form-search";
 import { searchFilter } from "../../helpers/searchFilter";
+import Link from "next/link";
+import { Accordion } from "../../components/accordion";
 
 const List = ({ data }: DataProps) => {
   const router = useRouter();
@@ -30,8 +32,9 @@ const List = ({ data }: DataProps) => {
   const { sortBy, search } = router.query;
 
   const classification =
-    typeof sortBy === "string" &&
-    (sortBy.charAt(0).toUpperCase() + sortBy.slice(1)).replace("-", " ");
+    typeof sortBy === "string"
+      ? (sortBy.charAt(0).toUpperCase() + sortBy.slice(1)).replace("-", " ")
+      : "";
 
   useLoginRedirect(router);
 
@@ -49,14 +52,6 @@ const List = ({ data }: DataProps) => {
     setModal({ ...modal, isRefreshing: false });
   }, [data]);
 
-  const toggleOrder = () => {
-    if (sortBy === "last-added") {
-      router.push("/list?sortBy=recently-added");
-    } else {
-      router.push("/list?sortBy=last-added");
-    }
-  };
-
   const [{ value }, dispatch] = useReducer(reducer, {
     value: typeof search === "string" ? search : "",
   });
@@ -64,6 +59,16 @@ const List = ({ data }: DataProps) => {
   const handleSearch = (e: any) => {
     e.preventDefault();
     router.push(`/list?sortBy=${sortBy}&search=${value}`);
+  };
+
+  const [{ open }, setAccordion] = useState({ open: false });
+
+  const toggleAccordion = () => {
+    if (open) {
+      setAccordion({ open: false });
+    } else {
+      setAccordion({ open: true });
+    }
   };
 
   return (
@@ -95,15 +100,30 @@ const List = ({ data }: DataProps) => {
             onClick={() => router.push("/add")}
           />
         </div>
-        <div className={styles.sortBy}>
-          <Button
-            variant="tertiary"
-            type="button"
-            text={`Sort by: ${classification}`}
-            long={true}
-            onClick={toggleOrder}
-          />
-        </div>
+        <Accordion
+          open={open}
+          classification={classification}
+          onClick={toggleAccordion}
+        >
+          <Accordion.Item>
+            <Link
+              href={`/list?sortBy=recently-added${
+                search ? `&search=${search}` : ""
+              }`}
+            >
+              <a>• Recently added first</a>
+            </Link>
+          </Accordion.Item>
+          <Accordion.Item>
+            <Link
+              href={`/list?sortBy=last-added${
+                search ? `&search=${search}` : ""
+              }`}
+            >
+              <a>• Last added first</a>
+            </Link>
+          </Accordion.Item>
+        </Accordion>
         <div>
           {dobs.length > 0 ? (
             dobs.map((birthday: BirthdayElement) => (
