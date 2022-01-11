@@ -22,6 +22,8 @@ import Label from "../../components/label";
 import reducer, { initialState } from "../../modules/search-management/reducer";
 import { changeValues } from "../../modules/search-management/actions";
 import { FaArrowCircleUp } from "react-icons/fa";
+import { FaSearch } from "react-icons/fa";
+import { FormSearch } from "../../components/form-search";
 
 const List = ({ data }: DataProps) => {
   const router = useRouter();
@@ -77,19 +79,13 @@ const List = ({ data }: DataProps) => {
       <Container>
         <Title>Birthdays list</Title>
         <Line />
-        <form onSubmit={handleSearch}>
-          <Label bold={true}>Search:</Label>
-          <input
-            type="text"
-            id="search"
-            name="search"
-            placeholder="Search by name, surname or email"
-            onChange={({ target }: any) => dispatch(changeValues(target))}
-            value={value}
-          />
-          <button onSubmit={handleSearch}>Search</button>
-          <Line />
-        </form>
+        <FormSearch
+          onSubmit={handleSearch}
+          onChange={({ target }: any) => dispatch(changeValues(target))}
+          value={value}
+          variant="tertiary"
+        />
+        <Line />
         <div className={styles.menu}>
           <Button
             variant="secondary"
