@@ -18,11 +18,9 @@ import { useLoginRedirect } from "../../temporal/useLoginRedirect";
 import { Modal } from "../../components/modal";
 import { useModalContext } from "../../hooks/useModalContext";
 import { formatName } from "../../helpers/formatName";
-import Label from "../../components/label";
-import reducer, { initialState } from "../../modules/search-management/reducer";
+import reducer from "../../modules/search-management/reducer";
 import { changeValues } from "../../modules/search-management/actions";
 import { FaArrowCircleUp } from "react-icons/fa";
-import { FaSearch } from "react-icons/fa";
 import { FormSearch } from "../../components/form-search";
 
 const List = ({ data }: DataProps) => {
@@ -58,16 +56,14 @@ const List = ({ data }: DataProps) => {
     }
   };
 
-  const [{ value, message }, dispatch] = useReducer(reducer, initialState);
+  const [{ value }, dispatch] = useReducer(reducer, {
+    value: typeof search === "string" ? search : "",
+  });
 
   const handleSearch = (e: any) => {
     e.preventDefault();
     router.push(`/list?sortBy=${sortBy}&search=${value}`);
   };
-
-  const birthdays = dobs.filter((birthday) =>
-    birthday.firstName.includes(value)
-  );
 
   return (
     <Layout

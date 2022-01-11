@@ -1,17 +1,7 @@
-import { ActionProps, StateProps } from "./interfaces";
+import { StateProps, ValueProps } from "./interfaces";
 
-const reducer = (state: StateProps, action: ActionProps) => {
+const reducer = (state: StateProps, action: ValueProps) => {
   switch (action.type) {
-    case "message":
-      return {
-        ...state,
-        message: {
-          show: action.payload.show,
-          variant: action.payload.variant,
-          text: action.payload.text,
-        },
-      };
-
     case "value":
       return {
         ...state,
@@ -24,12 +14,3 @@ const reducer = (state: StateProps, action: ActionProps) => {
 };
 
 export default reducer;
-
-export const initialState = {
-  value: "",
-  message: {
-    show: false,
-    variant: "",
-    text: "",
-  },
-};
