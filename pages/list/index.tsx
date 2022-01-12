@@ -22,9 +22,9 @@ import reducer from "../../modules/search-management/reducer";
 import { changeValues } from "../../modules/search-management/actions";
 import { FaArrowCircleUp } from "react-icons/fa";
 import { FormSearch } from "../../components/form-search";
-import { searchFilter } from "../../helpers/searchFilter";
 import Link from "next/link";
 import { Accordion } from "../../components/accordion";
+import { matchSorter } from "match-sorter";
 
 const List = ({ data }: DataProps) => {
   const router = useRouter();
@@ -189,8 +189,10 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
 
   const search = query.search;
 
-  if (search) {
-    birthdays = typeof search === "string" && searchFilter(birthdays, search);
+  if (search && typeof search === "string") {
+    birthdays = matchSorter(birthdays, search, {
+      keys: ["firstName", "lastName", "name"],
+    });
   }
 
   const page = query.page ?? "1";

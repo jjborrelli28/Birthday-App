@@ -6,4 +6,3 @@ export type ValueProps = {
   type: "value";
   payload: string;
 };
-

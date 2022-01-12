@@ -24,10 +24,10 @@ import { formatName } from "../helpers/formatName";
 import { useEffect, useReducer } from "react";
 import { HiCake } from "react-icons/hi";
 import { GiExtraTime } from "react-icons/gi";
-import reducer from "../modules/search-management/reducer";
+import reducer, { initialState } from "../modules/search-management/reducer";
 import { FormSearch } from "../components/form-search";
 import { changeValues } from "../modules/search-management/actions";
-import { searchFilter } from "../helpers/searchFilter";
+import { matchSorter } from "match-sorter";
 
 const Home = ({ data }: DataProps) => {
   const router = useRouter();
@@ -51,9 +51,15 @@ const Home = ({ data }: DataProps) => {
 
   const { today } = getDates();
 
-  const [{ value }, dispatch] = useReducer(reducer, {
-    value: typeof search === "string" ? search : "",
-  });
+  const init = () => {
+    if (typeof search === "string") {
+      return { value: search };
+    } else {
+      return initialState;
+    }
+  };
+
+  const [{ value }, dispatch] = useReducer(reducer, initialState, init);
 
   const handleSearch = (e: any) => {
     e.preventDefault();
@@ -199,8 +205,10 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
 
   const search = query.search;
 
-  if (search) {
-    birthdays = typeof search === "string" && searchFilter(birthdays, search);
+  if (search && typeof search === "string") {
+    birthdays = matchSorter(birthdays, search, {
+      keys: ["firstName", "lastName", "name"],
+    });
   }
 
   const page = query.page ?? "1";

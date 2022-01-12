@@ -13,4 +13,8 @@ const reducer = (state: StateProps, action: ValueProps) => {
   }
 };
 
+export const initialState = {
+  value: "",
+};
+
 export default reducer;
