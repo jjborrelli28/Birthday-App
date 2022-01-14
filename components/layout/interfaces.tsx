@@ -4,6 +4,7 @@ interface PropsLayout {
   description: string;
   hideHeader?: boolean;
   hideFooter?: boolean;
+  auth: boolean;
 }
 
 export default PropsLayout;

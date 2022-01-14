@@ -13,7 +13,7 @@ import { BirthdayElement } from "../../modules/home-management/interfaces";
 import { formatDate, formatName } from "../../helpers/helpers";
 import { GetServerSideProps } from "next";
 import { DataProps } from "../../modules/list-management/interfaces";
-import { useLoginRedirect } from "../../temporal/useLoginRedirect";
+import { useAuthenticator } from "../../temporal/useAuthenticator";
 import { Modal } from "../../components/modal";
 import { useModalContext } from "../../hooks/useModalContext";
 import reducer from "../../modules/search-management/reducer";
@@ -24,11 +24,11 @@ import Link from "next/link";
 import { Accordion } from "../../components/accordion";
 
 const List = ({ data }: DataProps) => {
+  const auth = useAuthenticator();
+
   const router = useRouter();
 
   const { search } = router.query;
-
-  useLoginRedirect(router);
 
   const modal = useModalContext();
 
@@ -79,6 +79,7 @@ const List = ({ data }: DataProps) => {
       description="List birthdays list"
       hideHeader={true}
       hideFooter={true}
+      auth={auth}
     >
       <Container>
         <Title>Birthdays list</Title>

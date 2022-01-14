@@ -13,7 +13,6 @@ import Picture from "../components/picture";
 import calendar from "../assets/calendar.png";
 import Line from "../components/line";
 import Pagination from "../components/pagination";
-import { useLoginRedirect } from "../temporal/useLoginRedirect";
 import { Modal } from "../components/modal";
 import { useModalContext } from "../hooks/useModalContext";
 import { useEffect, useReducer } from "react";
@@ -23,13 +22,14 @@ import reducer, { initialState } from "../modules/search-management/reducer";
 import { FormSearch } from "../components/form-search";
 import { changeValues } from "../modules/search-management/actions";
 import { TargetProps } from "../modules/form-management/interfaces";
+import { useAuthenticator } from "../temporal/useAuthenticator";
 
 const Home = ({ data }: DataProps) => {
+  const auth = useAuthenticator();
+
   const router = useRouter();
 
   const { search } = router.query;
-
-  useLoginRedirect(router);
 
   const modal = useModalContext();
 
@@ -61,14 +61,21 @@ const Home = ({ data }: DataProps) => {
     router.push(`/?search=${value}`);
   };
 
+  const resetSearch = (e: any) => {
+    e.preventDefault();
+    dispatch({ type: "value", payload: "" });
+    router.push(`/`);
+  };
+
   return (
-    <Layout title="Birthday App | Home" description="Homepage">
+    <Layout title="Birthday App | Home" description="Homepage" auth={auth}>
       <Container>
         <Title>Next birthdays</Title>
         <Line />
         <FormSearch
           onSubmit={handleSearch}
           onChange={({ target }: TargetProps) => dispatch(changeValues(target))}
+          reset={resetSearch}
           value={value}
           variant="primary"
         />

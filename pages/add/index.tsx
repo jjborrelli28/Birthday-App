@@ -8,14 +8,14 @@ import {
   showMessage,
 } from "../../modules/form-management/actions";
 import { TargetProps } from "../../modules/form-management/interfaces";
-import { useLoginRedirect } from "../../temporal/useLoginRedirect";
+import { useAuthenticator } from "../../temporal/useAuthenticator";
 
 const Add = () => {
+  const auth = useAuthenticator();
+
   const [{ values, message }, dispatch] = useReducer(reducer, initialState);
 
   const router = useRouter();
-
-  useLoginRedirect(router);
 
   const addBirthday = (e: Event) => {
     e.preventDefault();
@@ -61,6 +61,7 @@ const Add = () => {
     <Layout
       title="Birthday App | Add Birthday"
       description="Page to add birthdays"
+      auth={auth}
     >
       <Form
         title="Add a new birthday"
