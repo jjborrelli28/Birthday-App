@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./index.module.scss";
-import { cc } from "../../helpers/classConcatenator";
+import { cc } from "../../helpers/helpers";
 import { IoIosArrowDropdown } from "react-icons/io";
 import { AccordionProps, ItemProps } from "./interfaces";
 

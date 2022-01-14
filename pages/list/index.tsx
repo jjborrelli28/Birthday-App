@@ -10,13 +10,12 @@ import Title from "../../components/title";
 import styles from "./index.module.scss";
 import Pagination from "../../components/pagination";
 import { BirthdayElement } from "../../modules/home-management/interfaces";
-import { formatDate } from "../../helpers/formatDate";
+import { formatDate, formatName } from "../../helpers/helpers";
 import { GetServerSideProps } from "next";
 import { DataProps } from "../../modules/list-management/interfaces";
 import { useLoginRedirect } from "../../temporal/useLoginRedirect";
 import { Modal } from "../../components/modal";
 import { useModalContext } from "../../hooks/useModalContext";
-import { formatName } from "../../helpers/formatName";
 import reducer from "../../modules/search-management/reducer";
 import { changeValues } from "../../modules/search-management/actions";
 import { FaArrowCircleUp } from "react-icons/fa";
@@ -196,6 +195,12 @@ export const getServerSideProps: GetServerSideProps = async ({
 
   const data = await res.json();
 
+  if (sortBy !== "recently-added" && sortBy !== "last-added") {
+    return {
+      notFound: true,
+    };
+  }
+
   if (data.page > data.pages) {
     return {
       notFound: true,
@@ -208,48 +213,3 @@ export const getServerSideProps: GetServerSideProps = async ({
 };
 
 export default List;
-
-/*  const res = await fetch(
-    "https://birthday-app-api.vercel.app/api/v1/john/birthdays"
-  );
-  let { birthdays } = await res.json();
-
-  const sortBy = query.sortBy;
-
-  const search = query.search;
-
-  if (search && typeof search === "string") {
-    birthdays = matchSorter(birthdays, search, {
-      keys: ["firstName", "lastName", "name"],
-    });
-  }
-
-  const page = query.page ?? "1";
-
-  const pages = Math.ceil(birthdays.length === 0 ? 1 : birthdays.length / 20);
-
-  if (sortBy === "recently-added") {
-    birthdays = [...birthdays].reverse();
-  }
-
-  const data = {
-    dobs: getPage(birthdays, +page, 20),
-    page,
-    pages,
-  };
-
-  if (sortBy !== "recently-added" && sortBy !== "last-added") {
-    return {
-      notFound: true,
-    };
-  }
-
-  if (+page > pages) {
-    return {
-      notFound: true,
-    };
-  }
-
-  return {
-    props: { data },
-  };*/

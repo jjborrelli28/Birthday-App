@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./index.module.scss";
 import InputProps from "./interfaces";
-import { cc } from "../../helpers/classConcatenator";
+import { cc } from "../../helpers/helpers";
 
 const Input = ({
   type,

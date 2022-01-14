@@ -9,7 +9,7 @@ import Layout from "../../components/layout";
 import Line from "../../components/line";
 import { Textarea } from "../../components/textarea";
 import Title from "../../components/title";
-import { formatDate } from "../../helpers/formatDate";
+import { formatDate } from "../../helpers/helpers";
 import { BirthdaySelectProps } from "../../modules/edit-management/interfaces";
 import { changeValues } from "../../modules/form-management/actions";
 import { TargetProps } from "../../modules/form-management/interfaces";

@@ -1,7 +1,7 @@
 import Layout from "../components/layout";
 import { GetServerSideProps } from "next";
 import styles from "./index.module.scss";
-import { getDates } from "../helpers/getDates";
+import { getDates, formatName } from "../helpers/helpers";
 import Button from "../components/button";
 import { DataProps } from "../modules/home-management/interfaces";
 import { useRouter } from "next/router";
@@ -16,7 +16,6 @@ import Pagination from "../components/pagination";
 import { useLoginRedirect } from "../temporal/useLoginRedirect";
 import { Modal } from "../components/modal";
 import { useModalContext } from "../hooks/useModalContext";
-import { formatName } from "../helpers/formatName";
 import { useEffect, useReducer } from "react";
 import { HiCake } from "react-icons/hi";
 import { GiExtraTime } from "react-icons/gi";

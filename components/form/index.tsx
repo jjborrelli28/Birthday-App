@@ -7,7 +7,7 @@ import Line from "../line";
 import Title from "../title";
 import Message from "../message";
 import { FormProps } from "./interface";
-import { getDates } from "../../helpers/getDates";
+import { getDates } from "../../helpers/helpers";
 
 export const Form: React.FC<FormProps> = ({
   title,

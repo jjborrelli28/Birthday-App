@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./index.module.scss";
 import { FaSearch } from "react-icons/fa";
-import { cc } from "../../helpers/classConcatenator";
+import { cc } from "../../helpers/helpers";
 import { FormSearchProps } from "./interfaces";
 
 export const FormSearch = ({

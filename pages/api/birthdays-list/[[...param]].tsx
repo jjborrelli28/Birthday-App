@@ -1,9 +1,6 @@
 import { matchSorter } from "match-sorter";
 import type { NextApiRequest, NextApiResponse } from "next";
-import { getBirthdays } from "../../../helpers/getBirthdays";
-import { getDates } from "../../../helpers/getDates";
-import { getPage } from "../../../helpers/getPage";
-import { sortDates } from "../../../helpers/sortDates";
+import { getPage } from "../../../helpers/helpers";
 import { BirthdayElement } from "../../../modules/home-management/interfaces";
 
 type Data = {

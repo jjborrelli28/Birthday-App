@@ -1,5 +1,5 @@
 import React from "react";
-import { cc } from "../../helpers/classConcatenator";
+import { cc } from "../../helpers/helpers";
 import styles from "./index.module.scss";
 import TitleProps from "./interfaces";
 
