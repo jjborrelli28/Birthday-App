@@ -9,7 +9,6 @@ import Message from "../../components/message";
 import Title from "../../components/title";
 import styles from "./index.module.scss";
 import Pagination from "../../components/pagination";
-import { getPage } from "../../helpers/getPage";
 import { BirthdayElement } from "../../modules/home-management/interfaces";
 import { formatDate } from "../../helpers/formatDate";
 import { GetServerSideProps } from "next";
@@ -24,17 +23,11 @@ import { FaArrowCircleUp } from "react-icons/fa";
 import { FormSearch } from "../../components/form-search";
 import Link from "next/link";
 import { Accordion } from "../../components/accordion";
-import { matchSorter } from "match-sorter";
 
 const List = ({ data }: DataProps) => {
   const router = useRouter();
 
-  const { sortBy, search } = router.query;
-
-  const classification =
-    typeof sortBy === "string"
-      ? (sortBy.charAt(0).toUpperCase() + sortBy.slice(1)).replace("-", " ")
-      : "";
+  const { search } = router.query;
 
   useLoginRedirect(router);
 
@@ -46,7 +39,11 @@ const List = ({ data }: DataProps) => {
     router.replace(router.asPath);
   }
 
-  const { dobs, page, pages } = data;
+  const { dobs, page, pages, sortBy } = data;
+
+  const classification = (
+    sortBy.charAt(0).toUpperCase() + sortBy.slice(1)
+  ).replace("-", " ");
 
   useEffect(() => {
     setModal({ ...modal, isRefreshing: false });
@@ -179,8 +176,40 @@ const List = ({ data }: DataProps) => {
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async ({ query }) => {
-  const res = await fetch(
+export const getServerSideProps: GetServerSideProps = async ({
+  query,
+  req,
+}) => {
+  const sortBy = query.sortBy ? query.sortBy : "recently-added";
+  const search = query.search ? `/${query.search}` : "";
+  const page = query.page ? query.page : 1;
+  const host = req.headers.host;
+
+  const res = await fetch(`http://${host}/api/birthdays-list${search}`, {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ page, sortBy }),
+  });
+
+  const data = await res.json();
+
+  if (data.page > data.pages) {
+    return {
+      notFound: true,
+    };
+  }
+
+  return {
+    props: { data },
+  };
+};
+
+export default List;
+
+/*  const res = await fetch(
     "https://birthday-app-api.vercel.app/api/v1/john/birthdays"
   );
   let { birthdays } = await res.json();
@@ -223,7 +252,4 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
 
   return {
     props: { data },
-  };
-};
-
-export default List;
+  };*/

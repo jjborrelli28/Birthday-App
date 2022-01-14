@@ -3,6 +3,7 @@ export interface DataProps {
     dobs: BirthdayElement[];
     page: string;
     pages: number;
+    sortBy: string;
   };
 }
 

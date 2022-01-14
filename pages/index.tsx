@@ -4,7 +4,6 @@ import styles from "./index.module.scss";
 import { getDates } from "../helpers/getDates";
 import Button from "../components/button";
 import { DataProps } from "../modules/home-management/interfaces";
-import { sortDates } from "../helpers/sortDates";
 import { useRouter } from "next/router";
 import Message from "../components/message";
 import Title from "../components/title";
@@ -13,9 +12,6 @@ import Card from "../components/card";
 import Picture from "../components/picture";
 import calendar from "../assets/calendar.png";
 import Line from "../components/line";
-import { BirthdayElement } from "../modules/home-management/interfaces";
-import { getBirthdays } from "../helpers/getBirthdays";
-import { getPage } from "../helpers/getPage";
 import Pagination from "../components/pagination";
 import { useLoginRedirect } from "../temporal/useLoginRedirect";
 import { Modal } from "../components/modal";
@@ -27,7 +23,7 @@ import { GiExtraTime } from "react-icons/gi";
 import reducer, { initialState } from "../modules/search-management/reducer";
 import { FormSearch } from "../components/form-search";
 import { changeValues } from "../modules/search-management/actions";
-import { matchSorter } from "match-sorter";
+import { TargetProps } from "../modules/form-management/interfaces";
 
 const Home = ({ data }: DataProps) => {
   const router = useRouter();
@@ -73,7 +69,7 @@ const Home = ({ data }: DataProps) => {
         <Line />
         <FormSearch
           onSubmit={handleSearch}
-          onChange={({ target }: any) => dispatch(changeValues(target))}
+          onChange={({ target }: TargetProps) => dispatch(changeValues(target))}
           value={value}
           variant="primary"
         />
@@ -195,40 +191,26 @@ const Home = ({ data }: DataProps) => {
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async ({ query }) => {
-  const { today, nextWeek } = getDates();
+export const getServerSideProps: GetServerSideProps = async ({
+  query,
+  req,
+}) => {
+  const search = query.search ? `/${query.search}` : "";
+  const page = query.page ?? 1;
+  const host = req.headers.host;
 
-  const res = await fetch(
-    "https://birthday-app-api.vercel.app/api/v1/john/birthdays"
-  );
-  let { birthdays } = await res.json();
+  const res = await fetch(`http://${host}/api/next-birthdays${search}`, {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ page }),
+  });
 
-  const search = query.search;
+  const data = await res.json();
 
-  if (search && typeof search === "string") {
-    birthdays = matchSorter(birthdays, search, {
-      keys: ["firstName", "lastName", "name"],
-    });
-  }
-
-  const page = query.page ?? "1";
-
-  const nextBirthdays = sortDates(getBirthdays(birthdays)).filter(
-    (birthdays: BirthdayElement) =>
-      birthdays.birthday >= today && birthdays.birthday <= nextWeek
-  );
-
-  const pages = Math.ceil(
-    nextBirthdays.length === 0 ? 1 : nextBirthdays.length / 20
-  );
-
-  const data = {
-    dobs: getPage(nextBirthdays, +page, 20),
-    page,
-    pages,
-  };
-
-  if (+page > pages) {
+  if (data.page > data.pages) {
     return {
       notFound: true,
     };
