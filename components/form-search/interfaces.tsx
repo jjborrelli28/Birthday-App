@@ -3,4 +3,5 @@ export interface FormSearchProps {
   onChange: any;
   value: string;
   variant: string;
+  reset?: any;
 }

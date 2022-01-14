@@ -3,12 +3,14 @@ import styles from "./index.module.scss";
 import { FaSearch } from "react-icons/fa";
 import { cc } from "../../helpers/helpers";
 import { FormSearchProps } from "./interfaces";
+import { RiDeleteBack2Fill } from "react-icons/ri";
 
 export const FormSearch = ({
   onSubmit,
   onChange,
   value,
   variant,
+  reset,
 }: FormSearchProps) => {
   return (
     <div className={styles.container}>
@@ -22,6 +24,9 @@ export const FormSearch = ({
           onChange={onChange}
           value={value}
         />
+        <button type="button" className={styles.reset} onClick={reset}>
+          <RiDeleteBack2Fill />
+        </button>
         <button className={cc(styles.btn, styles[variant])} onSubmit={onSubmit}>
           <FaSearch />
         </button>

@@ -57,6 +57,12 @@ const List = ({ data }: DataProps) => {
     router.push(`/list?sortBy=${sortBy}&search=${value}`);
   };
 
+  const resetSearch = (e: any) => {
+    e.preventDefault();
+    dispatch({ type: "value", payload: "" });
+    router.push(`/list?sortBy=${sortBy}`);
+  };
+
   const [{ open }, setAccordion] = useState({ open: false });
 
   const toggleAccordion = () => {
@@ -80,6 +86,7 @@ const List = ({ data }: DataProps) => {
         <FormSearch
           onSubmit={handleSearch}
           onChange={({ target }: any) => dispatch(changeValues(target))}
+          reset={resetSearch}
           value={value}
           variant="tertiary"
         />
@@ -87,7 +94,7 @@ const List = ({ data }: DataProps) => {
         <div className={styles.menu}>
           <Button
             variant="secondary"
-            text="« Back"
+            text="Home"
             onClick={() => router.push("/")}
           />
           <Button
