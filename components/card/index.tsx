@@ -1,5 +1,5 @@
 import React from "react";
-import { cc } from "../../helpers/classConcatenator";
+import { cc } from "../../helpers/helpers";
 import { useModalContext } from "../../hooks/useModalContext";
 import styles from "./index.module.scss";
 import CardProps, {
@@ -13,7 +13,7 @@ import Image from "next/image";
 import { DataProps } from "./interfaces";
 import { FaUserEdit } from "react-icons/fa";
 import { FaUserSlash } from "react-icons/fa";
-import { getDates } from "../../helpers/getDates";
+import { getDates } from "../../helpers/helpers";
 import { HiOutlineMailOpen } from "react-icons/hi";
 
 const Card = ({ children, variant = "primary" }: CardProps) => {

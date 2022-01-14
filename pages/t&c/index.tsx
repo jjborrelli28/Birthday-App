@@ -9,12 +9,12 @@ import Text from "../../components/text";
 import Line from "../../components/line";
 import Picture from "../../components/picture";
 import logo from "../../assets/logo.png";
-import { useLoginRedirect } from "../../temporal/useLoginRedirect";
+import { useAuthenticator } from "../../temporal/useAuthenticator";
 
 const TermsAndConditions = () => {
-  const router = useRouter();
+  const auth = useAuthenticator();
 
-  useLoginRedirect(router);
+  const router = useRouter();
 
   const handleDecline = () => {
     router.push("/login");
@@ -27,7 +27,11 @@ const TermsAndConditions = () => {
   };
 
   return (
-    <Layout title="Birthday App | T&C" description="Terms and conditions page">
+    <Layout
+      title="Birthday App | T&C"
+      description="Terms and conditions page"
+      auth={auth}
+    >
       <Container>
         <div className={styles.container}>
           <div>

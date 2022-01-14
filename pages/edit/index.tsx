@@ -8,14 +8,16 @@ import {
   showMessage,
 } from "../../modules/form-management/actions";
 import reducer from "../../modules/form-management/reducer";
-import { useLoginRedirect } from "../../temporal/useLoginRedirect";
-import { formatDate } from "../../helpers/formatDate";
+import { useAuthenticator } from "../../temporal/useAuthenticator";
+import { formatDate } from "../../helpers/helpers";
 import { BirthdayElement } from "../../modules/home-management/interfaces";
 import { BirthdaySelectProps } from "../../modules/edit-management/interfaces";
 import { TargetProps } from "../../modules/form-management/interfaces";
-import { formatName } from "../../helpers/formatName";
+import { formatName } from "../../helpers/helpers";
 
 const Edit = ({ birthdaySelect }: BirthdaySelectProps) => {
+  const auth = useAuthenticator();
+
   const { email, firstName, lastName, birthday, id } = birthdaySelect;
 
   const initialState = {
@@ -35,8 +37,6 @@ const Edit = ({ birthdaySelect }: BirthdaySelectProps) => {
   const [{ values, message }, dispatch] = useReducer(reducer, initialState);
 
   const router = useRouter();
-
-  useLoginRedirect(router);
 
   const editBirthday = (e: Event) => {
     e.preventDefault();
@@ -81,6 +81,7 @@ const Edit = ({ birthdaySelect }: BirthdaySelectProps) => {
     <Layout
       title="Birthday App | Edit Birthday"
       description="Page to edit birthdays"
+      auth={auth}
     >
       <Form
         title={`Edit birthday of ${formatName(firstName, lastName)}`}

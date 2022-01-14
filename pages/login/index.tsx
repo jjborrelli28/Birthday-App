@@ -12,7 +12,7 @@ const Login = () => {
 
   const handleLogin = () => {
     localStorage.setItem("logged", "true");
-    
+
     if (localStorage.getItem("t&cAccepted")) {
       router.push("/");
     } else {
@@ -21,7 +21,7 @@ const Login = () => {
   };
 
   return (
-    <Layout title="Birthday App | Login" description="Login page">
+    <Layout title="Birthday App | Login" description="Login page" auth={true}>
       <Container>
         <div className={styles.container}>
           <Image src={logo} alt="Logo" width={150} height={150} />

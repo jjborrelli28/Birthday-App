@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./index.module.scss";
 import InputProps from "./interfaces";
-import { cc } from "../../helpers/classConcatenator";
+import { cc } from "../../helpers/helpers";
 
 const Input = ({
   type,
@@ -23,7 +23,7 @@ const Input = ({
       type={type}
       id={id}
       name={name}
-      placeholder={`*${placeholder}`}
+      placeholder={`${required ? "*" : ""}${placeholder}`}
       value={value}
       onChange={onChange}
       minLength={minLength}

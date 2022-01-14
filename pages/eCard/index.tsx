@@ -9,16 +9,18 @@ import Layout from "../../components/layout";
 import Line from "../../components/line";
 import { Textarea } from "../../components/textarea";
 import Title from "../../components/title";
-import { formatDate } from "../../helpers/formatDate";
+import { formatDate } from "../../helpers/helpers";
 import { BirthdaySelectProps } from "../../modules/edit-management/interfaces";
 import { changeValues } from "../../modules/form-management/actions";
 import { TargetProps } from "../../modules/form-management/interfaces";
 import reducer from "../../modules/form-management/reducer";
 import { BirthdayElement } from "../../modules/home-management/interfaces";
-import { useLoginRedirect } from "../../temporal/useLoginRedirect";
+import { useAuthenticator } from "../../temporal/useAuthenticator";
 import styles from "./index.module.scss";
 
 const ECard = ({ birthdaySelect }: BirthdaySelectProps) => {
+  const auth = useAuthenticator();
+
   const { email, firstName, lastName, birthday } = birthdaySelect;
 
   const fullName = `${firstName} ${lastName}`;
@@ -41,8 +43,6 @@ const ECard = ({ birthdaySelect }: BirthdaySelectProps) => {
 
   const router = useRouter();
 
-  useLoginRedirect(router);
-
   const sendEmail = (e: any) => {
     e.preventDefault();
 
@@ -56,7 +56,11 @@ const ECard = ({ birthdaySelect }: BirthdaySelectProps) => {
   };
 
   return (
-    <Layout title="Birthday App | Send eCard" description="eCard form">
+    <Layout
+      title="Birthday App | Send eCard"
+      description="eCard form"
+      auth={auth}
+    >
       <Container>
         <Title>
           eCard for {firstName} {lastName}

@@ -1,6 +1,6 @@
 import Link from "next/link";
 import React from "react";
-import { cc } from "../../../helpers/classConcatenator";
+import { cc } from "../../../helpers/helpers";
 import { ItemProps } from "../interfaces";
 import styles from "./index.module.scss";
 

@@ -17,7 +17,7 @@
   position: relative;
 }
 
-.handContainer {
+.arrowContainer {
   position: absolute;
   right: 0;
   width: initial;
@@ -28,17 +28,13 @@
   align-items: center;
 }
 
-.hand {
+.arrow {
   margin: 0;
   padding: 0;
   text-align: center;
   font-size: 1rem;
   transform: rotate(-180deg);
   margin-bottom: 0.3rem;
-}
-
-.sortBy {
-  margin-bottom: 1rem;
 }
 
 @include tablet {
@@ -50,23 +46,26 @@
     gap: 1rem;
   }
 
-  .handContainer {
+  .arrowContainer {
     width: 5.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
-  .hand {
-    font-size: 1.1rem;
+  .arrow {
+    font-size: 1.2rem;
     transform: initial;
     margin-bottom: initial;
   }
 }
 
 @include desktop {
-  .handContainer {
+  .arrowContainer {
     width: 6rem;
   }
 
-  .hand {
-    font-size: 1.2rem;
+  .arrow {
+    font-size: 1.4rem;
   }
 }

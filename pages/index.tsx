@@ -1,10 +1,9 @@
 import Layout from "../components/layout";
 import { GetServerSideProps } from "next";
 import styles from "./index.module.scss";
-import { getDates } from "../helpers/getDates";
+import { getDates, formatName } from "../helpers/helpers";
 import Button from "../components/button";
 import { DataProps } from "../modules/home-management/interfaces";
-import { sortDates } from "../helpers/sortDates";
 import { useRouter } from "next/router";
 import Message from "../components/message";
 import Title from "../components/title";
@@ -13,22 +12,24 @@ import Card from "../components/card";
 import Picture from "../components/picture";
 import calendar from "../assets/calendar.png";
 import Line from "../components/line";
-import { BirthdayElement } from "../modules/home-management/interfaces";
-import { getBirthdays } from "../helpers/getBirthdays";
-import { getPage } from "../helpers/getPage";
 import Pagination from "../components/pagination";
-import { useLoginRedirect } from "../temporal/useLoginRedirect";
 import { Modal } from "../components/modal";
 import { useModalContext } from "../hooks/useModalContext";
-import { formatName } from "../helpers/formatName";
-import { useEffect } from "react";
+import { useEffect, useReducer } from "react";
 import { HiCake } from "react-icons/hi";
 import { GiExtraTime } from "react-icons/gi";
+import reducer, { initialState } from "../modules/search-management/reducer";
+import { FormSearch } from "../components/form-search";
+import { changeValues } from "../modules/search-management/actions";
+import { TargetProps } from "../modules/form-management/interfaces";
+import { useAuthenticator } from "../temporal/useAuthenticator";
 
 const Home = ({ data }: DataProps) => {
+  const auth = useAuthenticator();
+
   const router = useRouter();
 
-  useLoginRedirect(router);
+  const { search } = router.query;
 
   const modal = useModalContext();
 
@@ -45,16 +46,45 @@ const Home = ({ data }: DataProps) => {
 
   const { today } = getDates();
 
+  const init = () => {
+    if (typeof search === "string") {
+      return { value: search };
+    } else {
+      return initialState;
+    }
+  };
+
+  const [{ value }, dispatch] = useReducer(reducer, initialState, init);
+
+  const handleSearch = (e: any) => {
+    e.preventDefault();
+    router.push(`/?search=${value}`);
+  };
+
+  const resetSearch = (e: any) => {
+    e.preventDefault();
+    dispatch({ type: "value", payload: "" });
+    router.push(`/`);
+  };
+
   return (
-    <Layout title="Birthday App | Home" description="Homepage">
+    <Layout title="Birthday App | Home" description="Homepage" auth={auth}>
       <Container>
         <Title>Next birthdays</Title>
+        <Line />
+        <FormSearch
+          onSubmit={handleSearch}
+          onChange={({ target }: TargetProps) => dispatch(changeValues(target))}
+          reset={resetSearch}
+          value={value}
+          variant="primary"
+        />
         <Line />
         <div className={styles.menu}>
           <Button
             variant="tertiary"
             text="List"
-            onClick={() => router.push("/list?sortBy=recent-additions")}
+            onClick={() => router.push("/list?sortBy=recently-added")}
           />
           <Button
             variant="primary"
@@ -132,16 +162,28 @@ const Home = ({ data }: DataProps) => {
             </>
           ) : (
             <div className={styles.messageContainer}>
-              <Message variant="warning">No Birthdays coming soon</Message>
-              <Picture
-                src={calendar}
-                alt="logo"
-                width={"250px"}
-                heigth={"250px"}
-              />
+              <Message variant="warning">
+                {search
+                  ? "No results found for the search"
+                  : "No Birthdays coming soon"}
+              </Message>
+              {!search && (
+                <Picture
+                  src={calendar}
+                  alt="logo"
+                  width={"250px"}
+                  heigth={"250px"}
+                />
+              )}
             </div>
           )}
-          {pages > 1 && <Pagination pages={pages} page={+page} />}
+          {pages > 1 && (
+            <Pagination
+              pages={pages}
+              page={+page}
+              query={search ? `search=${search}&` : ``}
+            />
+          )}
         </div>
         <Modal show={active}>
           <Modal.Header>{`Removing birthday from: ${payload.name}`}</Modal.Header>
@@ -155,30 +197,26 @@ const Home = ({ data }: DataProps) => {
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async ({ query }) => {
-  const { today, nextWeek } = getDates();
+export const getServerSideProps: GetServerSideProps = async ({
+  query,
+  req,
+}) => {
+  const search = query.search ? `/${query.search}` : "";
+  const page = query.page ?? 1;
+  const host = req.headers.host;
 
-  const res = await fetch(
-    "https://birthday-app-api.vercel.app/api/v1/john/birthdays"
-  );
-  const { birthdays } = await res.json();
+  const res = await fetch(`http://${host}/api/next-birthdays${search}`, {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ page }),
+  });
 
-  const page = query.page ?? "1";
+  const data = await res.json();
 
-  const nextBirthdays = sortDates(getBirthdays(birthdays)).filter(
-    (birthdays: BirthdayElement) =>
-      birthdays.birthday >= today && birthdays.birthday <= nextWeek
-  );
-
-  const pages = Math.ceil(nextBirthdays.length / 20);
-
-  const data = {
-    dobs: getPage(nextBirthdays, +page, 20),
-    page,
-    pages,
-  };
-
-  if (+page > pages) {
+  if (data.page > data.pages) {
     return {
       notFound: true,
     };

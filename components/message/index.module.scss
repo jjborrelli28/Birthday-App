@@ -32,6 +32,12 @@
   border: solid $black 0.2rem;
 }
 
+.danger {
+  background-color: $red;
+  color: $white;
+  border: solid $black 0.2rem;
+}
+
 @include tablet {
   .message {
     font-size: 1.1rem;

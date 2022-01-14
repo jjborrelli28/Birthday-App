@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import React, { useEffect } from "react";
+import React, { useEffect, useReducer, useState } from "react";
 import Button from "../../components/button";
 import Card from "../../components/card";
 import Container from "../../components/container";
@@ -9,26 +9,26 @@ import Message from "../../components/message";
 import Title from "../../components/title";
 import styles from "./index.module.scss";
 import Pagination from "../../components/pagination";
-import { getPage } from "../../helpers/getPage";
 import { BirthdayElement } from "../../modules/home-management/interfaces";
-import { formatDate } from "../../helpers/formatDate";
+import { formatDate, formatName } from "../../helpers/helpers";
 import { GetServerSideProps } from "next";
 import { DataProps } from "../../modules/list-management/interfaces";
-import { useLoginRedirect } from "../../temporal/useLoginRedirect";
+import { useAuthenticator } from "../../temporal/useAuthenticator";
 import { Modal } from "../../components/modal";
 import { useModalContext } from "../../hooks/useModalContext";
-import { formatName } from "../../helpers/formatName";
+import reducer from "../../modules/search-management/reducer";
+import { changeValues } from "../../modules/search-management/actions";
+import { FaArrowCircleUp } from "react-icons/fa";
+import { FormSearch } from "../../components/form-search";
+import Link from "next/link";
+import { Accordion } from "../../components/accordion";
 
 const List = ({ data }: DataProps) => {
+  const auth = useAuthenticator();
+
   const router = useRouter();
 
-  const { sortBy } = router.query;
-
-  const classification =
-    typeof sortBy === "string" &&
-    (sortBy.charAt(0).toUpperCase() + sortBy.slice(1)).replace("-", " ");
-
-  useLoginRedirect(router);
+  const { search } = router.query;
 
   const modal = useModalContext();
 
@@ -38,17 +38,38 @@ const List = ({ data }: DataProps) => {
     router.replace(router.asPath);
   }
 
-  const { dobs, page, pages } = data;
+  const { dobs, page, pages, sortBy } = data;
+
+  const classification = (
+    sortBy.charAt(0).toUpperCase() + sortBy.slice(1)
+  ).replace("-", " ");
 
   useEffect(() => {
     setModal({ ...modal, isRefreshing: false });
   }, [data]);
 
-  const toggleOrder = () => {
-    if (sortBy === "last-added") {
-      router.push("/list?sortBy=recent-additions");
+  const [{ value }, dispatch] = useReducer(reducer, {
+    value: typeof search === "string" ? search : "",
+  });
+
+  const handleSearch = (e: any) => {
+    e.preventDefault();
+    router.push(`/list?sortBy=${sortBy}&search=${value}`);
+  };
+
+  const resetSearch = (e: any) => {
+    e.preventDefault();
+    dispatch({ type: "value", payload: "" });
+    router.push(`/list?sortBy=${sortBy}`);
+  };
+
+  const [{ open }, setAccordion] = useState({ open: false });
+
+  const toggleAccordion = () => {
+    if (open) {
+      setAccordion({ open: false });
     } else {
-      router.push("/list?sortBy=last-added");
+      setAccordion({ open: true });
     }
   };
 
@@ -58,14 +79,23 @@ const List = ({ data }: DataProps) => {
       description="List birthdays list"
       hideHeader={true}
       hideFooter={true}
+      auth={auth}
     >
       <Container>
         <Title>Birthdays list</Title>
         <Line />
+        <FormSearch
+          onSubmit={handleSearch}
+          onChange={({ target }: any) => dispatch(changeValues(target))}
+          reset={resetSearch}
+          value={value}
+          variant="tertiary"
+        />
+        <Line />
         <div className={styles.menu}>
           <Button
             variant="secondary"
-            text="« Back"
+            text="Home"
             onClick={() => router.push("/")}
           />
           <Button
@@ -74,15 +104,30 @@ const List = ({ data }: DataProps) => {
             onClick={() => router.push("/add")}
           />
         </div>
-        <div className={styles.sortBy}>
-          <Button
-            variant="tertiary"
-            type="button"
-            text={`Sort by: ${classification}`}
-            long={true}
-            onClick={toggleOrder}
-          />
-        </div>
+        <Accordion
+          open={open}
+          classification={classification}
+          onClick={toggleAccordion}
+        >
+          <Accordion.Item>
+            <Link
+              href={`/list?sortBy=recently-added${
+                search ? `&search=${search}` : ""
+              }`}
+            >
+              <a>• Recently added first</a>
+            </Link>
+          </Accordion.Item>
+          <Accordion.Item>
+            <Link
+              href={`/list?sortBy=last-added${
+                search ? `&search=${search}` : ""
+              }`}
+            >
+              <a>• Last added first</a>
+            </Link>
+          </Accordion.Item>
+        </Accordion>
         <div>
           {dobs.length > 0 ? (
             dobs.map((birthday: BirthdayElement) => (
@@ -105,10 +150,16 @@ const List = ({ data }: DataProps) => {
             ))
           ) : (
             <div className={styles.messageContainer}>
-              <div className={styles.handContainer}>
-                <h2 className={styles.hand}>☝</h2>
-              </div>
-              <Message variant="warning">Set your Birthday reminders!</Message>
+              {!search && (
+                <div className={styles.arrowContainer}>
+                  <FaArrowCircleUp className={styles.arrow} />
+                </div>
+              )}
+              <Message variant="warning">
+                {search
+                  ? "No results found for the search"
+                  : "Set your Birthday reminders!"}
+              </Message>
             </div>
           )}
           {pages > 1 && (
@@ -116,7 +167,7 @@ const List = ({ data }: DataProps) => {
               variant="tertiary"
               pages={pages}
               page={+page}
-              query={`sortBy=${sortBy}&`}
+              query={`sortBy=${sortBy}&${search ? `search=${search}&` : ``}`}
             />
           )}
         </div>
@@ -132,35 +183,33 @@ const List = ({ data }: DataProps) => {
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async ({ query }) => {
-  const res = await fetch(
-    "https://birthday-app-api.vercel.app/api/v1/john/birthdays"
-  );
-  let { birthdays } = await res.json();
+export const getServerSideProps: GetServerSideProps = async ({
+  query,
+  req,
+}) => {
+  const sortBy = query.sortBy ? query.sortBy : "recently-added";
+  const search = query.search ? `/${query.search}` : "";
+  const page = query.page ? query.page : 1;
+  const host = req.headers.host;
 
-  const sortBy = query.sortBy;
+  const res = await fetch(`http://${host}/api/birthdays-list${search}`, {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ page, sortBy }),
+  });
 
-  const page = query.page ?? "1";
+  const data = await res.json();
 
-  const pages = Math.ceil(birthdays.length / 20);
-
-  if (sortBy === "recent-additions") {
-    birthdays = [...birthdays].reverse();
-  }
-
-  const data = {
-    dobs: getPage(birthdays, +page, 20),
-    page,
-    pages,
-  };
-
-  if (sortBy !== "recent-additions" && sortBy !== "last-added") {
+  if (sortBy !== "recently-added" && sortBy !== "last-added") {
     return {
       notFound: true,
     };
   }
 
-  if (+page > pages) {
+  if (data.page > data.pages) {
     return {
       notFound: true,
     };
