@@ -28,14 +28,14 @@ export const getDates = () => {
 };
 
 export const getBirthdays = (data: BirthdayElement[]) => {
-  const { today, birthdayCurrentYear, birthdayNextYear } = getDates();
+  const { today, birthdayCurrentYear, birthdayNextYear: nextYearBirthday } = getDates();
 
   return data.map((item) => {
     return {
       ...item,
       birthday:
         birthdayCurrentYear(item.birthday) < today
-          ? birthdayNextYear(item.birthday)
+          ? nextYearBirthday(item.birthday)
           : birthdayCurrentYear(item.birthday),
     };
   });

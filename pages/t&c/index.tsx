@@ -17,13 +17,13 @@ const TermsAndConditions = () => {
   const router = useRouter();
 
   const handleDecline = () => {
-    router.push("/login");
+    router.push("/");
     localStorage.removeItem("logged");
   };
 
   const handleAgree = () => {
     localStorage.setItem("t&cAccepted", "true");
-    router.push("/");
+    router.push("/home");
   };
 
   return (
@@ -31,6 +31,7 @@ const TermsAndConditions = () => {
       title="Birthday App | T&C"
       description="Terms and conditions page"
       auth={auth}
+      hideFooter={false}
     >
       <Container>
         <div className={styles.container}>

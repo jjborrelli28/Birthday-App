@@ -77,8 +77,7 @@ const List = ({ data }: DataProps) => {
     <Layout
       title="Birthday App | Birthdays list"
       description="List birthdays list"
-      hideHeader={true}
-      hideFooter={true}
+      hideFooter={false}
       auth={auth}
     >
       <Container>
@@ -95,11 +94,13 @@ const List = ({ data }: DataProps) => {
         <div className={styles.menu}>
           <Button
             variant="secondary"
+            shadow={true}
             text="Home"
-            onClick={() => router.push("/")}
+            onClick={() => router.push("/home")}
           />
           <Button
             variant="primary"
+            shadow={true}
             text="Add"
             onClick={() => router.push("/add")}
           />
@@ -192,7 +193,7 @@ export const getServerSideProps: GetServerSideProps = async ({
   const page = query.page ? query.page : 1;
   const host = req.headers.host;
 
-  const res = await fetch(`http://${host}/api/birthdays-list${search}`, {
+  const res = await fetch(`http://${host}/api/full-birthdays-list${search}`, {
     method: "POST",
     headers: {
       Accept: "application/json",

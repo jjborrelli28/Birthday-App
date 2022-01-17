@@ -5,6 +5,7 @@ interface ButtonProps {
   onClick?: any;
   onSubmit?: any;
   long?: boolean;
+  shadow?: boolean;
 }
 
 export default ButtonProps;

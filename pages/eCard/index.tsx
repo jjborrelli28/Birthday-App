@@ -51,7 +51,7 @@ const ECard = ({ birthdaySelect }: BirthdaySelectProps) => {
     }?subject=${"Birthday Greeting"}&body=${values.greeting}`;
 
     setTimeout(() => {
-      router.push("/");
+      router.back();
     }, 1000);
   };
 

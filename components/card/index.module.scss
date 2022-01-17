@@ -11,6 +11,10 @@
   transition: transform 0.5s;
 }
 
+.card:last-child {
+  margin-bottom: 0;
+}
+
 .card:hover {
   transform: scale(1.05);
 }
