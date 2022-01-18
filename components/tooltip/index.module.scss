@@ -1,0 +1,74 @@
+@import "../../styles/variables";
+@import "../../styles/media_queries";
+
+.container {
+  position: relative;
+  display: flex;
+  flex: 1;
+}
+
+.container:hover .tooltip {
+  opacity: 1;
+  transition: all 0.5s;
+}
+
+.tooltip {
+  position: absolute;
+  max-width: 12rem;
+  max-height: 4rem;
+  bottom: 3rem;
+  left: calc(50% - 0.375rem);
+  right: -50%;
+  opacity: 0;
+  transition: all 0.5s;
+}
+
+.arrow {
+  width: 0;
+  height: 0;
+}
+
+.down {
+  border-left: 0.5rem solid transparent;
+  border-right: 0.5rem solid transparent;
+  border-top: 0.75rem solid $dark-gray;
+}
+
+.label {
+  background-color: $light-gray;
+  border: solid $dark-gray 0.2rem;
+  border-radius: 0.6rem 0.6rem 0.6rem 0;
+  padding: 0.2rem 0.3rem 0 0.3rem;
+
+  p {
+    margin: auto;
+    font-size: 0.9rem;
+    font-weight: bold;
+    line-height: 1.1rem;
+  }
+}
+
+@include tablet {
+  .tooltip {
+    max-width: 15rem;
+    max-height: 5rem;
+    bottom: 3.2rem;
+  }
+
+  .label {
+    padding: 0.3rem 0.4rem 0 0.4rem;
+
+    p {
+      font-size: 1rem;
+      line-height: 1.3rem;
+    }
+  }
+}
+
+@include desktop {
+  .tooltip {
+    max-width: 18rem;
+    max-height: 6rem;
+    bottom: 3.3rem;
+  }
+}

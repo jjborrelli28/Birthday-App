@@ -9,7 +9,7 @@
 
 .form {
   display: flex;
-  width: 95%;
+  width: 90%;
   position: relative;
 }
 
@@ -81,7 +81,7 @@
 
 @include tablet {
   .form {
-    width: 85%;
+    width: 80%;
   }
 
   .input {
@@ -106,7 +106,7 @@
 
 @include desktop {
   .form {
-    width: 75%;
+    width: 70%;
   }
 
   .input {

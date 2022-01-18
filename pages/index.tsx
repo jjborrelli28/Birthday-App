@@ -5,7 +5,6 @@ import styles from "./index.module.scss";
 import logo from "../assets/logo.png";
 import Button from "../components/button";
 import { useRouter } from "next/router";
-import Container from "../components/container";
 
 const Login = () => {
   const router = useRouter();
