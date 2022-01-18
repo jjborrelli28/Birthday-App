@@ -1,6 +1,10 @@
 import React, { useReducer } from "react";
 import { useRouter } from "next/router";
 import reducer, { initialState } from "../../modules/form-management/reducer";
+import {
+  initialLoadState,
+  loadReducer,
+} from "../../modules/load-management/loadReducer";
 import { Form } from "../../components/form";
 import Layout from "../../components/layout";
 import {
@@ -15,6 +19,8 @@ const Add = () => {
 
   const [{ values, message }, dispatch] = useReducer(reducer, initialState);
 
+  const [{ isLoading }, setLoad] = useReducer(loadReducer, initialLoadState);
+
   const router = useRouter();
 
   const addBirthday = (e: Event) => {
@@ -23,9 +29,8 @@ const Add = () => {
     const { email, firstName, lastName, birthday } = values;
 
     if (firstName && lastName && email && birthday) {
-      dispatch(
-        showMessage(true, "success", "The birthday was saved successfully ✔")
-      );
+      setLoad({ type: "load", payload: true });
+
       fetch("https://birthday-app-api.vercel.app/api/v1/john/birthdays/add", {
         method: "POST",
         headers: {
@@ -39,8 +44,24 @@ const Add = () => {
             return res.json();
           }
         })
-        .then((response) => console.log("Success:", response))
-        .catch((error) => console.error("Error:", error));
+        .then(() =>
+          dispatch(
+            showMessage(
+              true,
+              "success",
+              "The birthday was saved successfully ✔"
+            )
+          )
+        )
+        .catch((error) =>
+          dispatch(
+            showMessage(
+              true,
+              "warning",
+              `Error saving birthday. Error description: ${error}`
+            )
+          )
+        );
 
       setTimeout(() => {
         router.back();
@@ -70,6 +91,7 @@ const Add = () => {
         onSubmit={addBirthday}
         onChange={({ target }: TargetProps) => dispatch(changeValues(target))}
         router={router}
+        disabled={isLoading}
       />
     </Layout>
   );

@@ -11,4 +11,5 @@ export interface FormProps {
   onSubmit: any;
   onChange: any;
   router: NextRouter;
+  disabled: boolean;
 }

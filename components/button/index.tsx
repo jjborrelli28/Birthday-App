@@ -11,6 +11,7 @@ const Button = ({
   onSubmit,
   long = false,
   shadow = false,
+  disabled = false,
 }: ButtonProps) => {
   return (
     <button
@@ -19,10 +20,12 @@ const Button = ({
         styles.button,
         styles[variant],
         long && styles.long,
-        shadow && styles.shadow
+        shadow && styles.shadow,
+        disabled && styles.disabled
       )}
       onClick={onClick}
       onSubmit={onSubmit}
+      disabled={disabled}
     >
       {text}
     </button>

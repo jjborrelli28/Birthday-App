@@ -1,4 +1,4 @@
-import React, { useReducer } from "react";
+import React, { useReducer, useState } from "react";
 import { GetServerSideProps } from "next";
 import { useRouter } from "next/router";
 import { Form } from "../../components/form";
@@ -14,6 +14,10 @@ import { BirthdayElement } from "../../modules/home-management/interfaces";
 import { BirthdaySelectProps } from "../../modules/edit-management/interfaces";
 import { TargetProps } from "../../modules/form-management/interfaces";
 import { formatName } from "../../helpers/helpers";
+import {
+  initialLoadState,
+  loadReducer,
+} from "../../modules/load-management/loadReducer";
 
 const Edit = ({ birthdaySelect }: BirthdaySelectProps) => {
   const auth = useAuthenticator();
@@ -36,6 +40,8 @@ const Edit = ({ birthdaySelect }: BirthdaySelectProps) => {
 
   const [{ values, message }, dispatch] = useReducer(reducer, initialState);
 
+  const [{ isLoading }, setLoad] = useReducer(loadReducer, initialLoadState);
+
   const router = useRouter();
 
   const editBirthday = (e: Event) => {
@@ -44,9 +50,8 @@ const Edit = ({ birthdaySelect }: BirthdaySelectProps) => {
     const { email, firstName, lastName, birthday } = values;
 
     if (firstName && lastName && email && birthday) {
-      dispatch(
-        showMessage(true, "success", "The birthday was saved successfully ✔")
-      );
+      setLoad({ type: "load", payload: true });
+
       fetch(`https://birthday-app-api.vercel.app/api/v1/john/birthdays/${id}`, {
         method: "PUT",
         headers: {
@@ -59,8 +64,24 @@ const Edit = ({ birthdaySelect }: BirthdaySelectProps) => {
             return res.json();
           }
         })
-        .then((response) => console.log("Success:", response))
-        .catch((error) => console.error("Error:", error));
+        .then(() =>
+          dispatch(
+            showMessage(
+              true,
+              "success",
+              "The birthday was saved successfully ✔"
+            )
+          )
+        )
+        .catch((error) =>
+          dispatch(
+            showMessage(
+              true,
+              "warning",
+              `Error editing birthday. Error description: ${error}`
+            )
+          )
+        );
 
       setTimeout(() => {
         router.back();
@@ -90,6 +111,7 @@ const Edit = ({ birthdaySelect }: BirthdaySelectProps) => {
         onSubmit={editBirthday}
         onChange={({ target }: TargetProps) => dispatch(changeValues(target))}
         router={router}
+        disabled={isLoading}
       />
     </Layout>
   );

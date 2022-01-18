@@ -16,6 +16,7 @@ export const Form: React.FC<FormProps> = ({
   onSubmit,
   onChange,
   router,
+  disabled,
 }) => {
   const { today } = getDates();
 
@@ -91,7 +92,12 @@ export const Form: React.FC<FormProps> = ({
             text="Cancel"
             onClick={() => router.back()}
           />
-          <Button variant="primary" text="Save" onSubmit={onSubmit} />
+          <Button
+            variant="primary"
+            text="Save"
+            onSubmit={onSubmit}
+            disabled={disabled}
+          />
         </div>
       </form>
     </Container>
