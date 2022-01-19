@@ -1,5 +1,6 @@
+import { ReactNode } from "react";
 interface TitleProps {
-  children: string;
+  children: ReactNode;
   bold?: boolean;
 }
 

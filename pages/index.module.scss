@@ -1,9 +1,37 @@
 @import "../styles/variables";
+@import "../styles/media_queries";
 
-.container {
+.center {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   flex: 1;
+}
+
+.form {
+  background-color: $light-gray;
+  padding: 1rem;
+  border-radius: 0.6rem;
+  margin-bottom: 1rem;
+}
+
+.signup {
+  border: solid $light-gray 0.2rem;
+  border-radius: 0.6rem;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+@include tablet {
+  .form {
+    padding: 1.5rem;
+  }
+}
+
+@include desktop {
+  .form {
+    padding: 2rem;
+  }
 }
