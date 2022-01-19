@@ -12,7 +12,7 @@ import Title from "../components/title";
 import Text from "../components/text";
 import Link from "next/link";
 
-const Login = () => {
+const SignIn = () => {
   const router = useRouter();
 
   const handleLogin = () => {
@@ -44,6 +44,7 @@ const Login = () => {
               name="email"
               placeholder=""
               pattern="^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$"
+              required={true}
             />
             <Label mobileHidden={false}>Password</Label>
             <Input
@@ -52,6 +53,7 @@ const Login = () => {
               name="password"
               placeholder=""
               pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"
+              required={true}
             />
             <Button
               variant="primary"
@@ -64,7 +66,7 @@ const Login = () => {
           <div className={styles.signup}>
             <Text>
               New to Birthday App?{" "}
-              <Link href={"./signup"}>
+              <Link href={"./sign-up"}>
                 <a>Create an account.</a>
               </Link>
             </Text>
@@ -75,4 +77,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default SignIn;

@@ -16,7 +16,7 @@ export default function handler(
 ) {
   const { param } = req.query;
 
-  fetch("https://birthday-app-api.vercel.app/api/v1/john/birthdays")
+  fetch(`${process.env.BDA_API}/john/birthdays`)
     .then((response) => response.json())
     .then(({ birthdays }) => {
       // Search filter
