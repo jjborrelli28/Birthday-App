@@ -73,7 +73,7 @@ export const createUser = ({
       setTimeout(() => {
         dispatch(showMessage(false, "", ""));
         setLoadState(false);
-        router.back();
+        router.push("/");
       }, 2000);
     } else {
       dispatch(showMessage(true, "danger", "Passwords do not match"));

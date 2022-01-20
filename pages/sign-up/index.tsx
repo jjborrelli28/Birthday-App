@@ -155,7 +155,7 @@ const SignUp = () => {
               type="button"
               variant="secondary"
               text="Cancel"
-              onClick={() => router.back()}
+              onClick={() => router.push("/")}
             />
             <Button
               variant="primary"
