@@ -1,82 +1,27 @@
-import React, { useReducer } from "react";
+import React, { FormEvent, useReducer } from "react";
 import { useRouter } from "next/router";
-import reducer, { initialState } from "../../modules/form-management/reducer";
-import {
-  initialLoadState,
-  loadReducer,
-} from "../../modules/load-management/loadReducer";
+import reducer, {
+  initialAddBirthdayState,
+} from "../../modules/form-management/reducer";
 import { Form } from "../../components/form";
 import Layout from "../../components/layout";
-import {
-  changeValues,
-  showMessage,
-} from "../../modules/form-management/actions";
+import { changeValues } from "../../modules/form-management/actions";
 import { TargetProps } from "../../modules/form-management/interfaces";
 import { useAuthenticator } from "../../temporal/useAuthenticator";
+import { addBirthday } from "../../helpers/addBirthday";
+import { useLoadState } from "../../hooks/useLoadState";
 
 const Add = () => {
   const auth = useAuthenticator();
 
-  const [{ values, message }, dispatch] = useReducer(reducer, initialState);
+  const [{ values, message }, dispatch] = useReducer(
+    reducer,
+    initialAddBirthdayState
+  );
 
-  const [{ isLoading }, setLoad] = useReducer(loadReducer, initialLoadState);
+  const { loadState, setLoadState } = useLoadState();
 
   const router = useRouter();
-
-  const addBirthday = (e: Event) => {
-    e.preventDefault();
-
-    const { email, firstName, lastName, birthday } = values;
-
-    if (firstName && lastName && email && birthday) {
-      setLoad({ type: "load", payload: true });
-
-      fetch("https://birthday-app-api.vercel.app/api/v1/john/birthdays/add", {
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(values),
-      })
-        .then((res) => {
-          if (res.ok) {
-            return res.json();
-          }
-        })
-        .then(() =>
-          dispatch(
-            showMessage(
-              true,
-              "success",
-              "The birthday was saved successfully ✔"
-            )
-          )
-        )
-        .catch((error) =>
-          dispatch(
-            showMessage(
-              true,
-              "warning",
-              `Error saving birthday. Error description: ${error}`
-            )
-          )
-        );
-
-      setTimeout(() => {
-        router.back();
-        dispatch(showMessage(false, "", ""));
-      }, 1500);
-    } else {
-      dispatch(
-        showMessage(
-          true,
-          "warning",
-          "All fields need to be completed before saving the changes"
-        )
-      );
-    }
-  };
 
   return (
     <Layout
@@ -88,10 +33,12 @@ const Add = () => {
         title="Add a new birthday"
         values={values}
         message={message}
-        onSubmit={addBirthday}
+        onSubmit={(e: FormEvent) =>
+          addBirthday({ e, values, setLoadState, dispatch, router })
+        }
         onChange={({ target }: TargetProps) => dispatch(changeValues(target))}
         router={router}
-        disabled={isLoading}
+        disabled={loadState}
       />
     </Layout>
   );

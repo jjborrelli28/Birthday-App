@@ -15,7 +15,9 @@ import Link from "next/link";
 const SignIn = () => {
   const router = useRouter();
 
-  const handleLogin = () => {
+  const handleSignIn = (e: any) => {
+    e.preventDefault();
+
     localStorage.setItem("logged", "true");
 
     if (localStorage.getItem("t&cAccepted")) {
@@ -36,7 +38,7 @@ const SignIn = () => {
         <div className={styles.center}>
           <Image src={logo} alt="Logo" width={150} height={150} />
           <Title>Sign in to Birthday App</Title>
-          <form className={styles.form}>
+          <form className={styles.form} onSubmit={handleSignIn}>
             <Label mobileHidden={false}>Email address</Label>
             <Input
               type="text"
@@ -57,16 +59,15 @@ const SignIn = () => {
             />
             <Button
               variant="primary"
-              type="submit"
               long={true}
               text="Sign in"
-              onClick={handleLogin}
+              onSubmit={handleSignIn}
             />
           </form>
           <div className={styles.signup}>
             <Text>
               New to Birthday App?{" "}
-              <Link href={"./sign-up"}>
+              <Link href={"/sign-up"}>
                 <a>Create an account.</a>
               </Link>
             </Text>

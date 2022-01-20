@@ -10,7 +10,12 @@ import Title from "../../components/title";
 import styles from "./index.module.scss";
 import Pagination from "../../components/pagination";
 import { BirthdayElement } from "../../modules/home-management/interfaces";
-import { formatDate, formatName } from "../../helpers/helpers";
+import {
+  formatDate,
+  formatName,
+  handleSearch,
+  resetSearch,
+} from "../../helpers/helpers";
 import { GetServerSideProps } from "next";
 import { DataProps } from "../../modules/list-management/interfaces";
 import { useAuthenticator } from "../../temporal/useAuthenticator";
@@ -52,17 +57,6 @@ const List = ({ data }: DataProps) => {
     value: typeof search === "string" ? search : "",
   });
 
-  const handleSearch = (e: any) => {
-    e.preventDefault();
-    router.push(`/list?sortBy=${sortBy}&search=${value}`);
-  };
-
-  const resetSearch = (e: any) => {
-    e.preventDefault();
-    dispatch({ type: "value", payload: "" });
-    router.push(`/list?sortBy=${sortBy}`);
-  };
-
   const [{ open }, setAccordion] = useState({ open: false });
 
   const toggleAccordion = () => {
@@ -84,9 +78,13 @@ const List = ({ data }: DataProps) => {
         <Title>Birthdays list</Title>
         <Line />
         <FormSearch
-          onSubmit={handleSearch}
+          onSubmit={(e: Event) =>
+            handleSearch(e, router, value, `sortBy=${sortBy}&`)
+          }
           onChange={({ target }: any) => dispatch(changeValues(target))}
-          reset={resetSearch}
+          reset={(e: Event) =>
+            resetSearch(e, dispatch, router, `?sortBy=${sortBy}`)
+          }
           value={value}
           variant="tertiary"
         />

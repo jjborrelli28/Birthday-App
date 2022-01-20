@@ -1,10 +1,8 @@
-import React, { useReducer } from "react";
+import React from "react";
+import { deleteBirthday } from "../../helpers/deteleBirthday";
 import { cc } from "../../helpers/helpers";
+import { useLoadState } from "../../hooks/useLoadState";
 import { useModalContext } from "../../hooks/useModalContext";
-import {
-  initialLoadState,
-  loadReducer,
-} from "../../modules/load-management/loadReducer";
 import Button from "../button";
 import styles from "./index.module.scss";
 import { ChildrenProps, HeaderProps, ModalProps } from "./interface";
@@ -38,51 +36,7 @@ export const Footer = () => {
 
   const { setModal, payload } = modal;
 
-  const [{ isLoading }, setLoad] = useReducer(loadReducer, initialLoadState);
-
-  const deleteBirthday = (e: Event) => {
-    e.preventDefault();
-
-    setLoad({ type: "load", payload: true });
-
-    fetch(
-      `https://birthday-app-api.vercel.app/api/v1/john/birthdays/${payload.id}`,
-      {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    )
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        }
-      })
-      .then(() =>
-        setModal({
-          ...modal,
-          text: "The birthday was removed ✔",
-          variant: "success",
-        })
-      )
-      .catch((error) =>
-        setModal({
-          ...modal,
-          text: `Error deleting birthdays. Error description: ${error}`,
-          variant: "danger",
-        })
-      );
-
-    setTimeout(() => {
-      setModal({
-        ...modal,
-        active: false,
-        isRefreshing: true,
-      });
-      setLoad({ type: "load", payload: false });
-    }, 1500);
-  };
+  const { loadState, setLoadState } = useLoadState();
 
   return (
     <div className={styles.footer}>
@@ -101,8 +55,10 @@ export const Footer = () => {
         variant="danger"
         type="button"
         text="Delete"
-        onClick={deleteBirthday}
-        disabled={isLoading}
+        onClick={(e: any) =>
+          deleteBirthday({ e, payload, setLoadState, setModal, modal })
+        }
+        disabled={loadState}
       />
     </div>
   );

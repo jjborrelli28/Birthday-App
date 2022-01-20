@@ -16,7 +16,10 @@ export const FormSearch = ({
   return (
     <div className={styles.container}>
       <form className={styles.form} onSubmit={onSubmit}>
-        <Tooltip>
+        <Tooltip
+          text="You can search
+            by first name, last name or email"
+        >
           <input
             type="text"
             id="search"

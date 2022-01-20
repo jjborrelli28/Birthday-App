@@ -9,6 +9,8 @@ export type ValuesProps = {
   birthday: string;
   fullName?: string;
   greeting?: string;
+  password1?: string;
+  password2?: string;
 };
 
 export type MessageProps = {
@@ -29,7 +31,9 @@ export type PersonalAction = {
     | "lastName"
     | "birthday"
     | "fullName"
-    | "greeting";
+    | "greeting"
+    | "password1"
+    | "password2";
   payload: string;
 };
 

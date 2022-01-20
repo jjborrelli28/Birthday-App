@@ -10,6 +10,7 @@ import Line from "../../components/line";
 import { Textarea } from "../../components/textarea";
 import Title from "../../components/title";
 import { formatDate } from "../../helpers/helpers";
+import { useLoadState } from "../../hooks/useLoadState";
 import { BirthdaySelectProps } from "../../modules/edit-management/interfaces";
 import { changeValues } from "../../modules/form-management/actions";
 import { TargetProps } from "../../modules/form-management/interfaces";
@@ -41,18 +42,23 @@ const ECard = ({ birthdaySelect }: BirthdaySelectProps) => {
 
   const [{ values }, dispatch] = useReducer(reducer, initialState);
 
+  const { loadState, setLoadState } = useLoadState();
+
   const router = useRouter();
 
-  const sendEmail = (e: any) => {
+  const sendECard = (e: any) => {
     e.preventDefault();
+
+    setLoadState(true);
 
     window.location.href = `mailto:${
       values.email
     }?subject=${"Birthday Greeting"}&body=${values.greeting}`;
 
     setTimeout(() => {
+      setLoadState(false);
       router.back();
-    }, 1000);
+    }, 2000);
   };
 
   return (
@@ -66,7 +72,7 @@ const ECard = ({ birthdaySelect }: BirthdaySelectProps) => {
           eCard for {firstName} {lastName}
         </Title>
         <Line />
-        <form className={styles.form} onSubmit={sendEmail}>
+        <form className={styles.form} onSubmit={sendECard}>
           <div>
             <Label bold={true} mobileHidden={false}>
               Full name:
@@ -126,7 +132,12 @@ const ECard = ({ birthdaySelect }: BirthdaySelectProps) => {
               text="Cancel"
               onClick={() => router.back()}
             />
-            <Button variant="email" text="Send" onSubmit={sendEmail} />
+            <Button
+              variant="email"
+              text="Send"
+              onSubmit={sendECard}
+              disabled={loadState}
+            />
           </div>
         </form>
       </Container>

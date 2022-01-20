@@ -16,7 +16,7 @@ export default function handler(
 ) {
   const { param } = req.query;
 
-  fetch(`${process.env.BDA_API}/john/birthdays`)
+  fetch(`${process.env.BDA_API_V1}/john/birthdays`)
     .then((response) => response.json())
     .then(({ birthdays }) => {
       // Search filter

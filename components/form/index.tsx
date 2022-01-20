@@ -85,7 +85,7 @@ export const Form: React.FC<FormProps> = ({
             <Message variant={message.variant}>{message.text}</Message>
           )}
         </div>
-        <div className={styles.btnsContainer}>
+        <div className={styles.btns}>
           <Button
             type="button"
             variant="secondary"

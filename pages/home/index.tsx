@@ -1,7 +1,12 @@
 import Layout from "../../components/layout";
 import { GetServerSideProps } from "next";
 import styles from "./index.module.scss";
-import { getDates, formatName } from "../../helpers/helpers";
+import {
+  getDates,
+  formatName,
+  handleSearch,
+  resetSearch,
+} from "../../helpers/helpers";
 import Button from "../../components/button";
 import { DataProps } from "../../modules/home-management/interfaces";
 import { useRouter } from "next/router";
@@ -34,6 +39,7 @@ const Home = ({ data }: DataProps) => {
   const modal = useModalContext();
 
   const { active, text, variant, payload, isRefreshing, setModal } = modal;
+
   if (isRefreshing) {
     router.replace(router.asPath);
   }
@@ -56,17 +62,6 @@ const Home = ({ data }: DataProps) => {
 
   const [{ value }, dispatch] = useReducer(reducer, initialState, init);
 
-  const handleSearch = (e: any) => {
-    e.preventDefault();
-    router.push(`/?search=${value}`);
-  };
-
-  const resetSearch = (e: any) => {
-    e.preventDefault();
-    dispatch({ type: "value", payload: "" });
-    router.push(`/`);
-  };
-
   return (
     <Layout
       title="Birthday App | Home"
@@ -78,9 +73,9 @@ const Home = ({ data }: DataProps) => {
         <Title>Home</Title>
         <Line />
         <FormSearch
-          onSubmit={handleSearch}
+          onSubmit={(e: Event) => handleSearch(e, router, value)}
           onChange={({ target }: TargetProps) => dispatch(changeValues(target))}
-          reset={resetSearch}
+          reset={(e: Event) => resetSearch(e, dispatch, router)}
           value={value}
           variant="primary"
         />
