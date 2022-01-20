@@ -13,7 +13,7 @@ const Layout = ({
   title,
   description,
   hideHeader = true,
-  hideFooter = true,
+  hideFooter = false,
   auth,
 }: PropsLayout) => {
   return (

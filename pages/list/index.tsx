@@ -70,8 +70,7 @@ const List = ({ data }: DataProps) => {
   return (
     <Layout
       title="Birthday App | Birthdays list"
-      description="List birthdays list"
-      hideFooter={false}
+      description="Birthdays list page"
       auth={auth}
     >
       <Container>

@@ -65,8 +65,7 @@ const Home = ({ data }: DataProps) => {
   return (
     <Layout
       title="Birthday App | Home"
-      description="Homepage"
-      hideFooter={false}
+      description="Upcoming birthdays"
       auth={auth}
     >
       <Container>

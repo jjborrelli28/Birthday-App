@@ -29,10 +29,9 @@ const SignIn = () => {
 
   return (
     <Layout
-      title="Birthday App | Login"
-      description="Login page"
+      title="Birthday App | Sign in"
+      description="Sign in page"
       auth={true}
-      hideFooter={false}
     >
       <Container>
         <div className={styles.center}>

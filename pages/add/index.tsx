@@ -26,7 +26,7 @@ const Add = () => {
   return (
     <Layout
       title="Birthday App | Add Birthday"
-      description="Page to add birthdays"
+      description="Form page to add birthday"
       auth={auth}
     >
       <Form

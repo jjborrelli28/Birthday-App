@@ -64,7 +64,7 @@ const ECard = ({ birthdaySelect }: BirthdaySelectProps) => {
   return (
     <Layout
       title="Birthday App | Send eCard"
-      description="eCard form"
+      description="Form page to send eCard"
       auth={auth}
     >
       <Container>

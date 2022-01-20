@@ -36,10 +36,9 @@ const SignUp = () => {
 
   return (
     <Layout
-      title="Birthday App | Login"
-      description="Login page"
+      title="Birthday App | Sign up"
+      description="Sign up page"
       auth={true}
-      hideFooter={false}
     >
       <Container>
         <Title>Sign up for Birthday App </Title>

@@ -42,7 +42,7 @@ const Edit = ({ birthdaySelect }: BirthdaySelectProps) => {
   return (
     <Layout
       title="Birthday App | Edit Birthday"
-      description="Page to edit birthdays"
+      description="Birthday edit form page"
       auth={auth}
     >
       <Form
