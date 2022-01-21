@@ -10,7 +10,7 @@
   margin-bottom: 1rem;
 }
 
-.message {
+.alert {
   margin: 0;
   width: 100%;
   font-weight: bold;
@@ -39,7 +39,7 @@
 }
 
 @include tablet {
-  .message {
+  .alert {
     font-size: 1.1rem;
     padding: 0.4rem;
     line-height: 1.8rem;
@@ -47,7 +47,7 @@
 }
 
 @include desktop {
-  .message {
+  .alert {
     font-size: 1.2rem;
     padding: 0.5rem;
     line-height: 2.2rem;

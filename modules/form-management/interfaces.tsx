@@ -13,15 +13,15 @@ export type ValuesProps = {
   password2?: string;
 };
 
-export type MessageProps = {
-  show: boolean;
+export type AlertProps = {
+  active: boolean;
   variant: string;
-  text: string;
+  message: string;
 };
 
 export interface StateProps {
   values: ValuesProps;
-  message: MessageProps;
+  alert: AlertProps;
 }
 
 export type PersonalAction = {
@@ -37,13 +37,13 @@ export type PersonalAction = {
   payload: string;
 };
 
-export type MessageAction = {
-  type: "message";
+export type AlertAction = {
+  type: "alert";
   payload: {
-    show: boolean;
+    active: boolean;
     variant: string;
-    text: string;
+    message: string;
   };
 };
 
-export type ActionProps = PersonalAction | MessageAction;
+export type ActionProps = PersonalAction | AlertAction;

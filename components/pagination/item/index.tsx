@@ -1,5 +1,5 @@
 import Link from "next/link";
-import React from "react";
+import React, { PropsWithChildren } from "react";
 import { cc } from "../../../helpers/helpers";
 import { ItemProps } from "../interfaces";
 import styles from "./index.module.scss";
@@ -12,7 +12,7 @@ const Item = ({
   select = false,
   hidden = false,
   query = "",
-}: ItemProps) => {
+}: PropsWithChildren<ItemProps>) => {
   return disabled ? (
     <span
       className={cc(styles.item, styles[variant], disabled && styles.disabled)}

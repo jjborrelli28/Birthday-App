@@ -47,7 +47,7 @@
 
 @include tablet {
   .container {
-    width: 500px;
+    width: 31.25rem;
     padding: 1.5rem;
   }
 
@@ -58,7 +58,7 @@
 
 @include desktop {
   .container {
-    width: 600px;
+    width: 37.5rem;
     padding: 2rem;
   }
 }

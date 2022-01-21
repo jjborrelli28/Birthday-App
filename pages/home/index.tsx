@@ -10,7 +10,7 @@ import {
 import Button from "../../components/button";
 import { DataProps } from "../../modules/home-management/interfaces";
 import { useRouter } from "next/router";
-import Message from "../../components/message";
+import Alert from "../../components/alert";
 import Title from "../../components/title";
 import Container from "../../components/container";
 import Card from "../../components/card";
@@ -163,11 +163,11 @@ const Home = ({ data }: DataProps) => {
             </>
           ) : (
             <div className={styles.messageContainer}>
-              <Message variant="warning">
+              <Alert variant="warning">
                 {search
                   ? "No results found for the search"
                   : "No Birthdays coming soon"}
-              </Message>
+              </Alert>
               {!search && (
                 <Picture
                   src={calendar}
@@ -189,7 +189,7 @@ const Home = ({ data }: DataProps) => {
         <Modal show={active}>
           <Modal.Header>{`Removing birthday from: ${payload.name}`}</Modal.Header>
           <Modal.Body>
-            <Message variant={variant}>{text}</Message>
+            <Alert variant={variant}>{text}</Alert>
           </Modal.Body>
           <Modal.Footer />
         </Modal>

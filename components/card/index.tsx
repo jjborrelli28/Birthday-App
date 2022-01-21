@@ -68,13 +68,13 @@ export const Comands = ({ id, name, router, birthday }: ComandsProps) => {
   return (
     <div className={styles.comands}>
       <button
-        className={cc(styles.btn, styles.edit)}
+        className={cc(styles.button, styles.edit)}
         onClick={() => router.push(`/edit?id=${id}`)}
       >
         <FaUserEdit />
       </button>
       <button
-        className={cc(styles.btn, styles.delete)}
+        className={cc(styles.button, styles.delete)}
         onClick={() =>
           setModal({
             ...modal,
@@ -89,7 +89,7 @@ export const Comands = ({ id, name, router, birthday }: ComandsProps) => {
       </button>
       {birthday == today && (
         <button
-          className={cc(styles.btn, styles.eCard)}
+          className={cc(styles.button, styles.eCard)}
           onClick={() => router.push(`/eCard?id=${id}`)}
         >
           <HiOutlineMailOpen />

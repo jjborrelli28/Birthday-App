@@ -14,7 +14,7 @@ import { useLoadState } from "../../hooks/useLoadState";
 const Add = () => {
   const auth = useAuthenticator();
 
-  const [{ values, message }, dispatch] = useReducer(
+  const [{ values, alert }, dispatch] = useReducer(
     reducer,
     initialAddBirthdayState
   );
@@ -32,7 +32,7 @@ const Add = () => {
       <Form
         title="Add a new birthday"
         values={values}
-        message={message}
+        alert={alert}
         onSubmit={(e: FormEvent) =>
           addBirthday({ e, values, setLoadState, dispatch, router })
         }

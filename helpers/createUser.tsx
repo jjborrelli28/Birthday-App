@@ -1,4 +1,4 @@
-import { showMessage } from "../modules/form-management/actions";
+import { setAlert } from "../modules/form-management/actions";
 import { ValuesProps } from "../modules/form-management/interfaces";
 import { NextRouter } from "next/router";
 import { FormEvent } from "react";
@@ -26,9 +26,9 @@ export const createUser = ({
     if (password1 === password2) {
       setLoadState(true);
 
-      dispatch(showMessage(false, "", ""));
+      dispatch(setAlert(false, "", ""));
 
-      fetch(`https://birthday-app-api.vercel.app/api/v2/signup`, {
+      fetch(`${process.env.NEXT_PUBLIC_API_V2}/signup`, {
         method: "POST",
         headers: {
           Accept: "application/json",
@@ -48,7 +48,7 @@ export const createUser = ({
         .then((data) => {
           if (data.success) {
             dispatch(
-              showMessage(
+              setAlert(
                 true,
                 "success",
                 `The user was created successfully ✔`
@@ -56,7 +56,7 @@ export const createUser = ({
             );
           } else {
             dispatch(
-              showMessage(
+              setAlert(
                 true,
                 "danger",
                 `Error creating user: ${data.message}`
@@ -66,21 +66,21 @@ export const createUser = ({
         })
         .catch((error) =>
           dispatch(
-            showMessage(true, "warning", `Error creating user: ${error}`)
+            setAlert(true, "warning", `Error creating user: ${error}`)
           )
         );
 
       setTimeout(() => {
-        dispatch(showMessage(false, "", ""));
+        dispatch(setAlert(false, "", ""));
         setLoadState(false);
         router.push("/");
       }, 2000);
     } else {
-      dispatch(showMessage(true, "danger", "Passwords do not match"));
+      dispatch(setAlert(true, "danger", "Passwords do not match"));
     }
   } else {
     dispatch(
-      showMessage(
+      setAlert(
         true,
         "warning",
         "All fields must be completed to create a user"

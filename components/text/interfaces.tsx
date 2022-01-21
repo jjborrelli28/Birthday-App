@@ -1,7 +1,5 @@
-import { ReactNode } from "react";
-interface TitleProps {
-  children: ReactNode;
+interface TextProps {
   bold?: boolean;
 }
 
-export default TitleProps;
+export default TextProps;

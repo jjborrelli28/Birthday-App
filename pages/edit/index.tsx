@@ -26,14 +26,14 @@ const Edit = ({ birthdaySelect }: BirthdaySelectProps) => {
       lastName,
       birthday: formatDate(birthday),
     },
-    message: {
-      show: false,
+    alert: {
+      active: false,
       variant: "",
-      text: "",
+      message: "",
     },
   };
 
-  const [{ values, message }, dispatch] = useReducer(reducer, initialState);
+  const [{ values, alert }, dispatch] = useReducer(reducer, initialState);
 
   const { loadState, setLoadState } = useLoadState();
 
@@ -48,7 +48,7 @@ const Edit = ({ birthdaySelect }: BirthdaySelectProps) => {
       <Form
         title={`Edit birthday of ${formatName(firstName, lastName)}`}
         values={values}
-        message={message}
+        alert={alert}
         onSubmit={(e: Event) =>
           editBirthday({ e, values, setLoadState, dispatch, router })
         }
@@ -61,9 +61,7 @@ const Edit = ({ birthdaySelect }: BirthdaySelectProps) => {
 };
 
 export const getServerSideProps: GetServerSideProps = async ({ query }) => {
-  const res = await fetch(
-    "https://birthday-app-api.vercel.app/api/v1/john/birthdays"
-  );
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_V1}/john/birthdays`);
   const { birthdays } = await res.json();
 
   const id = query.id;

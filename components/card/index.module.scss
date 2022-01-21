@@ -63,7 +63,7 @@
   margin: 0.5rem;
 }
 
-.btn {
+.button {
   font-size: 1.25rem;
   font-weight: bold;
   width: 2rem;
@@ -75,11 +75,11 @@
   align-items: center;
 }
 
-.btn:hover {
+.button:hover {
   transition: transform 0.5s;
 }
 
-.btn:hover {
+.button:hover {
   transform: scale(1.1);
 }
 

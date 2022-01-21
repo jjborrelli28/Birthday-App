@@ -5,7 +5,7 @@ import Card from "../../components/card";
 import Container from "../../components/container";
 import Layout from "../../components/layout";
 import Line from "../../components/line";
-import Message from "../../components/message";
+import Alert from "../../components/alert";
 import Title from "../../components/title";
 import styles from "./index.module.scss";
 import Pagination from "../../components/pagination";
@@ -153,11 +153,11 @@ const List = ({ data }: DataProps) => {
                   <FaArrowCircleUp className={styles.arrow} />
                 </div>
               )}
-              <Message variant="warning">
+              <Alert variant="warning">
                 {search
                   ? "No results found for the search"
                   : "Set your Birthday reminders!"}
-              </Message>
+              </Alert>
             </div>
           )}
           {pages > 1 && (
@@ -172,7 +172,7 @@ const List = ({ data }: DataProps) => {
         <Modal show={active}>
           <Modal.Header>{`Removing birthday from: ${payload.name}`}</Modal.Header>
           <Modal.Body>
-            <Message variant={variant}>{text}</Message>
+            <Alert variant={variant}>{text}</Alert>
           </Modal.Body>
           <Modal.Footer />
         </Modal>

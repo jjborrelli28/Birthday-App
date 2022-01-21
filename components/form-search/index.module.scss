@@ -48,7 +48,7 @@
   color: lighten($color: $dark-gray, $amount: 5);
 }
 
-.btn {
+.button {
   width: 2rem;
   height: 1.8rem;
   display: flex;
@@ -97,7 +97,7 @@
     right: 2.05rem;
   }
 
-  .btn {
+  .button {
     width: 2.3rem;
     height: 1.9rem;
     font-size: 1.1rem;
@@ -122,7 +122,7 @@
     right: 2.25rem;
   }
 
-  .btn {
+  .button {
     width: 2.4rem;
     height: 2rem;
     font-size: 1.2rem;

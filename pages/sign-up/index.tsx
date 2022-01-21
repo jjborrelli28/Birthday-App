@@ -14,7 +14,7 @@ import { initialSignUpState } from "../../modules/form-management/reducer";
 import { getDates } from "../../helpers/helpers";
 import { changeValues } from "../../modules/form-management/actions";
 import { TargetProps } from "../../modules/form-management/interfaces";
-import Message from "../../components/message";
+import Alert from "../../components/alert";
 import { useLoadState } from "../../hooks/useLoadState";
 import { createUser } from "../../helpers/createUser";
 
@@ -23,16 +23,13 @@ const SignUp = () => {
 
   const { today } = getDates();
 
-  const [{ values, message }, dispatch] = useReducer(
-    reducer,
-    initialSignUpState
-  );
+  const [{ values, alert }, dispatch] = useReducer(reducer, initialSignUpState);
 
   const { loadState, setLoadState } = useLoadState();
 
   const { firstName, lastName, email, birthday, password1, password2 } = values;
 
-  const { show, variant, text } = message;
+  const { active, variant, message } = alert;
 
   return (
     <Layout
@@ -147,9 +144,9 @@ const SignUp = () => {
                 required={true}
               />
             </Tooltip>
-            {show && <Message variant={variant}>{text}</Message>}
+            {active && <Alert variant={variant}>{message}</Alert>}
           </div>
-          <div className={styles.btns}>
+          <div className={styles.buttons}>
             <Button
               type="button"
               variant="secondary"

@@ -1,7 +1,7 @@
 import { ModalContextProps } from "../contexts/modal/interfaces";
 
 type DeleteBirthdayProps = {
-  e: Event;
+  e: React.MouseEvent<HTMLDivElement, MouseEvent>;
   payload: { id: string; name: string };
   setLoadState: any;
   setModal: any;
@@ -19,15 +19,12 @@ export const deleteBirthday = ({
 
   setLoadState(true);
 
-  fetch(
-    `https://birthday-app-api.vercel.app/api/v1/john/birthdays/${payload.id}`,
-    {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    }
-  )
+  fetch(`${process.env.NEXT_PUBLIC_API_V1}/john/birthdays/${payload.id}`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  })
     .then((res) => {
       return res.json();
     })

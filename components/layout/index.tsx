@@ -1,5 +1,5 @@
 import Head from "next/head";
-import React from "react";
+import React, { PropsWithChildren } from "react";
 import Error from "../error";
 import PropsLayout from "./interfaces";
 import styles from "./index.module.scss";
@@ -15,7 +15,7 @@ const Layout = ({
   hideHeader = true,
   hideFooter = false,
   auth,
-}: PropsLayout) => {
+}: PropsWithChildren<PropsLayout>) => {
   return (
     <div>
       <Head>
@@ -47,16 +47,16 @@ const Layout = ({
         </div>
 
         <footer className={cc(styles.footer, hideFooter && styles.hide)}>
-          <p>By JJ</p>
-          <p>Copyright © 2022</p>
+          <p className={styles.text}>By JJ</p>
+          <p className={styles.text}>Copyright © 2022</p>
           <div className={styles.icons}>
             <Link href="https://github.com/jjborrelli28">
-              <a>
+              <a className={styles.anchor}>
                 <AiFillGithub className={styles.icon} />
               </a>
             </Link>
             <Link href="https://jjborrelli.netlify.app/">
-              <a>
+              <a className={styles.anchor}>
                 <BsFillPersonLinesFill className={styles.icon} />
               </a>
             </Link>

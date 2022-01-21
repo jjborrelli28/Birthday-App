@@ -33,10 +33,10 @@ const ECard = ({ birthdaySelect }: BirthdaySelectProps) => {
       birthday: formatDate(birthday),
       greeting: `Very happy birthday ${fullName}!`,
     },
-    message: {
-      show: false,
+    alert: {
+      active: false,
       variant: "",
-      text: "",
+      message: "",
     },
   };
 
@@ -125,7 +125,7 @@ const ECard = ({ birthdaySelect }: BirthdaySelectProps) => {
               required={true}
             />
           </div>
-          <div className={styles.btnsContainer}>
+          <div className={styles.buttons}>
             <Button
               type="button"
               variant="secondary"
@@ -146,9 +146,7 @@ const ECard = ({ birthdaySelect }: BirthdaySelectProps) => {
 };
 
 export const getServerSideProps: GetServerSideProps = async ({ query }) => {
-  const res = await fetch(
-    "https://birthday-app-api.vercel.app/api/v1/john/birthdays"
-  );
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_V1}/john/birthdays`);
   const { birthdays } = await res.json();
 
   const id = query.id;

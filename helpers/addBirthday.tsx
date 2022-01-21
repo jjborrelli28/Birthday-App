@@ -1,6 +1,6 @@
 import { NextRouter } from "next/router";
 import { FormEvent } from "react";
-import { showMessage } from "../modules/form-management/actions";
+import { setAlert } from "../modules/form-management/actions";
 import { ValuesProps } from "../modules/form-management/interfaces";
 
 type AddBirthdayProps = {
@@ -25,7 +25,7 @@ export const addBirthday = ({
   if (firstName && lastName && email && birthday) {
     setLoadState(true);
 
-    fetch("https://birthday-app-api.vercel.app/api/v1/john/birthdays/add", {
+    fetch(`${process.env.NEXT_PUBLIC_API_V1}/john/birthdays/add`, {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -39,7 +39,7 @@ export const addBirthday = ({
       .then((data) => {
         if (data.success) {
           dispatch(
-            showMessage(
+            setAlert(
               true,
               "success",
               "The birthday was saved successfully ✔"
@@ -47,7 +47,7 @@ export const addBirthday = ({
           );
         } else {
           dispatch(
-            showMessage(
+            setAlert(
               true,
               "danger",
               `Error saving birthday: ${data.message}`
@@ -57,18 +57,18 @@ export const addBirthday = ({
       })
       .catch((error) =>
         dispatch(
-          showMessage(true, "warning", `Error saving birthday: ${error}`)
+          setAlert(true, "warning", `Error saving birthday: ${error}`)
         )
       );
 
     setTimeout(() => {
-      dispatch(showMessage(false, "", ""));
+      dispatch(setAlert(false, "", ""));
       setLoadState(true);
       router.back();
     }, 2000);
   } else {
     dispatch(
-      showMessage(
+      setAlert(
         true,
         "warning",
         "All fields need to be completed before saving the changes"

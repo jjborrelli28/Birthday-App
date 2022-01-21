@@ -33,7 +33,7 @@ export const FormSearch = ({
         <button type="button" className={styles.reset} onClick={reset}>
           <RiDeleteBack2Fill />
         </button>
-        <button className={cc(styles.btn, styles[variant])} onSubmit={onSubmit}>
+        <button className={cc(styles.button, styles[variant])} onSubmit={onSubmit}>
           <FaSearch />
         </button>
       </form>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { PropsWithChildren } from "react";
 import { cc } from "../../helpers/helpers";
 import styles from "./index.module.scss";
 import LabelProps from "./interfaces";
@@ -8,7 +8,7 @@ const Label = ({
   required = false,
   bold = false,
   mobileHidden = true,
-}: LabelProps) => {
+}: PropsWithChildren<LabelProps>) => {
   return (
     <label
       className={cc(

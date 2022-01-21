@@ -62,7 +62,7 @@ const TermsAndConditions = () => {
               <Text bold={true}>All rights reserved.</Text>
             </div>
           </div>
-          <div className={styles.btnsContainer}>
+          <div className={styles.buttons}>
             <Button
               variant="secondary"
               text="Decline"
