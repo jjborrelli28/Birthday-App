@@ -26,7 +26,7 @@ export const editBirthday = ({
   if (firstName && lastName && email && birthday) {
     setLoadState(true);
 
-    fetch(`${process.env.NEXT_PUBLIC_API_V1}/john/birthdays/${id}`, {
+    fetch(`${process.env.NEXT_PUBLIC_BDA_API_V1}/john/birthdays/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",

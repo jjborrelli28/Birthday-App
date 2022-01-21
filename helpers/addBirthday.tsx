@@ -25,7 +25,7 @@ export const addBirthday = ({
   if (firstName && lastName && email && birthday) {
     setLoadState(true);
 
-    fetch(`${process.env.NEXT_PUBLIC_API_V1}/john/birthdays/add`, {
+    fetch(`${process.env.NEXT_PUBLIC_BDA_API_V1}/john/birthdays/add`, {
       method: "POST",
       headers: {
         Accept: "application/json",

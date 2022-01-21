@@ -146,7 +146,7 @@ const ECard = ({ birthdaySelect }: BirthdaySelectProps) => {
 };
 
 export const getServerSideProps: GetServerSideProps = async ({ query }) => {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_V1}/john/birthdays`);
+  const res = await fetch(`${process.env.NEXT_PUBLIC_BDA_API_V1}/john/birthdays`);
   const { birthdays } = await res.json();
 
   const id = query.id;

@@ -28,7 +28,7 @@ export const createUser = ({
 
       dispatch(setAlert(false, "", ""));
 
-      fetch(`${process.env.NEXT_PUBLIC_API_V2}/signup`, {
+      fetch(`${process.env.NEXT_PUBLIC_BDA_API_V2}/signup`, {
         method: "POST",
         headers: {
           Accept: "application/json",

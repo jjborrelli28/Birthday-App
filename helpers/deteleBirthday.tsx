@@ -19,7 +19,7 @@ export const deleteBirthday = ({
 
   setLoadState(true);
 
-  fetch(`${process.env.NEXT_PUBLIC_API_V1}/john/birthdays/${payload.id}`, {
+  fetch(`${process.env.NEXT_PUBLIC_BDA_API_V1}/john/birthdays/${payload.id}`, {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",
