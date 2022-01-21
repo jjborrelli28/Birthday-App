@@ -14,7 +14,7 @@ export const Accordion = ({
     <div className={styles.accordion}>
       <div className={cc(styles.header, open && styles.line)}>
         <h2 className={styles.title}> {`Sort by: ${classification}`}</h2>
-        <button type="button" className={styles.btn} onClick={onClick}>
+        <button type="button" className={styles.button} onClick={onClick}>
           <IoIosArrowDropdown
             className={cc(open && styles.invert, !open && styles.normal)}
           />

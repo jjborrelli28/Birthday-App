@@ -10,13 +10,22 @@ const Button = ({
   onClick,
   onSubmit,
   long = false,
+  shadow = false,
+  disabled = false,
 }: ButtonProps) => {
   return (
     <button
       type={type}
-      className={cc(styles.button, styles[variant], long && styles.long)}
+      className={cc(
+        styles.button,
+        styles[variant],
+        long && styles.long,
+        shadow && styles.shadow,
+        disabled && styles.disabled
+      )}
       onClick={onClick}
       onSubmit={onSubmit}
+      disabled={disabled}
     >
       {text}
     </button>

@@ -2,26 +2,26 @@
 @import "../../styles/media_queries";
 
 .container {
-  padding: 1rem;
   border: solid $light-gray 0.2rem;
   border-radius: 0.6rem;
-  min-height: calc(100vh - 2rem);
   display: flex;
   flex-direction: column;
+  flex: 1;
   position: relative;
+  padding: 1rem;
 }
 
 @include tablet {
   .container {
-    padding: 1.5rem;
-    max-width: 600px;
+    width: 31.25rem;
     margin: auto;
+    padding: 1.5rem;
   }
 }
 
 @include desktop {
   .container {
+    width: 37.5rem;
     padding: 2rem;
-    width: 792.8px;
   }
 }

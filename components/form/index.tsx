@@ -5,19 +5,22 @@ import Input from "../input";
 import Label from "../label";
 import Line from "../line";
 import Title from "../title";
-import Message from "../message";
+import Alert from "../alert";
 import { FormProps } from "./interface";
 import { getDates } from "../../helpers/helpers";
 
 export const Form: React.FC<FormProps> = ({
   title,
   values,
-  message,
+  alert,
   onSubmit,
   onChange,
   router,
+  disabled,
 }) => {
   const { today } = getDates();
+
+  const { active, variant, message } = alert;
 
   return (
     <Container>
@@ -80,18 +83,21 @@ export const Form: React.FC<FormProps> = ({
             max={today}
             required={true}
           />
-          {message.show && (
-            <Message variant={message.variant}>{message.text}</Message>
-          )}
+          {active && <Alert variant={variant}>{message}</Alert>}
         </div>
-        <div className={styles.btnsContainer}>
+        <div className={styles.buttons}>
           <Button
             type="button"
             variant="secondary"
             text="Cancel"
             onClick={() => router.back()}
           />
-          <Button variant="primary" text="Save" onSubmit={onSubmit} />
+          <Button
+            variant="primary"
+            text="Save"
+            onSubmit={onSubmit}
+            disabled={disabled}
+          />
         </div>
       </form>
     </Container>

@@ -5,12 +5,17 @@ import Card from "../../components/card";
 import Container from "../../components/container";
 import Layout from "../../components/layout";
 import Line from "../../components/line";
-import Message from "../../components/message";
+import Alert from "../../components/alert";
 import Title from "../../components/title";
 import styles from "./index.module.scss";
 import Pagination from "../../components/pagination";
 import { BirthdayElement } from "../../modules/home-management/interfaces";
-import { formatDate, formatName } from "../../helpers/helpers";
+import {
+  formatDate,
+  formatName,
+  handleSearch,
+  resetSearch,
+} from "../../helpers/helpers";
 import { GetServerSideProps } from "next";
 import { DataProps } from "../../modules/list-management/interfaces";
 import { useAuthenticator } from "../../temporal/useAuthenticator";
@@ -52,17 +57,6 @@ const List = ({ data }: DataProps) => {
     value: typeof search === "string" ? search : "",
   });
 
-  const handleSearch = (e: any) => {
-    e.preventDefault();
-    router.push(`/list?sortBy=${sortBy}&search=${value}`);
-  };
-
-  const resetSearch = (e: any) => {
-    e.preventDefault();
-    dispatch({ type: "value", payload: "" });
-    router.push(`/list?sortBy=${sortBy}`);
-  };
-
   const [{ open }, setAccordion] = useState({ open: false });
 
   const toggleAccordion = () => {
@@ -76,18 +70,20 @@ const List = ({ data }: DataProps) => {
   return (
     <Layout
       title="Birthday App | Birthdays list"
-      description="List birthdays list"
-      hideHeader={true}
-      hideFooter={true}
+      description="Birthdays list page"
       auth={auth}
     >
       <Container>
         <Title>Birthdays list</Title>
         <Line />
         <FormSearch
-          onSubmit={handleSearch}
+          onSubmit={(e: Event) =>
+            handleSearch(e, router, value, `sortBy=${sortBy}&`)
+          }
           onChange={({ target }: any) => dispatch(changeValues(target))}
-          reset={resetSearch}
+          reset={(e: Event) =>
+            resetSearch(e, dispatch, router, `?sortBy=${sortBy}`)
+          }
           value={value}
           variant="tertiary"
         />
@@ -95,11 +91,13 @@ const List = ({ data }: DataProps) => {
         <div className={styles.menu}>
           <Button
             variant="secondary"
+            shadow={true}
             text="Home"
-            onClick={() => router.push("/")}
+            onClick={() => router.push("/home")}
           />
           <Button
             variant="primary"
+            shadow={true}
             text="Add"
             onClick={() => router.push("/add")}
           />
@@ -155,11 +153,11 @@ const List = ({ data }: DataProps) => {
                   <FaArrowCircleUp className={styles.arrow} />
                 </div>
               )}
-              <Message variant="warning">
+              <Alert variant="warning">
                 {search
                   ? "No results found for the search"
                   : "Set your Birthday reminders!"}
-              </Message>
+              </Alert>
             </div>
           )}
           {pages > 1 && (
@@ -174,7 +172,7 @@ const List = ({ data }: DataProps) => {
         <Modal show={active}>
           <Modal.Header>{`Removing birthday from: ${payload.name}`}</Modal.Header>
           <Modal.Body>
-            <Message variant={variant}>{text}</Message>
+            <Alert variant={variant}>{text}</Alert>
           </Modal.Body>
           <Modal.Footer />
         </Modal>
@@ -192,7 +190,7 @@ export const getServerSideProps: GetServerSideProps = async ({
   const page = query.page ? query.page : 1;
   const host = req.headers.host;
 
-  const res = await fetch(`http://${host}/api/birthdays-list${search}`, {
+  const res = await fetch(`http://${host}/api/full-birthdays-list${search}`, {
     method: "POST",
     headers: {
       Accept: "application/json",

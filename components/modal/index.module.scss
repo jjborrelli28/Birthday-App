@@ -47,7 +47,7 @@
 
 @include tablet {
   .container {
-    max-width: calc(100% - 3rem);
+    width: 31.25rem;
     padding: 1.5rem;
   }
 
@@ -58,7 +58,7 @@
 
 @include desktop {
   .container {
-    max-width: 600px;
+    width: 37.5rem;
     padding: 2rem;
   }
 }

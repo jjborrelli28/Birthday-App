@@ -21,7 +21,7 @@
   font-size: 1.1rem;
 }
 
-.btn {
+.button {
   background-color: $light-gray;
   border: none;
   font-size: 1.4rem;
@@ -30,7 +30,7 @@
   transition: all 0.3s;
 }
 
-.btn:hover {
+.button:hover {
   cursor: pointer;
   color: lighten($color: $black, $amount: 25);
   transform: scale(1.1);
@@ -95,7 +95,7 @@
     font-size: 1.2rem;
   }
 
-  .btn {
+  .button {
     font-size: 1.6rem;
   }
 
@@ -126,7 +126,7 @@
     font-size: 1.3rem;
   }
 
-  .btn {
+  .button {
     font-size: 1.8rem;
   }
 

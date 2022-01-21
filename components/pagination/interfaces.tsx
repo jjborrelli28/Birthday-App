@@ -14,7 +14,6 @@ type Action = {
 };
 
 export interface ItemProps {
-  children: React.ReactChild;
   page: number;
   variant?: string;
   disabled?: boolean;

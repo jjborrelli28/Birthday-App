@@ -1,6 +1,6 @@
 import React, { useState } from "react";
+import { ChildrenProps } from "./interfaces";
 import { initialState, ModalContext } from "./ModalContext";
-import { ChildrenProps } from "../../components/modal/interface";
 
 export const ModalControler = ({ children }: ChildrenProps) => {
   const [modal, setModal] = useState(initialState);

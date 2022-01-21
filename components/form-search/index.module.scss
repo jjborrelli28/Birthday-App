@@ -9,7 +9,8 @@
 
 .form {
   display: flex;
-  width: 95%;
+  width: 90%;
+  position: relative;
 }
 
 .input {
@@ -30,24 +31,24 @@
 }
 
 .reset {
-  background-color: $light-gray;
-  border: solid $gray 0.1rem;
-  border-left: none;
+  background-color: transparent;
+  border: none;
   height: 1.8rem;
   font-size: 1.4rem;
   display: flex;
   justify-content: center;
   align-items: center;
-  color: $red;
-  right: 2.2rem;
+  color: $dark-gray;
+  position: absolute;
+  right: 1.75rem;
 }
 
 .reset:hover {
   cursor: pointer;
-  color: lighten($color: $red, $amount: 5);
+  color: lighten($color: $dark-gray, $amount: 5);
 }
 
-.btn {
+.button {
   width: 2rem;
   height: 1.8rem;
   display: flex;
@@ -80,7 +81,7 @@
 
 @include tablet {
   .form {
-    width: 85%;
+    width: 80%;
   }
 
   .input {
@@ -92,9 +93,11 @@
   .reset {
     height: 1.9rem;
     font-size: 1.5rem;
+    position: absolute;
+    right: 2.05rem;
   }
 
-  .btn {
+  .button {
     width: 2.3rem;
     height: 1.9rem;
     font-size: 1.1rem;
@@ -103,7 +106,7 @@
 
 @include desktop {
   .form {
-    width: 75%;
+    width: 70%;
   }
 
   .input {
@@ -115,9 +118,11 @@
   .reset {
     height: 2rem;
     font-size: 1.7rem;
+    position: absolute;
+    right: 2.25rem;
   }
 
-  .btn {
+  .button {
     width: 2.4rem;
     height: 2rem;
     font-size: 1.2rem;

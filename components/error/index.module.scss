@@ -6,7 +6,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: calc(100vh - 2rem);
+  flex: 1;
   border: solid $light-gray 0.2rem;
   border-radius: 0.6rem;
 }
@@ -26,6 +26,7 @@
   font-weight: bold;
   font-size: 1rem;
   margin: 0;
+  padding: 1rem;
 }
 
 @include tablet {

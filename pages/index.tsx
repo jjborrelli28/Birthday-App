@@ -1,230 +1,80 @@
+import Image from "next/image";
+import React from "react";
 import Layout from "../components/layout";
-import { GetServerSideProps } from "next";
 import styles from "./index.module.scss";
-import { getDates, formatName } from "../helpers/helpers";
+import logo from "../assets/logo.png";
 import Button from "../components/button";
-import { DataProps } from "../modules/home-management/interfaces";
 import { useRouter } from "next/router";
-import Message from "../components/message";
-import Title from "../components/title";
 import Container from "../components/container";
-import Card from "../components/card";
-import Picture from "../components/picture";
-import calendar from "../assets/calendar.png";
-import Line from "../components/line";
-import Pagination from "../components/pagination";
-import { Modal } from "../components/modal";
-import { useModalContext } from "../hooks/useModalContext";
-import { useEffect, useReducer } from "react";
-import { HiCake } from "react-icons/hi";
-import { GiExtraTime } from "react-icons/gi";
-import reducer, { initialState } from "../modules/search-management/reducer";
-import { FormSearch } from "../components/form-search";
-import { changeValues } from "../modules/search-management/actions";
-import { TargetProps } from "../modules/form-management/interfaces";
-import { useAuthenticator } from "../temporal/useAuthenticator";
+import Input from "../components/input";
+import Label from "../components/label";
+import Title from "../components/title";
+import Text from "../components/text";
+import Link from "next/link";
 
-const Home = ({ data }: DataProps) => {
-  const auth = useAuthenticator();
-
+const SignIn = () => {
   const router = useRouter();
 
-  const { search } = router.query;
+  const handleSignIn = (e: any) => {
+    e.preventDefault();
 
-  const modal = useModalContext();
+    localStorage.setItem("logged", "true");
 
-  const { active, text, variant, payload, isRefreshing, setModal } = modal;
-  if (isRefreshing) {
-    router.replace(router.asPath);
-  }
-
-  const { dobs, page, pages } = data;
-
-  useEffect(() => {
-    setModal({ ...modal, isRefreshing: false });
-  }, [data]);
-
-  const { today } = getDates();
-
-  const init = () => {
-    if (typeof search === "string") {
-      return { value: search };
+    if (localStorage.getItem("t&cAccepted")) {
+      router.push("/home");
     } else {
-      return initialState;
+      router.push("/t&c");
     }
   };
 
-  const [{ value }, dispatch] = useReducer(reducer, initialState, init);
-
-  const handleSearch = (e: any) => {
-    e.preventDefault();
-    router.push(`/?search=${value}`);
-  };
-
-  const resetSearch = (e: any) => {
-    e.preventDefault();
-    dispatch({ type: "value", payload: "" });
-    router.push(`/`);
-  };
-
   return (
-    <Layout title="Birthday App | Home" description="Homepage" auth={auth}>
+    <Layout
+      title="Birthday App | Sign in"
+      description="Sign in page"
+      auth={true}
+    >
       <Container>
-        <Title>Next birthdays</Title>
-        <Line />
-        <FormSearch
-          onSubmit={handleSearch}
-          onChange={({ target }: TargetProps) => dispatch(changeValues(target))}
-          reset={resetSearch}
-          value={value}
-          variant="primary"
-        />
-        <Line />
-        <div className={styles.menu}>
-          <Button
-            variant="tertiary"
-            text="List"
-            onClick={() => router.push("/list?sortBy=recently-added")}
-          />
-          <Button
-            variant="primary"
-            text="Add"
-            onClick={() => router.push("/add")}
-          />
-        </div>
-        <div>
-          {dobs.length > 0 ? (
-            <>
-              {dobs.find((dob) => dob.birthday === today) && (
-                <div>
-                  <Title level={6}>
-                    {"Today's birthday"} <HiCake />
-                  </Title>
-                  {dobs
-                    .filter((dob) => dob.birthday === today)
-                    .map((birthday) => (
-                      <Card key={birthday.id}>
-                        <Card.Avatar />
-                        <Card.Data>
-                          <Card.Name
-                            name={birthday.firstName}
-                            surname={birthday.lastName}
-                          />
-                          <Card.Birthday>{birthday.birthday}</Card.Birthday>
-                          <Card.Email>{birthday.email}</Card.Email>
-                        </Card.Data>
-                        <Card.Comands
-                          id={birthday.id}
-                          name={formatName(
-                            birthday.firstName,
-                            birthday.lastName
-                          )}
-                          router={router}
-                          birthday={birthday.birthday}
-                        />
-                      </Card>
-                    ))}
-                  <Line />
-                </div>
-              )}
-
-              {dobs.find((dob) => dob.birthday !== today) && (
-                <div>
-                  <Title level={6}>
-                    {"Upcoming birthdays"} <GiExtraTime />
-                  </Title>
-                  {dobs
-                    .filter((dob) => dob.birthday !== today)
-                    .map((birthday) => (
-                      <Card key={birthday.id}>
-                        <Card.Avatar />
-                        <Card.Data>
-                          <Card.Name
-                            name={birthday.firstName}
-                            surname={birthday.lastName}
-                          />
-                          <Card.Birthday>{birthday.birthday}</Card.Birthday>
-                          <Card.Email>{birthday.email}</Card.Email>
-                        </Card.Data>
-                        <Card.Comands
-                          id={birthday.id}
-                          name={formatName(
-                            birthday.firstName,
-                            birthday.lastName
-                          )}
-                          router={router}
-                          birthday={birthday.birthday}
-                        />
-                      </Card>
-                    ))}
-                </div>
-              )}
-            </>
-          ) : (
-            <div className={styles.messageContainer}>
-              <Message variant="warning">
-                {search
-                  ? "No results found for the search"
-                  : "No Birthdays coming soon"}
-              </Message>
-              {!search && (
-                <Picture
-                  src={calendar}
-                  alt="logo"
-                  width={"250px"}
-                  heigth={"250px"}
-                />
-              )}
-            </div>
-          )}
-          {pages > 1 && (
-            <Pagination
-              pages={pages}
-              page={+page}
-              query={search ? `search=${search}&` : ``}
+        <div className={styles.center}>
+          <Image src={logo} alt="Logo" width={150} height={150} />
+          <Title>Sign in to Birthday App</Title>
+          <form className={styles.form} onSubmit={handleSignIn}>
+            <Label mobileHidden={false}>Email address</Label>
+            <Input
+              type="text"
+              id="email"
+              name="email"
+              placeholder=""
+              pattern="^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$"
+              required={true}
             />
-          )}
+            <Label mobileHidden={false}>Password</Label>
+            <Input
+              type="password"
+              id="password"
+              name="password"
+              placeholder=""
+              pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"
+              required={true}
+            />
+            <Button
+              variant="primary"
+              long={true}
+              text="Sign in"
+              onSubmit={handleSignIn}
+            />
+          </form>
+          <div className={styles.signup}>
+            <Text>
+              New to Birthday App?{" "}
+              <Link href={"/sign-up"}>
+                <a>Create an account.</a>
+              </Link>
+            </Text>
+          </div>
         </div>
-        <Modal show={active}>
-          <Modal.Header>{`Removing birthday from: ${payload.name}`}</Modal.Header>
-          <Modal.Body>
-            <Message variant={variant}>{text}</Message>
-          </Modal.Body>
-          <Modal.Footer />
-        </Modal>
       </Container>
     </Layout>
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async ({
-  query,
-  req,
-}) => {
-  const search = query.search ? `/${query.search}` : "";
-  const page = query.page ?? 1;
-  const host = req.headers.host;
-
-  const res = await fetch(`http://${host}/api/next-birthdays${search}`, {
-    method: "POST",
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ page }),
-  });
-
-  const data = await res.json();
-
-  if (data.page > data.pages) {
-    return {
-      notFound: true,
-    };
-  }
-
-  return {
-    props: { data },
-  };
-};
-
-export default Home;
+export default SignIn;

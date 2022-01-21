@@ -1,4 +1,4 @@
-import { MessageAction, PersonalAction } from "./interfaces";
+import { AlertAction, PersonalAction } from "./interfaces";
 
 export const changeValues = (target: HTMLInputElement) => {
   return {
@@ -7,13 +7,17 @@ export const changeValues = (target: HTMLInputElement) => {
   };
 };
 
-export const showMessage = (show: boolean, variant: string, text: string) => {
+export const setAlert = (
+  active: boolean,
+  variant: string,
+  message: string
+) => {
   return {
-    type: "message" as MessageAction["type"],
+    type: "alert" as AlertAction["type"],
     payload: {
-      show,
+      active,
       variant,
-      text,
+      message,
     },
   };
 };

@@ -1,11 +1,13 @@
-import React from "react";
+import React, { MouseEventHandler, PropsWithChildren } from "react";
+import { deleteBirthday } from "../../helpers/deteleBirthday";
 import { cc } from "../../helpers/helpers";
+import { useLoadState } from "../../hooks/useLoadState";
 import { useModalContext } from "../../hooks/useModalContext";
 import Button from "../button";
 import styles from "./index.module.scss";
-import { ChildrenProps, HeaderProps, ModalProps } from "./interface";
+import { BodyProps, HeaderProps, ModalProps } from "./interface";
 
-export const Modal = ({ children, show }: ModalProps) => {
+export const Modal = ({ children, show }: PropsWithChildren<ModalProps>) => {
   return (
     <div
       className={cc(
@@ -19,13 +21,16 @@ export const Modal = ({ children, show }: ModalProps) => {
   );
 };
 
-export const Header = ({ children, level = 2 }: HeaderProps) => {
+export const Header = ({
+  children,
+  level = 2,
+}: PropsWithChildren<HeaderProps>) => {
   const Comp: any = `h${level}`;
 
   return <Comp className={styles.header}>{children}</Comp>;
 };
 
-export const Body = ({ children }: ChildrenProps) => {
+export const Body = ({ children }: BodyProps) => {
   return <div className={styles.body}>{children}</div>;
 };
 
@@ -34,38 +39,10 @@ export const Footer = () => {
 
   const { setModal, payload } = modal;
 
-  const deleteBirthday = (e: Event) => {
-    e.preventDefault();
+  const { loadState, setLoadState } = useLoadState();
 
-    fetch(
-      `https://birthday-app-api.vercel.app/api/v1/john/birthdays/${payload.id}`,
-      {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    )
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        }
-      })
-      .then((response) => console.log("Success:", response))
-      .catch((error) => console.error("Error:", error));
-
-    setModal({
-      ...modal,
-      text: "The birthday was removed ✔",
-      variant: "success",
-    });
-    setTimeout(() => {
-      setModal({
-        ...modal,
-        active: false,
-        isRefreshing: true,
-      });
-    }, 1500);
+  const onClickHandler: MouseEventHandler<HTMLDivElement> = (e) => {
+    deleteBirthday({ e, payload, setLoadState, setModal, modal });
   };
 
   return (
@@ -85,7 +62,8 @@ export const Footer = () => {
         variant="danger"
         type="button"
         text="Delete"
-        onClick={deleteBirthday}
+        onClick={onClickHandler}
+        disabled={loadState}
       />
     </div>
   );

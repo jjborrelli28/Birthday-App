@@ -12,9 +12,3 @@
   display: flex;
   justify-content: space-between;
 }
-
-@include desktop {
-  .calendarContainer {
-    margin-bottom: 1rem;
-  }
-}

@@ -10,6 +10,7 @@ import Line from "../../components/line";
 import { Textarea } from "../../components/textarea";
 import Title from "../../components/title";
 import { formatDate } from "../../helpers/helpers";
+import { useLoadState } from "../../hooks/useLoadState";
 import { BirthdaySelectProps } from "../../modules/edit-management/interfaces";
 import { changeValues } from "../../modules/form-management/actions";
 import { TargetProps } from "../../modules/form-management/interfaces";
@@ -32,33 +33,38 @@ const ECard = ({ birthdaySelect }: BirthdaySelectProps) => {
       birthday: formatDate(birthday),
       greeting: `Very happy birthday ${fullName}!`,
     },
-    message: {
-      show: false,
+    alert: {
+      active: false,
       variant: "",
-      text: "",
+      message: "",
     },
   };
 
   const [{ values }, dispatch] = useReducer(reducer, initialState);
 
+  const { loadState, setLoadState } = useLoadState();
+
   const router = useRouter();
 
-  const sendEmail = (e: any) => {
+  const sendECard = (e: any) => {
     e.preventDefault();
+
+    setLoadState(true);
 
     window.location.href = `mailto:${
       values.email
     }?subject=${"Birthday Greeting"}&body=${values.greeting}`;
 
     setTimeout(() => {
-      router.push("/");
-    }, 1000);
+      setLoadState(false);
+      router.back();
+    }, 2000);
   };
 
   return (
     <Layout
       title="Birthday App | Send eCard"
-      description="eCard form"
+      description="Form page to send eCard"
       auth={auth}
     >
       <Container>
@@ -66,7 +72,7 @@ const ECard = ({ birthdaySelect }: BirthdaySelectProps) => {
           eCard for {firstName} {lastName}
         </Title>
         <Line />
-        <form className={styles.form} onSubmit={sendEmail}>
+        <form className={styles.form} onSubmit={sendECard}>
           <div>
             <Label bold={true} mobileHidden={false}>
               Full name:
@@ -119,14 +125,19 @@ const ECard = ({ birthdaySelect }: BirthdaySelectProps) => {
               required={true}
             />
           </div>
-          <div className={styles.btnsContainer}>
+          <div className={styles.buttons}>
             <Button
               type="button"
               variant="secondary"
               text="Cancel"
               onClick={() => router.back()}
             />
-            <Button variant="email" text="Send" onSubmit={sendEmail} />
+            <Button
+              variant="email"
+              text="Send"
+              onSubmit={sendECard}
+              disabled={loadState}
+            />
           </div>
         </form>
       </Container>
@@ -135,9 +146,7 @@ const ECard = ({ birthdaySelect }: BirthdaySelectProps) => {
 };
 
 export const getServerSideProps: GetServerSideProps = async ({ query }) => {
-  const res = await fetch(
-    "https://birthday-app-api.vercel.app/api/v1/john/birthdays"
-  );
+  const res = await fetch(`${process.env.NEXT_PUBLIC_BDA_API_V1}/john/birthdays`);
   const { birthdays } = await res.json();
 
   const id = query.id;

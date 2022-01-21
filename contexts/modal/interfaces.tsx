@@ -1,3 +1,5 @@
+import { ReactNode } from "react";
+
 export interface ModalContextProps {
   active: boolean;
   text: string;
@@ -5,4 +7,8 @@ export interface ModalContextProps {
   payload: { id: string; name: string };
   setModal?: any;
   isRefreshing: boolean;
+}
+
+export interface ChildrenProps {
+  children: ReactNode;
 }

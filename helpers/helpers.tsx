@@ -1,5 +1,6 @@
 import { format, add } from "date-fns";
 import { formatInTimeZone } from "date-fns-tz";
+import { NextRouter } from "next/router";
 import { BirthdayElement } from "../modules/home-management/interfaces";
 
 export const getDates = () => {
@@ -28,14 +29,18 @@ export const getDates = () => {
 };
 
 export const getBirthdays = (data: BirthdayElement[]) => {
-  const { today, birthdayCurrentYear, birthdayNextYear } = getDates();
+  const {
+    today,
+    birthdayCurrentYear,
+    birthdayNextYear: nextYearBirthday,
+  } = getDates();
 
   return data.map((item) => {
     return {
       ...item,
       birthday:
         birthdayCurrentYear(item.birthday) < today
-          ? birthdayNextYear(item.birthday)
+          ? nextYearBirthday(item.birthday)
           : birthdayCurrentYear(item.birthday),
     };
   });
@@ -79,4 +84,26 @@ export const cc = (...classNames: (string | boolean)[]) => {
   return classNames
     .filter((className) => typeof className === "string")
     .join(" ");
+};
+
+export const handleSearch = (
+  e: Event,
+  router: NextRouter,
+  value: string,
+  query?: string
+) => {
+  e.preventDefault();
+
+  router.push(`${router.pathname}?${query ?? ""}search=${value}`);
+};
+
+export const resetSearch = (
+  e: Event,
+  dispatch: any,
+  router: NextRouter,
+  query?: string
+) => {
+  e.preventDefault();
+  dispatch({ type: "value", payload: "" });
+  router.push(`${router.pathname}${query ?? ""}`);
 };

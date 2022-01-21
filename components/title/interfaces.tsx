@@ -1,7 +1,4 @@
-import { ReactNode } from "react";
-
 interface TitleProps {
-  children: ReactNode;
   level?: number;
 }
 

@@ -2,13 +2,13 @@ import { ActionProps, StateProps } from "./interfaces";
 
 const reducer = (state: StateProps, action: ActionProps) => {
   switch (action.type) {
-    case "message":
+    case "alert":
       return {
         ...state,
-        message: {
-          show: action.payload.show,
+        alert: {
+          active: action.payload.active,
           variant: action.payload.variant,
-          text: action.payload.text,
+          message: action.payload.message,
         },
       };
 
@@ -25,16 +25,32 @@ const reducer = (state: StateProps, action: ActionProps) => {
 
 export default reducer;
 
-export const initialState = {
+export const initialAddBirthdayState = {
   values: {
     email: "",
     firstName: "",
     lastName: "",
     birthday: "",
   },
-  message: {
-    show: false,
+  alert: {
+    active: false,
     variant: "",
-    text: "",
+    message: "",
+  },
+};
+
+export const initialSignUpState = {
+  values: {
+    email: "",
+    firstName: "",
+    lastName: "",
+    birthday: "",
+    password1: "",
+    password2: "",
+  },
+  alert: {
+    active: false,
+    variant: "",
+    message: "",
   },
 };

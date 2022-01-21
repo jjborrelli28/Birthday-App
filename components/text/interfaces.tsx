@@ -1,6 +1,5 @@
-interface TitleProps {
-  children: string;
+interface TextProps {
   bold?: boolean;
 }
 
-export default TitleProps;
+export default TextProps;
