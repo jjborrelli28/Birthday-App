@@ -27,7 +27,7 @@ const SignUp = () => {
 
   const { loadState, setLoadState } = useLoadState();
 
-  const { firstName, lastName, email, birthday, password1, password2 } = values;
+  const { firstName, lastName, email, birthday, password, password2 } = values;
 
   const { active, variant, message } = alert;
 
@@ -116,10 +116,10 @@ const SignUp = () => {
             <Tooltip text="Between 8 and 12 characters, an uppercase letter, a lowercase letter, a digit and a special character">
               <Input
                 type="password"
-                id="password1"
-                name="password1"
+                id="password"
+                name="password"
                 placeholder="Password"
-                value={password1}
+                value={password}
                 onChange={({ target }: TargetProps) =>
                   dispatch(changeValues(target))
                 }
@@ -156,7 +156,9 @@ const SignUp = () => {
             <Button
               variant="primary"
               text="Create"
-              onSubmit={createUser}
+              onSubmit={(e: FormEvent) =>
+                createUser({ e, values, setLoadState, dispatch, router })
+              }
               disabled={loadState}
             />
           </div>

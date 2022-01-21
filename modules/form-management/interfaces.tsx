@@ -6,10 +6,10 @@ export type ValuesProps = {
   email: string;
   firstName?: string;
   lastName?: string;
-  birthday: string;
+  birthday?: string;
   fullName?: string;
   greeting?: string;
-  password1?: string;
+  password?: string;
   password2?: string;
 };
 
@@ -32,7 +32,7 @@ export type PersonalAction = {
     | "birthday"
     | "fullName"
     | "greeting"
-    | "password1"
+    | "password"
     | "password2";
   payload: string;
 };

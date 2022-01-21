@@ -45,8 +45,20 @@ export const initialSignUpState = {
     firstName: "",
     lastName: "",
     birthday: "",
-    password1: "",
+    password: "",
     password2: "",
+  },
+  alert: {
+    active: false,
+    variant: "",
+    message: "",
+  },
+};
+
+export const initialSignInState = {
+  values: {
+    email: "",
+    password: "",
   },
   alert: {
     active: false,
