@@ -43,7 +43,6 @@ const Home = ({ data }: DataProps) => {
   if (isRefreshing) {
     router.replace(router.asPath);
   }
-
   const { dobs, page, pages } = data;
 
   useEffect(() => {

@@ -24,10 +24,6 @@ const SignUp = () => {
 
   const router = useRouter();
 
-  if (auth) {
-    router.push("/home");
-  }
-
   const { today } = getDates();
 
   const [{ values, alert }, dispatch] = useReducer(reducer, initialSignUpState);
@@ -43,6 +39,7 @@ const SignUp = () => {
       title="Birthday App | Sign up"
       description="Sign up page"
       auth={!auth}
+      hideHeader={true}
     >
       <Container>
         <Title>Sign up for Birthday App </Title>

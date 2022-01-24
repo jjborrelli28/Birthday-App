@@ -13,17 +13,25 @@ import { useAuthContext } from "../../hooks/useAuthContext";
 import Cookies from "js-cookie";
 
 const TermsAndConditions = () => {
-  const { auth } = useAuthContext();
+  const authState = useAuthContext();
+
+  const { auth, setAuth } = authState;
 
   const router = useRouter();
 
-  const handleDecline = () => {
-    Cookies.remove("name");
+  const { user } = router.query;
+
+  const handleDecline = (e: Event) => {
+    e.preventDefault();
+    Cookies.remove(`t&c-${user}`);
+    Cookies.remove("token");
+    setAuth({ ...authState, auth: false, stayLoggedIn: false });
     router.push("/");
   };
 
-  const handleAgree = () => {
-    Cookies.set("t&c", "accepted");
+  const handleAgree = (e: Event) => {
+    e.preventDefault();
+    Cookies.set(`t&c-${user}`, "accepted", { expires: 365 });
     router.push("/home");
   };
 
@@ -31,8 +39,7 @@ const TermsAndConditions = () => {
     <Layout
       title="Birthday App | T&C"
       description="Terms and conditions page"
-      auth={!auth}
-      hideHeader={true}
+      auth={auth && user && !Cookies.get(`t&c-${user}`) ? true : false}
     >
       <Container>
         <div className={styles.container}>
@@ -65,11 +72,17 @@ const TermsAndConditions = () => {
           </div>
           <div className={styles.buttons}>
             <Button
+              type="button"
               variant="secondary"
               text="Decline"
-              onClick={handleDecline}
+              onClick={(e: Event) => handleDecline(e)}
             />
-            <Button variant="primary" text="Agree" onClick={handleAgree} />
+            <Button
+              type="button"
+              variant="primary"
+              text="Agree"
+              onClick={(e: Event) => handleAgree(e)}
+            />
           </div>
         </div>
       </Container>

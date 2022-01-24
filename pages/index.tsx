@@ -1,5 +1,5 @@
 import Image from "next/image";
-import React, { FormEvent, useReducer, useState } from "react";
+import React, { FormEvent, useReducer } from "react";
 import Layout from "../components/layout";
 import styles from "./index.module.scss";
 import logo from "../assets/logo.png";
@@ -22,13 +22,11 @@ import { TargetProps } from "../modules/form-management/interfaces";
 import { useAuthContext } from "../hooks/useAuthContext";
 
 const SignIn = () => {
-  const { auth, setAuth } = useAuthContext();
+  const authState = useAuthContext();
+
+  const { auth, setAuth, stayLoggedIn } = authState;
 
   const router = useRouter();
-
-  if (auth) {
-    router.push("/home");
-  }
 
   const [{ values, alert }, dispatch] = useReducer(reducer, initialSignInState);
 
@@ -38,13 +36,12 @@ const SignIn = () => {
 
   const { active, variant, message } = alert;
 
-  const [stayLoggedIn, setStayLoggedIn] = useState(false);
-
   return (
     <Layout
       title="Birthday App | Sign in"
       description="Sign in page"
       auth={!auth}
+      hideHeader={true}
     >
       <Container>
         <div className={styles.center}>
@@ -59,8 +56,7 @@ const SignIn = () => {
                 setLoadState,
                 dispatch,
                 router,
-                stayLoggedIn,
-                setAuth,
+                authState,
               })
             }
           >
@@ -94,8 +90,8 @@ const SignIn = () => {
               <input
                 type="checkbox"
                 defaultChecked={stayLoggedIn}
-                onChange={() => setStayLoggedIn(!stayLoggedIn)}
-              />{" "}
+                onChange={() => setAuth({ ...authState, stayLoggedIn })}
+              />
               Stay logged In
             </Label>
             {active && <Alert variant={variant}>{message}</Alert>}
@@ -110,8 +106,7 @@ const SignIn = () => {
                   setLoadState,
                   dispatch,
                   router,
-                  stayLoggedIn,
-                  setAuth,
+                  authState,
                 })
               }
               disabled={loadState}

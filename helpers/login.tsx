@@ -3,6 +3,7 @@ import { setAlert } from "../modules/form-management/actions";
 import { ValuesProps } from "../modules/form-management/interfaces";
 import { NextRouter } from "next/router";
 import Cookies from "js-cookie";
+import { AuthProps } from "../contexts/auth/interfaces";
 
 type LoginProps = {
   e: FormEvent;
@@ -10,8 +11,7 @@ type LoginProps = {
   setLoadState: any;
   dispatch: any;
   router: NextRouter;
-  stayLoggedIn: boolean;
-  setAuth: any;
+  authState: AuthProps;
 };
 
 export const login = ({
@@ -20,10 +20,11 @@ export const login = ({
   dispatch,
   setLoadState,
   router,
-  stayLoggedIn,
-  setAuth,
+  authState,
 }: LoginProps) => {
   e.preventDefault();
+
+  const { setAuth, stayLoggedIn } = authState;
 
   const { email, password } = values;
 
@@ -49,7 +50,6 @@ export const login = ({
       .then((data) => {
         if (data.token) {
           dispatch(setAlert(true, "success", `User logged in successfully ✔`));
-          setAuth(true);
 
           if (stayLoggedIn) {
             Cookies.set("token", data.token, { expires: 365 });
@@ -59,8 +59,15 @@ export const login = ({
 
           setTimeout(() => {
             dispatch(setAlert(false, "", ""));
+
+            if (Cookies.get(`t&c-${email}`)) {
+              router.push("/home");
+            } else {
+              router.push(`/t&c?user=${email}`);
+            }
+
             setLoadState(false);
-            router.push("/home");
+            setAuth({ ...authState, auth: true });
           }, 1000);
         } else {
           dispatch(

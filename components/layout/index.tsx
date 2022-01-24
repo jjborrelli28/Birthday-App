@@ -20,7 +20,7 @@ const Layout = ({
   hideFooter = false,
   auth,
 }: PropsWithChildren<PropsLayout>) => {
-  const { setAuth } = useAuthContext();
+  const authState = useAuthContext();
 
   const router = useRouter();
 
@@ -33,19 +33,17 @@ const Layout = ({
       </Head>
       <div className={styles.layout}>
         <div className={styles.container}>
-          {router.pathname !== "/" && auth && (
-            <header className={styles.header} hidden={hideHeader}>
-              <nav className={styles.nav}>
-                <Button
-                  type="button"
-                  text="Sign out"
-                  variant="tertiary"
-                  onClick={(e: Event) => logout(router, setAuth)}
-                  shadow={true}
-                />
-              </nav>
-            </header>
-          )}
+          <header className={styles.header} hidden={hideHeader}>
+            <nav className={styles.nav}>
+              <Button
+                type="button"
+                text="Sign out"
+                variant="tertiary"
+                onClick={(e: Event) => logout(e, router, authState)}
+                shadow={true}
+              />
+            </nav>
+          </header>
 
           <main className={styles.main}>
             {auth ? (
