@@ -59,6 +59,7 @@ export const login = ({
 
           setTimeout(() => {
             dispatch(setAlert(false, "", ""));
+
             setAuth({ ...authState, auth: true });
 
             if (Cookies.get(`t&c-${email}`)) {

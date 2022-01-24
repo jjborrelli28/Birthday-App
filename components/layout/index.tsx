@@ -18,7 +18,7 @@ const Layout = ({
   description,
   hideHeader = false,
   hideFooter = false,
-  auth = true,
+  auth,
 }: PropsWithChildren<PropsLayout>) => {
   const authState = useAuthContext();
 

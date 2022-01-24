@@ -40,6 +40,7 @@ const TermsAndConditions = () => {
       title="Birthday App | T&C"
       description="Terms and conditions page"
       auth={auth && user && !Cookies.get(`t&c-${user}`) ? true : false}
+      hideHeader={true}
     >
       <Container>
         <div className={styles.container}>
