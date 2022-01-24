@@ -2,6 +2,8 @@ import { FormEvent } from "react";
 import { setAlert } from "../modules/form-management/actions";
 import { ValuesProps } from "../modules/form-management/interfaces";
 import { NextRouter } from "next/router";
+import Cookies from "js-cookie";
+import { useAuthenticator } from "../hooks/useAuthenticator";
 
 type LoginProps = {
   e: FormEvent;
@@ -9,6 +11,7 @@ type LoginProps = {
   setLoadState: any;
   dispatch: any;
   router: NextRouter;
+  stayLoggedIn: boolean;
 };
 
 export const login = ({
@@ -17,6 +20,7 @@ export const login = ({
   dispatch,
   setLoadState,
   router,
+  stayLoggedIn,
 }: LoginProps) => {
   e.preventDefault();
 
@@ -44,6 +48,11 @@ export const login = ({
       .then((data) => {
         if (data.token) {
           dispatch(setAlert(true, "success", `User logged in successfully ✔`));
+          if (stayLoggedIn) {
+            Cookies.set("token", data.token, { expires: 365 });
+          } else {
+            Cookies.set("token", data.token);
+          }
 
           setTimeout(() => {
             dispatch(setAlert(false, "", ""));

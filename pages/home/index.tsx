@@ -27,7 +27,7 @@ import reducer, { initialState } from "../../modules/search-management/reducer";
 import { FormSearch } from "../../components/form-search";
 import { changeValues } from "../../modules/search-management/actions";
 import { TargetProps } from "../../modules/form-management/interfaces";
-import { useAuthenticator } from "../../temporal/useAuthenticator";
+import { useAuthenticator } from "../../hooks/useAuthenticator";
 
 const Home = ({ data }: DataProps) => {
   const auth = useAuthenticator();

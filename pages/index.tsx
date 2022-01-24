@@ -1,5 +1,5 @@
 import Image from "next/image";
-import React, { FormEvent, useReducer } from "react";
+import React, { FormEvent, useReducer, useState } from "react";
 import Layout from "../components/layout";
 import styles from "./index.module.scss";
 import logo from "../assets/logo.png";
@@ -19,8 +19,11 @@ import { useRouter } from "next/router";
 import { useLoadState } from "../hooks/useLoadState";
 import { changeValues } from "../modules/form-management/actions";
 import { TargetProps } from "../modules/form-management/interfaces";
+import { useAuthenticator } from "../hooks/useAuthenticator";
 
 const SignIn = () => {
+  const auth = useAuthenticator();
+
   const router = useRouter();
 
   const [{ values, alert }, dispatch] = useReducer(reducer, initialSignInState);
@@ -31,11 +34,13 @@ const SignIn = () => {
 
   const { active, variant, message } = alert;
 
+  const [stayLoggedIn, setStayLoggedIn] = useState(false);
+
   return (
     <Layout
       title="Birthday App | Sign in"
       description="Sign in page"
-      auth={true}
+      auth={!auth}
     >
       <Container>
         <div className={styles.center}>
@@ -44,7 +49,7 @@ const SignIn = () => {
           <form
             className={styles.form}
             onSubmit={(e: FormEvent) =>
-              login({ e, values, setLoadState, dispatch, router })
+              login({ e, values, setLoadState, dispatch, router, stayLoggedIn })
             }
           >
             <Label mobileHidden={false}>Email address</Label>
@@ -74,7 +79,12 @@ const SignIn = () => {
               required={true}
             />
             <Label>
-              <input type="checkbox" /> Stay logged In
+              <input
+                type="checkbox"
+                defaultChecked={stayLoggedIn}
+                onChange={() => setStayLoggedIn(!stayLoggedIn)}
+              />{" "}
+              Stay logged In
             </Label>
             {active && <Alert variant={variant}>{message}</Alert>}
             <Button
@@ -82,7 +92,14 @@ const SignIn = () => {
               long={true}
               text="Sign in"
               onSubmit={(e: FormEvent) =>
-                login({ e, values, setLoadState, dispatch, router })
+                login({
+                  e,
+                  values,
+                  setLoadState,
+                  dispatch,
+                  router,
+                  stayLoggedIn,
+                })
               }
               disabled={loadState}
             />

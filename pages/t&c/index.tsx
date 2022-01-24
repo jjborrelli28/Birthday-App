@@ -9,7 +9,7 @@ import Text from "../../components/text";
 import Line from "../../components/line";
 import Picture from "../../components/picture";
 import logo from "../../assets/logo.png";
-import { useAuthenticator } from "../../temporal/useAuthenticator";
+import { useAuthenticator } from "../../hooks/useAuthenticator";
 
 const TermsAndConditions = () => {
   const auth = useAuthenticator();

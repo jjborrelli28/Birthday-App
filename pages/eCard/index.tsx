@@ -16,7 +16,7 @@ import { changeValues } from "../../modules/form-management/actions";
 import { TargetProps } from "../../modules/form-management/interfaces";
 import reducer from "../../modules/form-management/reducer";
 import { BirthdayElement } from "../../modules/home-management/interfaces";
-import { useAuthenticator } from "../../temporal/useAuthenticator";
+import { useAuthenticator } from "../../hooks/useAuthenticator";
 import styles from "./index.module.scss";
 
 const ECard = ({ birthdaySelect }: BirthdaySelectProps) => {

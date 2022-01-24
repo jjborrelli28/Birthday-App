@@ -7,15 +7,20 @@ import { AiFillGithub } from "react-icons/ai";
 import { BsFillPersonLinesFill } from "react-icons/bs";
 import Link from "next/link";
 import { cc } from "../../helpers/helpers";
+import Button from "../button";
+import { logout } from "../../helpers/logout";
+import { useRouter } from "next/router";
 
 const Layout = ({
   children,
   title,
   description,
-  hideHeader = true,
+  hideHeader = false,
   hideFooter = false,
   auth,
 }: PropsWithChildren<PropsLayout>) => {
+  const router = useRouter();
+
   return (
     <div>
       <Head>
@@ -25,11 +30,19 @@ const Layout = ({
       </Head>
       <div className={styles.layout}>
         <div className={styles.container}>
-          <header hidden={hideHeader}>
-            <nav>
-              <h2>Nav Component</h2>
-            </nav>
-          </header>
+          {router.pathname !== "/" && auth && (
+            <header className={styles.header} hidden={hideHeader}>
+              <nav className={styles.nav}>
+                <Button
+                  type="button"
+                  text="Sign out"
+                  variant="tertiary"
+                  onClick={(e: Event) => logout(router)}
+                  shadow={true}
+                />
+              </nav>
+            </header>
+          )}
 
           <main className={styles.main}>
             {auth ? (

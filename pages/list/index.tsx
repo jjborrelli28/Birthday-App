@@ -18,7 +18,7 @@ import {
 } from "../../helpers/helpers";
 import { GetServerSideProps } from "next";
 import { DataProps } from "../../modules/list-management/interfaces";
-import { useAuthenticator } from "../../temporal/useAuthenticator";
+import { useAuthenticator } from "../../hooks/useAuthenticator";
 import { Modal } from "../../components/modal";
 import { useModalContext } from "../../hooks/useModalContext";
 import reducer from "../../modules/search-management/reducer";

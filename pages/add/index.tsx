@@ -7,7 +7,7 @@ import { Form } from "../../components/form";
 import Layout from "../../components/layout";
 import { changeValues } from "../../modules/form-management/actions";
 import { TargetProps } from "../../modules/form-management/interfaces";
-import { useAuthenticator } from "../../temporal/useAuthenticator";
+import { useAuthenticator } from "../../hooks/useAuthenticator";
 import { addBirthday } from "../../helpers/addBirthday";
 import { useLoadState } from "../../hooks/useLoadState";
 

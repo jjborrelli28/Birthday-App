@@ -5,7 +5,7 @@ import { Form } from "../../components/form";
 import Layout from "../../components/layout";
 import { changeValues } from "../../modules/form-management/actions";
 import reducer from "../../modules/form-management/reducer";
-import { useAuthenticator } from "../../temporal/useAuthenticator";
+import { useAuthenticator } from "../../hooks/useAuthenticator";
 import { formatDate } from "../../helpers/helpers";
 import { BirthdayElement } from "../../modules/home-management/interfaces";
 import { BirthdaySelectProps } from "../../modules/edit-management/interfaces";
