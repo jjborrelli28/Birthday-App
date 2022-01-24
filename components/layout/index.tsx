@@ -10,6 +10,7 @@ import { cc } from "../../helpers/helpers";
 import Button from "../button";
 import { logout } from "../../helpers/logout";
 import { useRouter } from "next/router";
+import { useAuthContext } from "../../hooks/useAuthContext";
 
 const Layout = ({
   children,
@@ -19,6 +20,8 @@ const Layout = ({
   hideFooter = false,
   auth,
 }: PropsWithChildren<PropsLayout>) => {
+  const { setAuth } = useAuthContext();
+
   const router = useRouter();
 
   return (
@@ -37,7 +40,7 @@ const Layout = ({
                   type="button"
                   text="Sign out"
                   variant="tertiary"
-                  onClick={(e: Event) => logout(router)}
+                  onClick={(e: Event) => logout(router, setAuth)}
                   shadow={true}
                 />
               </nav>

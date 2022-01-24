@@ -19,12 +19,16 @@ import { useRouter } from "next/router";
 import { useLoadState } from "../hooks/useLoadState";
 import { changeValues } from "../modules/form-management/actions";
 import { TargetProps } from "../modules/form-management/interfaces";
-import { useAuthenticator } from "../hooks/useAuthenticator";
+import { useAuthContext } from "../hooks/useAuthContext";
 
 const SignIn = () => {
-  const auth = useAuthenticator();
+  const { auth, setAuth } = useAuthContext();
 
   const router = useRouter();
+
+  if (auth) {
+    router.push("/home");
+  }
 
   const [{ values, alert }, dispatch] = useReducer(reducer, initialSignInState);
 
@@ -49,7 +53,15 @@ const SignIn = () => {
           <form
             className={styles.form}
             onSubmit={(e: FormEvent) =>
-              login({ e, values, setLoadState, dispatch, router, stayLoggedIn })
+              login({
+                e,
+                values,
+                setLoadState,
+                dispatch,
+                router,
+                stayLoggedIn,
+                setAuth,
+              })
             }
           >
             <Label mobileHidden={false}>Email address</Label>
@@ -99,6 +111,7 @@ const SignIn = () => {
                   dispatch,
                   router,
                   stayLoggedIn,
+                  setAuth,
                 })
               }
               disabled={loadState}

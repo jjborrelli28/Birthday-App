@@ -18,7 +18,6 @@ import {
 } from "../../helpers/helpers";
 import { GetServerSideProps } from "next";
 import { DataProps } from "../../modules/list-management/interfaces";
-import { useAuthenticator } from "../../hooks/useAuthenticator";
 import { Modal } from "../../components/modal";
 import { useModalContext } from "../../hooks/useModalContext";
 import reducer from "../../modules/search-management/reducer";
@@ -27,9 +26,10 @@ import { FaArrowCircleUp } from "react-icons/fa";
 import { FormSearch } from "../../components/form-search";
 import Link from "next/link";
 import { Accordion } from "../../components/accordion";
+import { useAuthContext } from "../../hooks/useAuthContext";
 
 const List = ({ data }: DataProps) => {
-  const auth = useAuthenticator();
+  const { auth } = useAuthContext();
 
   const router = useRouter();
 

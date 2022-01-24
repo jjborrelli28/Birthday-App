@@ -27,10 +27,10 @@ import reducer, { initialState } from "../../modules/search-management/reducer";
 import { FormSearch } from "../../components/form-search";
 import { changeValues } from "../../modules/search-management/actions";
 import { TargetProps } from "../../modules/form-management/interfaces";
-import { useAuthenticator } from "../../hooks/useAuthenticator";
+import { useAuthContext } from "../../hooks/useAuthContext";
 
 const Home = ({ data }: DataProps) => {
-  const auth = useAuthenticator();
+  const { auth } = useAuthContext();
 
   const router = useRouter();
 

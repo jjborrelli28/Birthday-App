@@ -17,9 +17,16 @@ import { TargetProps } from "../../modules/form-management/interfaces";
 import Alert from "../../components/alert";
 import { useLoadState } from "../../hooks/useLoadState";
 import { createUser } from "../../helpers/createUser";
+import { useAuthContext } from "../../hooks/useAuthContext";
 
 const SignUp = () => {
+  const { auth } = useAuthContext();
+
   const router = useRouter();
+
+  if (auth) {
+    router.push("/home");
+  }
 
   const { today } = getDates();
 
@@ -35,7 +42,7 @@ const SignUp = () => {
     <Layout
       title="Birthday App | Sign up"
       description="Sign up page"
-      auth={true}
+      auth={!auth}
     >
       <Container>
         <Title>Sign up for Birthday App </Title>

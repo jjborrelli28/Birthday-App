@@ -3,7 +3,6 @@ import { setAlert } from "../modules/form-management/actions";
 import { ValuesProps } from "../modules/form-management/interfaces";
 import { NextRouter } from "next/router";
 import Cookies from "js-cookie";
-import { useAuthenticator } from "../hooks/useAuthenticator";
 
 type LoginProps = {
   e: FormEvent;
@@ -12,6 +11,7 @@ type LoginProps = {
   dispatch: any;
   router: NextRouter;
   stayLoggedIn: boolean;
+  setAuth: any;
 };
 
 export const login = ({
@@ -21,6 +21,7 @@ export const login = ({
   setLoadState,
   router,
   stayLoggedIn,
+  setAuth,
 }: LoginProps) => {
   e.preventDefault();
 
@@ -48,6 +49,8 @@ export const login = ({
       .then((data) => {
         if (data.token) {
           dispatch(setAlert(true, "success", `User logged in successfully ✔`));
+          setAuth(true);
+
           if (stayLoggedIn) {
             Cookies.set("token", data.token, { expires: 365 });
           } else {

@@ -10,17 +10,17 @@ import Line from "../../components/line";
 import { Textarea } from "../../components/textarea";
 import Title from "../../components/title";
 import { formatDate } from "../../helpers/helpers";
+import { useAuthContext } from "../../hooks/useAuthContext";
 import { useLoadState } from "../../hooks/useLoadState";
 import { BirthdaySelectProps } from "../../modules/edit-management/interfaces";
 import { changeValues } from "../../modules/form-management/actions";
 import { TargetProps } from "../../modules/form-management/interfaces";
 import reducer from "../../modules/form-management/reducer";
 import { BirthdayElement } from "../../modules/home-management/interfaces";
-import { useAuthenticator } from "../../hooks/useAuthenticator";
 import styles from "./index.module.scss";
 
 const ECard = ({ birthdaySelect }: BirthdaySelectProps) => {
-  const auth = useAuthenticator();
+  const { auth } = useAuthContext();
 
   const { email, firstName, lastName, birthday } = birthdaySelect;
 
@@ -146,7 +146,9 @@ const ECard = ({ birthdaySelect }: BirthdaySelectProps) => {
 };
 
 export const getServerSideProps: GetServerSideProps = async ({ query }) => {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_BDA_API_V1}/john/birthdays`);
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_BDA_API_V1}/john/birthdays`
+  );
   const { birthdays } = await res.json();
 
   const id = query.id;

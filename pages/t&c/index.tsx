@@ -9,20 +9,21 @@ import Text from "../../components/text";
 import Line from "../../components/line";
 import Picture from "../../components/picture";
 import logo from "../../assets/logo.png";
-import { useAuthenticator } from "../../hooks/useAuthenticator";
+import { useAuthContext } from "../../hooks/useAuthContext";
+import Cookies from "js-cookie";
 
 const TermsAndConditions = () => {
-  const auth = useAuthenticator();
+  const { auth } = useAuthContext();
 
   const router = useRouter();
 
   const handleDecline = () => {
+    Cookies.remove("name");
     router.push("/");
-    localStorage.removeItem("logged");
   };
 
   const handleAgree = () => {
-    localStorage.setItem("t&cAccepted", "true");
+    Cookies.set("t&c", "accepted");
     router.push("/home");
   };
 
@@ -30,8 +31,8 @@ const TermsAndConditions = () => {
     <Layout
       title="Birthday App | T&C"
       description="Terms and conditions page"
-      auth={auth}
-      hideFooter={false}
+      auth={!auth}
+      hideHeader={true}
     >
       <Container>
         <div className={styles.container}>
