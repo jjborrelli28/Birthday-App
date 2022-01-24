@@ -18,14 +18,14 @@ const Layout = ({
   description,
   hideHeader = false,
   hideFooter = false,
-  auth,
+  auth = true,
 }: PropsWithChildren<PropsLayout>) => {
   const authState = useAuthContext();
 
   const router = useRouter();
 
   return (
-    <div>
+    <>
       <Head>
         <title>{title}</title>
         <meta name="description" content={description} />
@@ -77,7 +77,7 @@ const Layout = ({
           </div>
         </footer>
       </div>
-    </div>
+    </>
   );
 };
 

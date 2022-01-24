@@ -59,6 +59,7 @@ export const login = ({
 
           setTimeout(() => {
             dispatch(setAlert(false, "", ""));
+            setAuth({ ...authState, auth: true });
 
             if (Cookies.get(`t&c-${email}`)) {
               router.push("/home");
@@ -67,8 +68,7 @@ export const login = ({
             }
 
             setLoadState(false);
-            setAuth({ ...authState, auth: true });
-          }, 1000);
+          }, 2000);
         } else {
           dispatch(
             setAlert(true, "danger", `Error creating user: ${data.message}`)

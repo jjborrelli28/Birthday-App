@@ -6,7 +6,7 @@ import { ModalControler } from "./modal/ModalControler";
 const Contexts = ({ children }: ChildrenProps) => {
   return (
     <AuthControler>
-      <ModalControler>{children}</ModalControler>;
+      <ModalControler>{children}</ModalControler>
     </AuthControler>
   );
 };
