@@ -145,10 +145,19 @@ const ECard = ({ birthdaySelect }: BirthdaySelectProps) => {
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async ({ query }) => {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BDA_API_V1}/john/birthdays`
-  );
+export const getServerSideProps: GetServerSideProps = async ({
+  query,
+  req,
+}) => {
+  const token = req.cookies.token;
+
+  const res = await fetch(`${process.env.NEXT_PUBLIC_BDA_API_V2}/birthdays`, {
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  });
   const { birthdays } = await res.json();
 
   const id = query.id;

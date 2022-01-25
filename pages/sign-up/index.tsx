@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import React, { FormEvent, useReducer } from "react";
+import React, { FormEvent, useEffect, useReducer } from "react";
 import Button from "../../components/button";
 import Container from "../../components/container";
 import Input from "../../components/input";
@@ -34,11 +34,19 @@ const SignUp = () => {
 
   const { active, variant, message } = alert;
 
+  useEffect(() => {
+    if (auth) {
+      router.push("/home");
+    }
+  }, [auth]);
+
+  if (auth) return null;
+
   return (
     <Layout
       title="Birthday App | Sign up"
       description="Sign up page"
-      auth={!auth}
+      auth={true}
       hideHeader={true}
     >
       <Container>

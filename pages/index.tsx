@@ -1,5 +1,5 @@
 import Image from "next/image";
-import React, { FormEvent, useReducer } from "react";
+import React, { FormEvent, useEffect, useReducer } from "react";
 import Layout from "../components/layout";
 import styles from "./index.module.scss";
 import logo from "../assets/logo.png";
@@ -36,11 +36,19 @@ const SignIn = () => {
 
   const { active, variant, message } = alert;
 
+  useEffect(() => {
+    if (auth) {
+      router.push("/home");
+    }
+  }, [auth]);
+
+  if (auth) return null;
+
   return (
     <Layout
       title="Birthday App | Sign in"
       description="Sign in page"
-      auth={!auth}
+      auth={true}
       hideHeader={true}
     >
       <Container>

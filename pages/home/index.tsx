@@ -204,6 +204,7 @@ export const getServerSideProps: GetServerSideProps = async ({
   const search = query.search ? `/${query.search}` : "";
   const page = query.page ?? 1;
   const host = req.headers.host;
+  const token = req.cookies.token;
 
   const res = await fetch(`http://${host}/api/upcoming-birthdays${search}`, {
     method: "POST",
@@ -211,7 +212,7 @@ export const getServerSideProps: GetServerSideProps = async ({
       Accept: "application/json",
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ page }),
+    body: JSON.stringify({ page, token }),
   });
 
   const data = await res.json();
