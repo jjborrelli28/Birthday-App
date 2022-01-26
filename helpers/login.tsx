@@ -62,7 +62,7 @@ export const login = ({
           setLoadState(false);
         } else {
           dispatch(
-            setAlert(true, "danger", `Error creating user: ${data.message}`)
+            setAlert(true, "danger", `Failed to login: ${data.message}`)
           );
 
           setTimeout(() => {
@@ -72,7 +72,7 @@ export const login = ({
         }
       })
       .catch((error) =>
-        dispatch(setAlert(true, "warning", `Error creating user: ${error}`))
+        dispatch(setAlert(true, "warning", `Failed to login: ${error}`))
       );
 
     setTimeout(() => {
