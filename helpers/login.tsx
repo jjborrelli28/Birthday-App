@@ -49,8 +49,6 @@ export const login = ({
       })
       .then((data) => {
         if (data.token) {
-          dispatch(setAlert(true, "success", `User logged in successfully ✔`));
-
           if (stayLoggedIn) {
             Cookies.set("user", email, { expires: 365 });
             Cookies.set("token", data.token, { expires: 365 });
@@ -59,13 +57,9 @@ export const login = ({
             Cookies.set("token", data.token);
           }
 
-          setTimeout(() => {
-            dispatch(setAlert(false, "", ""));
+          setAuth({ ...authState, auth: true });
 
-            setAuth({ ...authState, auth: true });
-
-            setLoadState(false);
-          }, 2000);
+          setLoadState(false);
         } else {
           dispatch(
             setAlert(true, "danger", `Error creating user: ${data.message}`)

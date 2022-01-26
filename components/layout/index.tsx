@@ -33,17 +33,19 @@ const Layout = ({
       </Head>
       <div className={styles.layout}>
         <div className={styles.container}>
-          <header className={styles.header} hidden={hideHeader}>
-            <nav className={styles.nav}>
-              <Button
-                type="button"
-                text="Sign out"
-                variant="tertiary"
-                onClick={(e: Event) => logout(e, router, authState)}
-                shadow={true}
-              />
-            </nav>
-          </header>
+          {auth && (
+            <header className={styles.header} hidden={hideHeader}>
+              <nav className={styles.nav}>
+                <Button
+                  type="button"
+                  text="Sign out"
+                  variant="tertiary"
+                  onClick={(e: Event) => logout(e, router, authState)}
+                  shadow={true}
+                />
+              </nav>
+            </header>
+          )}
 
           <main className={styles.main}>
             {auth ? (
