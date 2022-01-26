@@ -52,8 +52,10 @@ export const login = ({
           dispatch(setAlert(true, "success", `User logged in successfully ✔`));
 
           if (stayLoggedIn) {
+            Cookies.set("user", email, { expires: 365 });
             Cookies.set("token", data.token, { expires: 365 });
           } else {
+            Cookies.set("user", email);
             Cookies.set("token", data.token);
           }
 
@@ -61,12 +63,6 @@ export const login = ({
             dispatch(setAlert(false, "", ""));
 
             setAuth({ ...authState, auth: true });
-
-            if (Cookies.get(`t&c-${email}`)) {
-              router.push("/home");
-            } else {
-              router.push(`/t&c?user=${email}`);
-            }
 
             setLoadState(false);
           }, 2000);

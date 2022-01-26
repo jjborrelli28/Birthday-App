@@ -1,13 +1,13 @@
 import React from "react";
-import { AuthControler } from "./auth/AuthControler";
+import { AuthController } from "./auth/AuthController";
 import { ChildrenProps } from "./modal/interfaces";
-import { ModalControler } from "./modal/ModalControler";
+import { ModalController } from "./modal/ModalController";
 
 const Contexts = ({ children }: ChildrenProps) => {
   return (
-    <AuthControler>
-      <ModalControler>{children}</ModalControler>
-    </AuthControler>
+    <AuthController>
+      <ModalController>{children}</ModalController>
+    </AuthController>
   );
 };
 

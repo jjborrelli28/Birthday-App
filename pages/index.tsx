@@ -20,6 +20,7 @@ import { useLoadState } from "../hooks/useLoadState";
 import { changeValues } from "../modules/form-management/actions";
 import { TargetProps } from "../modules/form-management/interfaces";
 import { useAuthContext } from "../hooks/useAuthContext";
+import Cookies from "js-cookie";
 
 const SignIn = () => {
   const authState = useAuthContext();
@@ -38,7 +39,11 @@ const SignIn = () => {
 
   useEffect(() => {
     if (auth) {
-      router.push("/home");
+      if (Cookies.get(`t&c-${Cookies.get("user") ?? ""}`)) {
+        router.push("/home");
+      } else {
+        router.push(`/t&c?user=${Cookies.get("user") ?? ""}`);
+      }
     }
   }, [auth]);
 
