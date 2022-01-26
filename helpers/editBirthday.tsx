@@ -1,3 +1,4 @@
+import Cookies from "js-cookie";
 import { NextRouter } from "next/router";
 import { setAlert } from "../modules/form-management/actions";
 import { ValuesProps } from "../modules/form-management/interfaces";
@@ -19,6 +20,8 @@ export const editBirthday = ({
 }: EditBirthdayProps) => {
   e.preventDefault();
 
+  const token = Cookies.get("token");
+
   const { id } = router.query;
 
   const { email, firstName, lastName, birthday } = values;
@@ -26,10 +29,11 @@ export const editBirthday = ({
   if (firstName && lastName && email && birthday) {
     setLoadState(true);
 
-    fetch(`${process.env.NEXT_PUBLIC_BDA_API_V1}/john/birthdays/${id}`, {
+    fetch(`${process.env.NEXT_PUBLIC_BDA_API_V2}/birthdays/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify(values),
     })
@@ -39,26 +43,16 @@ export const editBirthday = ({
       .then((data) => {
         if (data.success) {
           dispatch(
-            setAlert(
-              true,
-              "success",
-              "The birthday was saved successfully ✔"
-            )
+            setAlert(true, "success", "The birthday was saved successfully ✔")
           );
         } else {
           dispatch(
-            setAlert(
-              true,
-              "danger",
-              `Error editing birthday: ${data.message}`
-            )
+            setAlert(true, "danger", `Error editing birthday: ${data.message}`)
           );
         }
       })
       .catch((error) =>
-        dispatch(
-          setAlert(true, "warning", `Error editing birthday: ${error}`)
-        )
+        dispatch(setAlert(true, "warning", `Error editing birthday: ${error}`))
       );
 
     setTimeout(() => {

@@ -9,20 +9,29 @@ import Text from "../../components/text";
 import Line from "../../components/line";
 import Picture from "../../components/picture";
 import logo from "../../assets/logo.png";
-import { useAuthenticator } from "../../temporal/useAuthenticator";
+import { useAuthContext } from "../../hooks/useAuthContext";
+import Cookies from "js-cookie";
 
 const TermsAndConditions = () => {
-  const auth = useAuthenticator();
+  const authState = useAuthContext();
+
+  const { auth, setAuth } = authState;
 
   const router = useRouter();
 
-  const handleDecline = () => {
+  const { user } = router.query;
+
+  const handleDecline = (e: Event) => {
+    e.preventDefault();
+    Cookies.remove(`t&c-${user}`);
+    Cookies.remove("token");
+    setAuth({ ...authState, auth: false, stayLoggedIn: false });
     router.push("/");
-    localStorage.removeItem("logged");
   };
 
-  const handleAgree = () => {
-    localStorage.setItem("t&cAccepted", "true");
+  const handleAgree = (e: Event) => {
+    e.preventDefault();
+    Cookies.set(`t&c-${user}`, "accepted", { expires: 365 });
     router.push("/home");
   };
 
@@ -30,8 +39,8 @@ const TermsAndConditions = () => {
     <Layout
       title="Birthday App | T&C"
       description="Terms and conditions page"
-      auth={auth}
-      hideFooter={false}
+      auth={auth && user && !Cookies.get(`t&c-${user}`) ? true : false}
+      hideHeader={true}
     >
       <Container>
         <div className={styles.container}>
@@ -64,11 +73,17 @@ const TermsAndConditions = () => {
           </div>
           <div className={styles.buttons}>
             <Button
+              type="button"
               variant="secondary"
               text="Decline"
-              onClick={handleDecline}
+              onClick={(e: Event) => handleDecline(e)}
             />
-            <Button variant="primary" text="Agree" onClick={handleAgree} />
+            <Button
+              type="button"
+              variant="primary"
+              text="Agree"
+              onClick={(e: Event) => handleAgree(e)}
+            />
           </div>
         </div>
       </Container>

@@ -5,7 +5,6 @@ import { Form } from "../../components/form";
 import Layout from "../../components/layout";
 import { changeValues } from "../../modules/form-management/actions";
 import reducer from "../../modules/form-management/reducer";
-import { useAuthenticator } from "../../temporal/useAuthenticator";
 import { formatDate } from "../../helpers/helpers";
 import { BirthdayElement } from "../../modules/home-management/interfaces";
 import { BirthdaySelectProps } from "../../modules/edit-management/interfaces";
@@ -13,9 +12,10 @@ import { TargetProps } from "../../modules/form-management/interfaces";
 import { formatName } from "../../helpers/helpers";
 import { editBirthday } from "../../helpers/editBirthday";
 import { useLoadState } from "../../hooks/useLoadState";
+import { useAuthContext } from "../../hooks/useAuthContext";
 
 const Edit = ({ birthdaySelect }: BirthdaySelectProps) => {
-  const auth = useAuthenticator();
+  const { auth } = useAuthContext();
 
   const { email, firstName, lastName, birthday } = birthdaySelect;
 
@@ -60,8 +60,19 @@ const Edit = ({ birthdaySelect }: BirthdaySelectProps) => {
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async ({ query }) => {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_BDA_API_V1}/john/birthdays`);
+export const getServerSideProps: GetServerSideProps = async ({
+  query,
+  req,
+}) => {
+  const token = req.cookies.token;
+
+  const res = await fetch(`${process.env.NEXT_PUBLIC_BDA_API_V2}/birthdays`, {
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  });
   const { birthdays } = await res.json();
 
   const id = query.id;

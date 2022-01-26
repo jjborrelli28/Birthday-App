@@ -18,7 +18,6 @@ import {
 } from "../../helpers/helpers";
 import { GetServerSideProps } from "next";
 import { DataProps } from "../../modules/list-management/interfaces";
-import { useAuthenticator } from "../../temporal/useAuthenticator";
 import { Modal } from "../../components/modal";
 import { useModalContext } from "../../hooks/useModalContext";
 import reducer from "../../modules/search-management/reducer";
@@ -27,10 +26,12 @@ import { FaArrowCircleUp } from "react-icons/fa";
 import { FormSearch } from "../../components/form-search";
 import Link from "next/link";
 import { Accordion } from "../../components/accordion";
+import { useAuthContext } from "../../hooks/useAuthContext";
+import Cookies from "js-cookie";
 
 const List = ({ data }: DataProps) => {
-  const auth = useAuthenticator();
-
+  const { auth } = useAuthContext();
+  console.log(data);
   const router = useRouter();
 
   const { search } = router.query;
@@ -189,6 +190,7 @@ export const getServerSideProps: GetServerSideProps = async ({
   const search = query.search ? `/${query.search}` : "";
   const page = query.page ? query.page : 1;
   const host = req.headers.host;
+  const token = req.cookies.token;
 
   const res = await fetch(`http://${host}/api/full-birthdays-list${search}`, {
     method: "POST",
@@ -196,7 +198,7 @@ export const getServerSideProps: GetServerSideProps = async ({
       Accept: "application/json",
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ page, sortBy }),
+    body: JSON.stringify({ page, sortBy, token }),
   });
 
   const data = await res.json();

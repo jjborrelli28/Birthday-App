@@ -20,10 +20,10 @@ export const createUser = ({
 }: CreateUserProps) => {
   e.preventDefault();
 
-  const { firstName, lastName, email, birthday, password1, password2 } = values;
+  const { firstName, lastName, email, birthday, password, password2 } = values;
 
   if (firstName && lastName && email && birthday) {
-    if (password1 === password2) {
+    if (password === password2) {
       setLoadState(true);
 
       dispatch(setAlert(false, "", ""));
@@ -39,7 +39,7 @@ export const createUser = ({
           lastName,
           email,
           birthday,
-          password: password1,
+          password,
         }),
       })
         .then((res) => {
@@ -48,26 +48,16 @@ export const createUser = ({
         .then((data) => {
           if (data.success) {
             dispatch(
-              setAlert(
-                true,
-                "success",
-                `The user was created successfully ✔`
-              )
+              setAlert(true, "success", `The user was created successfully ✔`)
             );
           } else {
             dispatch(
-              setAlert(
-                true,
-                "danger",
-                `Error creating user: ${data.message}`
-              )
+              setAlert(true, "danger", `Error creating user: ${data.message}`)
             );
           }
         })
         .catch((error) =>
-          dispatch(
-            setAlert(true, "warning", `Error creating user: ${error}`)
-          )
+          dispatch(setAlert(true, "warning", `Error creating user: ${error}`))
         );
 
       setTimeout(() => {
@@ -80,11 +70,7 @@ export const createUser = ({
     }
   } else {
     dispatch(
-      setAlert(
-        true,
-        "warning",
-        "All fields must be completed to create a user"
-      )
+      setAlert(true, "warning", "All fields must be completed to create a user")
     );
   }
 };

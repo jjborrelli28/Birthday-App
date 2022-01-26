@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import React, { FormEvent, useReducer } from "react";
+import React, { FormEvent, useEffect, useReducer } from "react";
 import Button from "../../components/button";
 import Container from "../../components/container";
 import Input from "../../components/input";
@@ -17,8 +17,11 @@ import { TargetProps } from "../../modules/form-management/interfaces";
 import Alert from "../../components/alert";
 import { useLoadState } from "../../hooks/useLoadState";
 import { createUser } from "../../helpers/createUser";
+import { useAuthContext } from "../../hooks/useAuthContext";
 
 const SignUp = () => {
+  const { auth } = useAuthContext();
+
   const router = useRouter();
 
   const { today } = getDates();
@@ -27,15 +30,24 @@ const SignUp = () => {
 
   const { loadState, setLoadState } = useLoadState();
 
-  const { firstName, lastName, email, birthday, password1, password2 } = values;
+  const { firstName, lastName, email, birthday, password, password2 } = values;
 
   const { active, variant, message } = alert;
+
+  useEffect(() => {
+    if (auth) {
+      router.push("/home");
+    }
+  }, [auth]);
+
+  if (auth) return null;
 
   return (
     <Layout
       title="Birthday App | Sign up"
       description="Sign up page"
       auth={true}
+      hideHeader={true}
     >
       <Container>
         <Title>Sign up for Birthday App </Title>
@@ -116,10 +128,10 @@ const SignUp = () => {
             <Tooltip text="Between 8 and 12 characters, an uppercase letter, a lowercase letter, a digit and a special character">
               <Input
                 type="password"
-                id="password1"
-                name="password1"
+                id="password"
+                name="password"
                 placeholder="Password"
-                value={password1}
+                value={password}
                 onChange={({ target }: TargetProps) =>
                   dispatch(changeValues(target))
                 }
@@ -156,7 +168,9 @@ const SignUp = () => {
             <Button
               variant="primary"
               text="Create"
-              onSubmit={createUser}
+              onSubmit={(e: FormEvent) =>
+                createUser({ e, values, setLoadState, dispatch, router })
+              }
               disabled={loadState}
             />
           </div>

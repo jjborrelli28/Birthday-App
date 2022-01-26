@@ -27,10 +27,10 @@ import reducer, { initialState } from "../../modules/search-management/reducer";
 import { FormSearch } from "../../components/form-search";
 import { changeValues } from "../../modules/search-management/actions";
 import { TargetProps } from "../../modules/form-management/interfaces";
-import { useAuthenticator } from "../../temporal/useAuthenticator";
+import { useAuthContext } from "../../hooks/useAuthContext";
 
 const Home = ({ data }: DataProps) => {
-  const auth = useAuthenticator();
+  const { auth } = useAuthContext();
 
   const router = useRouter();
 
@@ -43,7 +43,6 @@ const Home = ({ data }: DataProps) => {
   if (isRefreshing) {
     router.replace(router.asPath);
   }
-
   const { dobs, page, pages } = data;
 
   useEffect(() => {
@@ -205,6 +204,7 @@ export const getServerSideProps: GetServerSideProps = async ({
   const search = query.search ? `/${query.search}` : "";
   const page = query.page ?? 1;
   const host = req.headers.host;
+  const token = req.cookies.token;
 
   const res = await fetch(`http://${host}/api/upcoming-birthdays${search}`, {
     method: "POST",
@@ -212,7 +212,7 @@ export const getServerSideProps: GetServerSideProps = async ({
       Accept: "application/json",
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ page }),
+    body: JSON.stringify({ page, token }),
   });
 
   const data = await res.json();

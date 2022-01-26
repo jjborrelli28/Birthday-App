@@ -13,6 +13,18 @@
   flex: 1;
 }
 
+.header {
+  position: fixed;
+  width: 100%;
+  z-index: 99;
+}
+
+.nav {
+  display: flex;
+  justify-content: flex-end;
+  padding: 1rem;
+}
+
 .main {
   display: flex;
   flex-direction: column;
@@ -63,6 +75,10 @@
 }
 
 @include tablet {
+  .nav {
+    padding: 1.5rem;
+  }
+
   .main {
     padding: 1.5rem;
   }
@@ -85,6 +101,10 @@
 }
 
 @include desktop {
+  .nav {
+    padding: 2rem;
+  }
+
   .main {
     padding: 2rem;
   }

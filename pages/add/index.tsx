@@ -7,12 +7,12 @@ import { Form } from "../../components/form";
 import Layout from "../../components/layout";
 import { changeValues } from "../../modules/form-management/actions";
 import { TargetProps } from "../../modules/form-management/interfaces";
-import { useAuthenticator } from "../../temporal/useAuthenticator";
 import { addBirthday } from "../../helpers/addBirthday";
 import { useLoadState } from "../../hooks/useLoadState";
+import { useAuthContext } from "../../hooks/useAuthContext";
 
 const Add = () => {
-  const auth = useAuthenticator();
+  const { auth } = useAuthContext();
 
   const [{ values, alert }, dispatch] = useReducer(
     reducer,

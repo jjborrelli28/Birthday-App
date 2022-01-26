@@ -19,8 +19,16 @@ export default function handler(
   res: NextApiResponse<Data>
 ) {
   const { param } = req.query;
+  const token = req.body.token;
 
-  fetch(`${process.env.NEXT_PUBLIC_BDA_API_V1}/john/birthdays`)
+  fetch(`${process.env.NEXT_PUBLIC_BDA_API_V2}/birthdays`, {
+    method: "GET",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  })
     .then((response) => response.json())
     .then(({ birthdays }) => {
       // Search filter

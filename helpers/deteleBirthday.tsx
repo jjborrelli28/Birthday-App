@@ -1,3 +1,4 @@
+import Cookies from "js-cookie";
 import { ModalContextProps } from "../contexts/modal/interfaces";
 
 type DeleteBirthdayProps = {
@@ -17,12 +18,15 @@ export const deleteBirthday = ({
 }: DeleteBirthdayProps) => {
   e.preventDefault();
 
+  const token = Cookies.get("token");
+
   setLoadState(true);
 
-  fetch(`${process.env.NEXT_PUBLIC_BDA_API_V1}/john/birthdays/${payload.id}`, {
+  fetch(`${process.env.NEXT_PUBLIC_BDA_API_V2}/birthdays/${payload.id}`, {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
     },
   })
     .then((res) => {
