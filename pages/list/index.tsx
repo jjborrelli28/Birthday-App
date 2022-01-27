@@ -27,11 +27,12 @@ import { FormSearch } from "../../components/form-search";
 import Link from "next/link";
 import { Accordion } from "../../components/accordion";
 import { useAuthContext } from "../../hooks/useAuthContext";
-import Cookies from "js-cookie";
+import { IoMdArrowRoundBack } from "react-icons/io";
+import { IoPersonAddSharp } from "react-icons/io5";
 
 const List = ({ data }: DataProps) => {
   const { auth } = useAuthContext();
-  console.log(data);
+
   const router = useRouter();
 
   const { search } = router.query;
@@ -93,13 +94,13 @@ const List = ({ data }: DataProps) => {
           <Button
             variant="secondary"
             shadow={true}
-            text="Home"
+            text={<IoMdArrowRoundBack />}
             onClick={() => router.push("/home")}
           />
           <Button
-            variant="primary"
+            variant="success"
             shadow={true}
-            text="Add"
+            text={<IoPersonAddSharp />}
             onClick={() => router.push("/add")}
           />
         </div>
@@ -137,7 +138,7 @@ const List = ({ data }: DataProps) => {
                     name={birthday.firstName}
                     surname={birthday.lastName}
                   />
-                  <Card.Birthday>{formatDate(birthday.birthday)}</Card.Birthday>
+                  <Card.DOB>{formatDate(birthday.birthday)}</Card.DOB>
                   <Card.Email>{birthday.email}</Card.Email>
                 </Card.Data>
                 <Card.Comands

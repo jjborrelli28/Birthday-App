@@ -63,55 +63,6 @@
   margin: 0.5rem;
 }
 
-.button {
-  font-size: 1.25rem;
-  font-weight: bold;
-  width: 2rem;
-  height: 2rem;
-  border-radius: 0.6rem;
-  border: none;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.button:hover {
-  transition: transform 0.5s;
-}
-
-.button:hover {
-  transform: scale(1.1);
-}
-
-.edit {
-  background-color: $orange;
-}
-
-.edit:hover {
-  cursor: pointer;
-  background-color: lighten($color: $orange, $amount: 5);
-}
-
-.delete {
-  background-color: $red;
-  color: white;
-}
-
-.delete:hover {
-  cursor: pointer;
-  background-color: lighten($color: $red, $amount: 5);
-}
-
-.eCard {
-  background-color: $blue;
-  color: $white;
-}
-
-.eCard:hover {
-  cursor: pointer;
-  background-color: lighten($color: $blue, $amount: 5);
-}
-
 @include tablet {
   .avatar {
     min-width: 65px;

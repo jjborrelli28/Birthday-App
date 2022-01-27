@@ -1,4 +1,4 @@
-import { format, add } from "date-fns";
+import { format, add, parseISO } from "date-fns";
 import { formatInTimeZone } from "date-fns-tz";
 import { NextRouter } from "next/router";
 import { BirthdayElement } from "../modules/home-management/interfaces";
@@ -106,4 +106,49 @@ export const resetSearch = (
   e.preventDefault();
   dispatch({ type: "value", payload: "" });
   router.push(`${router.pathname}${query ?? ""}`);
+};
+
+// Calendar functions
+
+export const getEvents = (birthdays: BirthdayElement[]) => {
+  return birthdays?.map((birthday) => {
+    const fullName = `${
+      birthday.firstName.charAt(0).toUpperCase() +
+      birthday.firstName.slice(1) +
+      " " +
+      birthday.lastName.charAt(0).toUpperCase() +
+      birthday.lastName.slice(1)
+    }`;
+
+    return {
+      title: fullName,
+      start: add(parseISO(birthday.birthday), {
+        hours: 0,
+      }),
+      end: add(parseISO(birthday.birthday), {
+        hours: 23,
+        minutes: 59,
+        seconds: 59,
+      }),
+      notes: "Birthday date",
+      user: {
+        id: birthday.id,
+        fullName,
+      },
+    };
+  });
+};
+
+export const eventStyleGetter = () => {
+  const style = {
+    borderRadius: "0",
+    display: "block",
+    color: "white",
+    padding: "0",
+    paddingLeft: "0.4rem",
+  };
+
+  return {
+    style,
+  };
 };

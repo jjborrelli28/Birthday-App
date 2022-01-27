@@ -1,6 +1,7 @@
 import { GetServerSideProps } from "next";
 import { useRouter } from "next/router";
 import React, { useReducer } from "react";
+import { IoIosSend, IoMdArrowRoundBack } from "react-icons/io";
 import Button from "../../components/button";
 import Container from "../../components/container";
 import Input from "../../components/input";
@@ -129,12 +130,12 @@ const ECard = ({ birthdaySelect }: BirthdaySelectProps) => {
             <Button
               type="button"
               variant="secondary"
-              text="Cancel"
+              text={<IoMdArrowRoundBack />}
               onClick={() => router.back()}
             />
             <Button
               variant="email"
-              text="Send"
+              text={<IoIosSend />}
               onSubmit={sendECard}
               disabled={loadState}
             />

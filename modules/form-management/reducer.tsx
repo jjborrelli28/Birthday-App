@@ -25,20 +25,6 @@ const reducer = (state: StateProps, action: ActionProps) => {
 
 export default reducer;
 
-export const initialAddBirthdayState = {
-  values: {
-    email: "",
-    firstName: "",
-    lastName: "",
-    birthday: "",
-  },
-  alert: {
-    active: false,
-    variant: "",
-    message: "",
-  },
-};
-
 export const initialSignUpState = {
   values: {
     email: "",

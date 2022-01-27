@@ -3,7 +3,7 @@ import styles from "./index.module.scss";
 import { FaSearch } from "react-icons/fa";
 import { cc } from "../../helpers/helpers";
 import { FormSearchProps } from "./interfaces";
-import { RiDeleteBack2Fill } from "react-icons/ri";
+import { RiDeleteBack2Line } from "react-icons/ri";
 import { Tooltip } from "../tooltip";
 
 export const FormSearch = ({
@@ -31,9 +31,12 @@ export const FormSearch = ({
           />
         </Tooltip>
         <button type="button" className={styles.reset} onClick={reset}>
-          <RiDeleteBack2Fill />
+          <RiDeleteBack2Line />
         </button>
-        <button className={cc(styles.button, styles[variant])} onSubmit={onSubmit}>
+        <button
+          className={cc(styles.button, styles[variant])}
+          onSubmit={onSubmit}
+        >
           <FaSearch />
         </button>
       </form>

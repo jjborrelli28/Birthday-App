@@ -1,8 +1,6 @@
 import React, { FormEvent, useReducer } from "react";
 import { useRouter } from "next/router";
-import reducer, {
-  initialAddBirthdayState,
-} from "../../modules/form-management/reducer";
+import reducer from "../../modules/form-management/reducer";
 import { Form } from "../../components/form";
 import Layout from "../../components/layout";
 import { changeValues } from "../../modules/form-management/actions";
@@ -10,9 +8,30 @@ import { TargetProps } from "../../modules/form-management/interfaces";
 import { addBirthday } from "../../helpers/addBirthday";
 import { useLoadState } from "../../hooks/useLoadState";
 import { useAuthContext } from "../../hooks/useAuthContext";
+import { GetServerSideProps } from "next";
 
-const Add = () => {
+type DateProps = {
+  date: string;
+};
+
+const Add = ({ date }: DateProps) => {
   const { auth } = useAuthContext();
+
+  const router = useRouter();
+
+  const initialAddBirthdayState = {
+    values: {
+      email: "",
+      firstName: "",
+      lastName: "",
+      birthday: date,
+    },
+    alert: {
+      active: false,
+      variant: "",
+      message: "",
+    },
+  };
 
   const [{ values, alert }, dispatch] = useReducer(
     reducer,
@@ -20,8 +39,6 @@ const Add = () => {
   );
 
   const { loadState, setLoadState } = useLoadState();
-
-  const router = useRouter();
 
   return (
     <Layout
@@ -42,6 +59,14 @@ const Add = () => {
       />
     </Layout>
   );
+};
+
+export const getServerSideProps: GetServerSideProps = async ({ query }) => {
+  const date = query.date ?? "";
+
+  return {
+    props: { date },
+  };
 };
 
 export default Add;

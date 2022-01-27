@@ -1,0 +1,13 @@
+@import "../../styles/variables";
+@import "../../styles/media_queries";
+
+.menu {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.options {
+  display: flex;
+  gap: 1rem;
+}

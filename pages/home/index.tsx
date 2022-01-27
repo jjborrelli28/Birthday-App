@@ -28,6 +28,9 @@ import { FormSearch } from "../../components/form-search";
 import { changeValues } from "../../modules/search-management/actions";
 import { TargetProps } from "../../modules/form-management/interfaces";
 import { useAuthContext } from "../../hooks/useAuthContext";
+import { BsCalendar3 } from "react-icons/bs";
+import { IoPersonAddSharp } from "react-icons/io5";
+import { FaListUl } from "react-icons/fa";
 
 const Home = ({ data }: DataProps) => {
   const { auth } = useAuthContext();
@@ -43,6 +46,7 @@ const Home = ({ data }: DataProps) => {
   if (isRefreshing) {
     router.replace(router.asPath);
   }
+  
   const { dobs, page, pages } = data;
 
   useEffect(() => {
@@ -80,15 +84,21 @@ const Home = ({ data }: DataProps) => {
         <Line />
         <div className={styles.menu}>
           <Button
+            type="button"
+            variant="calendar"
+            text={<BsCalendar3 />}
+            onClick={() => router.push("/calendar-view")}
+          />
+          <Button
             variant="tertiary"
             shadow={true}
-            text="List"
+            text={<FaListUl />}
             onClick={() => router.push("/list?sortBy=recently-added")}
           />
           <Button
-            variant="primary"
+            variant="success"
             shadow={true}
-            text="Add"
+            text={<IoPersonAddSharp />}
             onClick={() => router.push("/add")}
           />
         </div>

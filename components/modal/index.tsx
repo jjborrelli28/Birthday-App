@@ -1,4 +1,6 @@
 import React, { MouseEventHandler, PropsWithChildren } from "react";
+import { AiFillDelete } from "react-icons/ai";
+import { IoMdArrowRoundBack } from "react-icons/io";
 import { deleteBirthday } from "../../helpers/deteleBirthday";
 import { cc } from "../../helpers/helpers";
 import { useLoadState } from "../../hooks/useLoadState";
@@ -50,7 +52,7 @@ export const Footer = () => {
       <Button
         variant="secondary"
         type="button"
-        text="Cancel"
+        text={<IoMdArrowRoundBack />}
         onClick={() =>
           setModal({
             ...modal,
@@ -61,7 +63,7 @@ export const Footer = () => {
       <Button
         variant="danger"
         type="button"
-        text="Delete"
+        text={<AiFillDelete />}
         onClick={onClickHandler}
         disabled={loadState}
       />
