@@ -190,16 +190,21 @@ export const getServerSideProps: GetServerSideProps = async ({
   const sortBy = query.sortBy ? query.sortBy : "recently-added";
   const search = query.search ? `/${query.search}` : "";
   const page = query.page ? query.page : 1;
-  const host = req.headers.host;
   const token = req.cookies.token;
 
-  const res = await fetch(`http://${host}/api/full-birthdays-list${search}`, {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_BDA_API}/birthdays`, {
     method: "POST",
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ page, sortBy, token }),
+    body: JSON.stringify({
+      token,
+      fullBirhdaysList: true,
+      search,
+      sortBy,
+      page,
+    }),
   });
 
   const data = await res.json();

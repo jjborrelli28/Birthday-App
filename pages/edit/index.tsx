@@ -66,13 +66,17 @@ export const getServerSideProps: GetServerSideProps = async ({
 }) => {
   const token = req.cookies.token;
 
-  const res = await fetch(`${process.env.NEXT_PUBLIC_BDA_API_V2}/birthdays`, {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_BDA_API}/birthdays`, {
+    method: "POST",
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
     },
+    body: JSON.stringify({
+      token,
+    }),
   });
+
   const { birthdays } = await res.json();
 
   const id = query.id;

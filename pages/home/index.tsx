@@ -46,7 +46,7 @@ const Home = ({ data }: DataProps) => {
   if (isRefreshing) {
     router.replace(router.asPath);
   }
-  
+
   const { dobs, page, pages } = data;
 
   useEffect(() => {
@@ -213,16 +213,20 @@ export const getServerSideProps: GetServerSideProps = async ({
 }) => {
   const search = query.search ? `/${query.search}` : "";
   const page = query.page ?? 1;
-  const host = req.headers.host;
   const token = req.cookies.token;
 
-  const res = await fetch(`http://${host}/api/upcoming-birthdays${search}`, {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_BDA_API}/birthdays`, {
     method: "POST",
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ page, token }),
+    body: JSON.stringify({
+      token,
+      upcomingBirthdays: true,
+      search,
+      page,
+    }),
   });
 
   const data = await res.json();

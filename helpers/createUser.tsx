@@ -28,18 +28,21 @@ export const createUser = ({
 
       dispatch(setAlert(false, "", ""));
 
-      fetch(`${process.env.NEXT_PUBLIC_BDA_API_V2}/signup`, {
+      fetch(`${process.env.NEXT_PUBLIC_BDA_API}/signup`, {
         method: "POST",
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          firstName,
-          lastName,
-          email,
-          birthday,
-          password,
+          method: "POST",
+          body: {
+            firstName,
+            lastName,
+            email,
+            birthday,
+            password,
+          },
         }),
       })
         .then((res) => {
