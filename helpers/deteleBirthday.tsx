@@ -7,6 +7,7 @@ type DeleteBirthdayProps = {
   setLoadState: any;
   setModal: any;
   modal: ModalContextProps;
+  url: string;
 };
 
 export const deleteBirthday = ({
@@ -15,6 +16,7 @@ export const deleteBirthday = ({
   setLoadState,
   setModal,
   modal,
+  url,
 }: DeleteBirthdayProps) => {
   e.preventDefault();
 
@@ -22,7 +24,7 @@ export const deleteBirthday = ({
 
   setLoadState(true);
 
-  fetch(`${process.env.NEXT_PUBLIC_BDA_API}/birthdays`, {
+  fetch(`${url}/birthdays`, {
     method: "POST",
     headers: {
       Accept: "application/json",

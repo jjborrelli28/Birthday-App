@@ -5,6 +5,7 @@ export interface DataProps {
     pages: number;
     sortBy: string;
   };
+  url: string;
 }
 
 export interface BirthdayElement {

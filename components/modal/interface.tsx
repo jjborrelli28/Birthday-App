@@ -11,3 +11,7 @@ export interface HeaderProps {
 export interface BodyProps {
   children: ReactNode;
 }
+
+export interface FooterProps {
+  url: string;
+}

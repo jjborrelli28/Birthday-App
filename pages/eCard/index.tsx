@@ -151,8 +151,9 @@ export const getServerSideProps: GetServerSideProps = async ({
   req,
 }) => {
   const token = req.cookies.token;
+  const url = `http://${req.headers.host}/api/bda`;
 
-  const res = await fetch(`${process.env.NEXT_PUBLIC_BDA_API}/birthdays`, {
+  const res = await fetch(`${url}/birthdays`, {
     method: "POST",
     headers: {
       Accept: "application/json",

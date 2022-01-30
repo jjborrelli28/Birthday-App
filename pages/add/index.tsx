@@ -10,11 +10,12 @@ import { useLoadState } from "../../hooks/useLoadState";
 import { useAuthContext } from "../../hooks/useAuthContext";
 import { GetServerSideProps } from "next";
 
-type DateProps = {
+type DataProps = {
   date: string;
+  url: string;
 };
 
-const Add = ({ date }: DateProps) => {
+const Add = ({ date, url }: DataProps) => {
   const { auth } = useAuthContext();
 
   const router = useRouter();
@@ -51,7 +52,7 @@ const Add = ({ date }: DateProps) => {
         values={values}
         alert={alert}
         onSubmit={(e: FormEvent) =>
-          addBirthday({ e, values, setLoadState, dispatch, router })
+          addBirthday({ e, values, setLoadState, dispatch, router, url })
         }
         onChange={({ target }: TargetProps) => dispatch(changeValues(target))}
         router={router}
@@ -61,11 +62,15 @@ const Add = ({ date }: DateProps) => {
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async ({ query }) => {
+export const getServerSideProps: GetServerSideProps = async ({
+  query,
+  req,
+}) => {
   const date = query.date ?? "";
+  const url = `http://${req.headers.host}/api/bda`;
 
   return {
-    props: { date },
+    props: { date, url },
   };
 };
 

@@ -20,8 +20,13 @@ import { createUser } from "../../helpers/createUser";
 import { useAuthContext } from "../../hooks/useAuthContext";
 import { IoMdArrowRoundBack } from "react-icons/io";
 import { MdSaveAlt } from "react-icons/md";
+import { GetServerSideProps } from "next";
 
-const SignUp = () => {
+type DataProps = {
+  url: string;
+};
+
+const SignUp = ({ url }: DataProps) => {
   const { auth } = useAuthContext();
 
   const router = useRouter();
@@ -57,7 +62,7 @@ const SignUp = () => {
         <form
           className={styles.form}
           onSubmit={(e: FormEvent) =>
-            createUser({ e, values, setLoadState, dispatch, router })
+            createUser({ e, values, setLoadState, dispatch, router, url })
           }
         >
           <div>
@@ -171,7 +176,7 @@ const SignUp = () => {
               variant="primary"
               text={<MdSaveAlt />}
               onSubmit={(e: FormEvent) =>
-                createUser({ e, values, setLoadState, dispatch, router })
+                createUser({ e, values, setLoadState, dispatch, router, url })
               }
               disabled={loadState}
             />
@@ -180,6 +185,14 @@ const SignUp = () => {
       </Container>
     </Layout>
   );
+};
+
+export const getServerSideProps: GetServerSideProps = async ({ req }) => {
+  const url = `http://${req.headers.host}/api/bda`;
+
+  return {
+    props: { url },
+  };
 };
 
 export default SignUp;

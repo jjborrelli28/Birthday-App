@@ -21,8 +21,13 @@ import { changeValues } from "../modules/form-management/actions";
 import { TargetProps } from "../modules/form-management/interfaces";
 import { useAuthContext } from "../hooks/useAuthContext";
 import Cookies from "js-cookie";
+import { GetServerSideProps } from "next";
 
-const SignIn = () => {
+type DataProps = {
+  url: string;
+};
+
+const SignIn = ({ url }: DataProps) => {
   const authState = useAuthContext();
 
   const { auth, setAuth, stayLoggedIn } = authState;
@@ -68,8 +73,8 @@ const SignIn = () => {
                 values,
                 setLoadState,
                 dispatch,
-                router,
                 authState,
+                url,
               })
             }
           >
@@ -118,8 +123,8 @@ const SignIn = () => {
                   values,
                   setLoadState,
                   dispatch,
-                  router,
                   authState,
+                  url
                 })
               }
               disabled={loadState}
@@ -137,6 +142,14 @@ const SignIn = () => {
       </Container>
     </Layout>
   );
+};
+
+export const getServerSideProps: GetServerSideProps = async ({ req }) => {
+  const url = `http://${req.headers.host}/api/bda`;
+
+  return {
+    props: { url },
+  };
 };
 
 export default SignIn;

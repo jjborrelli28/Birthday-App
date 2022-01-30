@@ -4,6 +4,7 @@ export interface DataProps {
     page: string;
     pages: number;
   };
+  url: string;
 }
 
 export interface BirthdayElement {

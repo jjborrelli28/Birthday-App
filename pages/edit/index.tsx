@@ -14,7 +14,7 @@ import { editBirthday } from "../../helpers/editBirthday";
 import { useLoadState } from "../../hooks/useLoadState";
 import { useAuthContext } from "../../hooks/useAuthContext";
 
-const Edit = ({ birthdaySelect }: BirthdaySelectProps) => {
+const Edit = ({ birthdaySelect, url }: BirthdaySelectProps) => {
   const { auth } = useAuthContext();
 
   const { email, firstName, lastName, birthday } = birthdaySelect;
@@ -50,7 +50,7 @@ const Edit = ({ birthdaySelect }: BirthdaySelectProps) => {
         values={values}
         alert={alert}
         onSubmit={(e: Event) =>
-          editBirthday({ e, values, setLoadState, dispatch, router })
+          editBirthday({ e, values, setLoadState, dispatch, router, url })
         }
         onChange={({ target }: TargetProps) => dispatch(changeValues(target))}
         router={router}
@@ -65,8 +65,9 @@ export const getServerSideProps: GetServerSideProps = async ({
   req,
 }) => {
   const token = req.cookies.token;
+  const url = `http://${req.headers.host}/api/bda`;
 
-  const res = await fetch(`${process.env.NEXT_PUBLIC_BDA_API}/birthdays`, {
+  const res = await fetch(`${url}/birthdays`, {
     method: "POST",
     headers: {
       Accept: "application/json",
@@ -92,7 +93,7 @@ export const getServerSideProps: GetServerSideProps = async ({
   )[0];
 
   return {
-    props: { birthdaySelect },
+    props: { birthdaySelect, url },
   };
 };
 

@@ -9,6 +9,7 @@ type EditBirthdayProps = {
   setLoadState: any;
   dispatch: any;
   router: NextRouter;
+  url: string;
 };
 
 export const editBirthday = ({
@@ -17,6 +18,7 @@ export const editBirthday = ({
   setLoadState,
   dispatch,
   router,
+  url,
 }: EditBirthdayProps) => {
   e.preventDefault();
 
@@ -29,7 +31,7 @@ export const editBirthday = ({
   if (firstName && lastName && email && birthday) {
     setLoadState(true);
 
-    fetch(`${process.env.NEXT_PUBLIC_BDA_API}/birthdays`, {
+    fetch(`${url}/birthdays`, {
       method: "POST",
       headers: {
         Accept: "application/json",

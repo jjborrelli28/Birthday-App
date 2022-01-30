@@ -18,7 +18,6 @@ import {
 } from "../../helpers/helpers";
 import { BirthdayElement } from "../../modules/home-management/interfaces";
 import { GetServerSideProps } from "next";
-import { add, parseISO } from "date-fns";
 import Button from "../../components/button";
 import { IoMdArrowRoundBack } from "react-icons/io";
 import { useRouter } from "next/router";
@@ -34,11 +33,12 @@ import {
 } from "../../modules/calendar-management/reducer";
 import enUS from "date-fns/locale/en-US";
 
-type BirthdaysProps = {
+type DataProps = {
   birthdays: BirthdayElement[];
+  url: string;
 };
 
-const CalendarView = ({ birthdays }: BirthdaysProps) => {
+const CalendarView = ({ birthdays, url }: DataProps) => {
   const { auth } = useAuthContext();
 
   const router = useRouter();
@@ -162,7 +162,7 @@ const CalendarView = ({ birthdays }: BirthdaysProps) => {
           <Modal.Body>
             <Alert variant={variant}>{text}</Alert>
           </Modal.Body>
-          <Modal.Footer />
+          <Modal.Footer url={url} />
         </Modal>
       </Container>
     </Layout>
@@ -171,8 +171,9 @@ const CalendarView = ({ birthdays }: BirthdaysProps) => {
 
 export const getServerSideProps: GetServerSideProps = async ({ req }) => {
   const token = req.cookies.token;
+  const url = `http://${req.headers.host}/api/bda`;
 
-  const res = await fetch(`${process.env.NEXT_PUBLIC_BDA_API}/birthdays`, {
+  const res = await fetch(`${url}/birthdays`, {
     method: "POST",
     headers: {
       Accept: "application/json",
@@ -195,7 +196,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
   });
 
   return {
-    props: { birthdays },
+    props: { birthdays, url },
   };
 };
 

@@ -6,4 +6,5 @@ export interface BirthdaySelectProps {
     lastName: string;
     birthday: string;
   };
+  url: string;
 }

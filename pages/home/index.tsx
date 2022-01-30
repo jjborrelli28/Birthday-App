@@ -32,7 +32,7 @@ import { BsCalendar3 } from "react-icons/bs";
 import { IoPersonAddSharp } from "react-icons/io5";
 import { FaListUl } from "react-icons/fa";
 
-const Home = ({ data }: DataProps) => {
+const Home = ({ data, url }: DataProps) => {
   const { auth } = useAuthContext();
 
   const router = useRouter();
@@ -200,7 +200,7 @@ const Home = ({ data }: DataProps) => {
           <Modal.Body>
             <Alert variant={variant}>{text}</Alert>
           </Modal.Body>
-          <Modal.Footer />
+          <Modal.Footer url={url} />
         </Modal>
       </Container>
     </Layout>
@@ -211,11 +211,12 @@ export const getServerSideProps: GetServerSideProps = async ({
   query,
   req,
 }) => {
-  const search = query.search ? `/${query.search}` : "";
+  const search = query.search ?? "";
   const page = query.page ?? 1;
   const token = req.cookies.token;
+  const url = `http://${req.headers.host}/api/bda`;
 
-  const res = await fetch(`${process.env.NEXT_PUBLIC_BDA_API}/birthdays`, {
+  const res = await fetch(`${url}/birthdays`, {
     method: "POST",
     headers: {
       Accept: "application/json",
@@ -238,7 +239,7 @@ export const getServerSideProps: GetServerSideProps = async ({
   }
 
   return {
-    props: { data },
+    props: { data, url },
   };
 };
 

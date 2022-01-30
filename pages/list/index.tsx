@@ -30,7 +30,7 @@ import { useAuthContext } from "../../hooks/useAuthContext";
 import { IoMdArrowRoundBack } from "react-icons/io";
 import { IoPersonAddSharp } from "react-icons/io5";
 
-const List = ({ data }: DataProps) => {
+const List = ({ data, url }: DataProps) => {
   const { auth } = useAuthContext();
 
   const router = useRouter();
@@ -176,7 +176,7 @@ const List = ({ data }: DataProps) => {
           <Modal.Body>
             <Alert variant={variant}>{text}</Alert>
           </Modal.Body>
-          <Modal.Footer />
+          <Modal.Footer url={url} />
         </Modal>
       </Container>
     </Layout>
@@ -188,11 +188,12 @@ export const getServerSideProps: GetServerSideProps = async ({
   req,
 }) => {
   const sortBy = query.sortBy ? query.sortBy : "recently-added";
-  const search = query.search ? `/${query.search}` : "";
+  const search = query.search ?? "";
   const page = query.page ? query.page : 1;
   const token = req.cookies.token;
+  const url = `http://${req.headers.host}/api/bda`;
 
-  const res = await fetch(`${process.env.NEXT_PUBLIC_BDA_API}/birthdays`, {
+  const res = await fetch(`${url}/birthdays`, {
     method: "POST",
     headers: {
       Accept: "application/json",
@@ -222,7 +223,7 @@ export const getServerSideProps: GetServerSideProps = async ({
   }
 
   return {
-    props: { data },
+    props: { data, url },
   };
 };
 
