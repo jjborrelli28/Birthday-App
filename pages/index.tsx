@@ -21,14 +21,8 @@ import { changeValues } from "../modules/form-management/actions";
 import { TargetProps } from "../modules/form-management/interfaces";
 import { useAuthContext } from "../hooks/useAuthContext";
 import Cookies from "js-cookie";
-import { GetServerSideProps } from "next";
-import { getURL } from "../helpers/helpers";
 
-type DataProps = {
-  url: string;
-};
-
-const SignIn = ({ url }: DataProps) => {
+const SignIn = () => {
   const authState = useAuthContext();
 
   const { auth, setAuth, stayLoggedIn } = authState;
@@ -75,7 +69,6 @@ const SignIn = ({ url }: DataProps) => {
                 setLoadState,
                 dispatch,
                 authState,
-                url,
               })
             }
           >
@@ -124,7 +117,6 @@ const SignIn = ({ url }: DataProps) => {
                   setLoadState,
                   dispatch,
                   authState,
-                  url,
                 })
               }
               disabled={loadState}
@@ -144,14 +136,6 @@ const SignIn = ({ url }: DataProps) => {
       </Container>
     </Layout>
   );
-};
-
-export const getServerSideProps: GetServerSideProps = async ({ req }) => {
-  const url = getURL(req.headers.host);
-
-  return {
-    props: { url },
-  };
 };
 
 export default SignIn;

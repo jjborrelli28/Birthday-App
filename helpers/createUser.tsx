@@ -9,7 +9,6 @@ type CreateUserProps = {
   setLoadState: any;
   dispatch: any;
   router: NextRouter;
-  url: string;
 };
 
 export const createUser = ({
@@ -18,7 +17,6 @@ export const createUser = ({
   setLoadState,
   dispatch,
   router,
-  url,
 }: CreateUserProps) => {
   e.preventDefault();
 
@@ -30,7 +28,7 @@ export const createUser = ({
 
       dispatch(setAlert(false, "", ""));
 
-      fetch(`${url}/signup`, {
+      fetch(`api/bda/signup`, {
         method: "POST",
         headers: {
           Accept: "application/json",

@@ -31,7 +31,7 @@ import { useAuthContext } from "../../hooks/useAuthContext";
 import { IoMdArrowRoundBack } from "react-icons/io";
 import { IoPersonAddSharp } from "react-icons/io5";
 
-const List = ({ data, url }: DataProps) => {
+const List = ({ data }: DataProps) => {
   const { auth } = useAuthContext();
 
   const router = useRouter();
@@ -179,7 +179,7 @@ const List = ({ data, url }: DataProps) => {
           <Modal.Body>
             <Alert variant={variant}>{text}</Alert>
           </Modal.Body>
-          <Modal.Footer url={url} />
+          <Modal.Footer />
         </Modal>
       </Container>
     </Layout>
@@ -226,7 +226,7 @@ export const getServerSideProps: GetServerSideProps = async ({
   }
 
   return {
-    props: { data, url },
+    props: { data },
   };
 };
 

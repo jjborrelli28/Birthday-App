@@ -11,7 +11,7 @@ import { Tooltip } from "../../components/tooltip";
 import reducer from "../../modules/form-management/reducer";
 import styles from "./index.module.scss";
 import { initialSignUpState } from "../../modules/form-management/reducer";
-import { getDates, getURL } from "../../helpers/helpers";
+import { getDates } from "../../helpers/helpers";
 import { changeValues } from "../../modules/form-management/actions";
 import { TargetProps } from "../../modules/form-management/interfaces";
 import Alert from "../../components/alert";
@@ -20,13 +20,8 @@ import { createUser } from "../../helpers/createUser";
 import { useAuthContext } from "../../hooks/useAuthContext";
 import { IoMdArrowRoundBack } from "react-icons/io";
 import { MdSaveAlt } from "react-icons/md";
-import { GetServerSideProps } from "next";
 
-type DataProps = {
-  url: string;
-};
-
-const SignUp = ({ url }: DataProps) => {
+const SignUp = () => {
   const { auth } = useAuthContext();
 
   const router = useRouter();
@@ -62,7 +57,7 @@ const SignUp = ({ url }: DataProps) => {
         <form
           className={styles.form}
           onSubmit={(e: FormEvent) =>
-            createUser({ e, values, setLoadState, dispatch, router, url })
+            createUser({ e, values, setLoadState, dispatch, router })
           }
         >
           <div>
@@ -176,7 +171,7 @@ const SignUp = ({ url }: DataProps) => {
             <Button
               variant="primary"
               onSubmit={(e: FormEvent) =>
-                createUser({ e, values, setLoadState, dispatch, router, url })
+                createUser({ e, values, setLoadState, dispatch, router })
               }
               disabled={loadState}
             >
@@ -187,14 +182,6 @@ const SignUp = ({ url }: DataProps) => {
       </Container>
     </Layout>
   );
-};
-
-export const getServerSideProps: GetServerSideProps = async ({ req }) => {
-  const url = getURL(req.headers.host);
-
-  return {
-    props: { url },
-  };
 };
 
 export default SignUp;

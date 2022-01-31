@@ -9,14 +9,12 @@ import { addBirthday } from "../../helpers/addBirthday";
 import { useLoadState } from "../../hooks/useLoadState";
 import { useAuthContext } from "../../hooks/useAuthContext";
 import { GetServerSideProps } from "next";
-import { getURL } from "../../helpers/helpers";
 
 type DataProps = {
   date: string;
-  url: string;
 };
 
-const Add = ({ date, url }: DataProps) => {
+const Add = ({ date }: DataProps) => {
   const { auth } = useAuthContext();
 
   const router = useRouter();
@@ -53,7 +51,7 @@ const Add = ({ date, url }: DataProps) => {
         values={values}
         alert={alert}
         onSubmit={(e: FormEvent) =>
-          addBirthday({ e, values, setLoadState, dispatch, router, url })
+          addBirthday({ e, values, setLoadState, dispatch, router })
         }
         onChange={({ target }: TargetProps) => dispatch(changeValues(target))}
         router={router}
@@ -63,15 +61,11 @@ const Add = ({ date, url }: DataProps) => {
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async ({
-  query,
-  req,
-}) => {
+export const getServerSideProps: GetServerSideProps = async ({ query }) => {
   const date = query.date ?? "";
-  const url = getURL(req.headers.host);
 
   return {
-    props: { date, url },
+    props: { date },
   };
 };
 

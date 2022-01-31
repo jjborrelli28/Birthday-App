@@ -11,7 +11,6 @@ type LoginProps = {
   setLoadState: any;
   dispatch: any;
   authState: AuthProps;
-  url: string;
 };
 
 export const login = ({
@@ -20,7 +19,6 @@ export const login = ({
   dispatch,
   setLoadState,
   authState,
-  url,
 }: LoginProps) => {
   e.preventDefault();
 
@@ -33,12 +31,12 @@ export const login = ({
 
     dispatch(setAlert(false, "", ""));
 
-    fetch(`${url}/signin`, {
+    fetch(`api/bda/signin`, {
       method: "POST",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
-      },
+      },  
       body: JSON.stringify({
         method: "POST",
         body: values,

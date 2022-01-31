@@ -10,7 +10,6 @@ type AddBirthdayProps = {
   setLoadState: any;
   dispatch: any;
   router: NextRouter;
-  url: string;
 };
 
 export const addBirthday = ({
@@ -19,7 +18,6 @@ export const addBirthday = ({
   setLoadState,
   dispatch,
   router,
-  url,
 }: AddBirthdayProps) => {
   e.preventDefault();
 
@@ -30,7 +28,7 @@ export const addBirthday = ({
   if (firstName && lastName && email && birthday) {
     setLoadState(true);
 
-    fetch(`${url}/birthdays`, {
+    fetch(`api/bda/birthdays`, {
       method: "POST",
       headers: {
         Accept: "application/json",

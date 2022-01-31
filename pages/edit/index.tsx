@@ -14,7 +14,7 @@ import { editBirthday } from "../../helpers/editBirthday";
 import { useLoadState } from "../../hooks/useLoadState";
 import { useAuthContext } from "../../hooks/useAuthContext";
 
-const Edit = ({ birthdaySelect, url }: BirthdaySelectProps) => {
+const Edit = ({ birthdaySelect }: BirthdaySelectProps) => {
   const { auth } = useAuthContext();
 
   const { email, firstName, lastName, birthday } = birthdaySelect;
@@ -50,7 +50,7 @@ const Edit = ({ birthdaySelect, url }: BirthdaySelectProps) => {
         values={values}
         alert={alert}
         onSubmit={(e: Event) =>
-          editBirthday({ e, values, setLoadState, dispatch, router, url })
+          editBirthday({ e, values, setLoadState, dispatch, router })
         }
         onChange={({ target }: TargetProps) => dispatch(changeValues(target))}
         router={router}
@@ -93,7 +93,7 @@ export const getServerSideProps: GetServerSideProps = async ({
   )[0];
 
   return {
-    props: { birthdaySelect, url },
+    props: { birthdaySelect },
   };
 };
 

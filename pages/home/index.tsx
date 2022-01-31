@@ -33,7 +33,7 @@ import { BsCalendar3 } from "react-icons/bs";
 import { IoPersonAddSharp } from "react-icons/io5";
 import { FaListUl } from "react-icons/fa";
 
-const Home = ({ data, url }: DataProps) => {
+const Home = ({ data }: DataProps) => {
   const { auth } = useAuthContext();
 
   const router = useRouter();
@@ -204,7 +204,7 @@ const Home = ({ data, url }: DataProps) => {
           <Modal.Body>
             <Alert variant={variant}>{text}</Alert>
           </Modal.Body>
-          <Modal.Footer url={url} />
+          <Modal.Footer />
         </Modal>
       </Container>
     </Layout>
@@ -243,7 +243,7 @@ export const getServerSideProps: GetServerSideProps = async ({
   }
 
   return {
-    props: { data, url },
+    props: { data },
   };
 };
 

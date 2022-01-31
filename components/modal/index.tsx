@@ -7,7 +7,7 @@ import { useLoadState } from "../../hooks/useLoadState";
 import { useModalContext } from "../../hooks/useModalContext";
 import Button from "../button";
 import styles from "./index.module.scss";
-import { BodyProps, FooterProps, HeaderProps, ModalProps } from "./interface";
+import { BodyProps, HeaderProps, ModalProps } from "./interface";
 
 export const Modal = ({ children, show }: PropsWithChildren<ModalProps>) => {
   return (
@@ -36,7 +36,7 @@ export const Body = ({ children }: BodyProps) => {
   return <div className={styles.body}>{children}</div>;
 };
 
-export const Footer = ({ url }: FooterProps) => {
+export const Footer = () => {
   const modal = useModalContext();
 
   const { setModal, payload } = modal;
@@ -44,7 +44,7 @@ export const Footer = ({ url }: FooterProps) => {
   const { loadState, setLoadState } = useLoadState();
 
   const onClickHandler: MouseEventHandler<HTMLDivElement> = (e) => {
-    deleteBirthday({ e, payload, setLoadState, setModal, modal, url });
+    deleteBirthday({ e, payload, setLoadState, setModal, modal });
   };
 
   return (

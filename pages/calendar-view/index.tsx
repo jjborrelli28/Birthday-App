@@ -32,10 +32,9 @@ import { Calendar, SlotInfo } from "react-big-calendar";
 
 type DataProps = {
   birthdays: BirthdayElement[];
-  url: string;
 };
 
-const CalendarView = ({ birthdays, url }: DataProps) => {
+const CalendarView = ({ birthdays }: DataProps) => {
   const { auth } = useAuthContext();
 
   const router = useRouter();
@@ -160,7 +159,7 @@ const CalendarView = ({ birthdays, url }: DataProps) => {
           <Modal.Body>
             <Alert variant={variant}>{text}</Alert>
           </Modal.Body>
-          <Modal.Footer url={url} />
+          <Modal.Footer />
         </Modal>
       </Container>
     </Layout>
@@ -194,7 +193,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
   });
 
   return {
-    props: { birthdays, url },
+    props: { birthdays },
   };
 };
 
