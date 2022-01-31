@@ -52,21 +52,23 @@ export const Footer = ({ url }: FooterProps) => {
       <Button
         variant="secondary"
         type="button"
-        text={<IoMdArrowRoundBack />}
         onClick={() =>
           setModal({
             ...modal,
             active: false,
           })
         }
-      />
+      >
+        <IoMdArrowRoundBack />
+      </Button>
       <Button
         variant="danger"
         type="button"
-        text={<AiFillDelete />}
         onClick={onClickHandler}
         disabled={loadState}
-      />
+      >
+        <AiFillDelete />
+      </Button>
     </div>
   );
 };

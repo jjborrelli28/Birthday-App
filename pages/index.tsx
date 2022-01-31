@@ -116,7 +116,6 @@ const SignIn = ({ url }: DataProps) => {
             <Button
               variant="primary"
               long={true}
-              text="Sign in"
               onSubmit={(e: FormEvent) =>
                 login({
                   e,
@@ -124,11 +123,13 @@ const SignIn = ({ url }: DataProps) => {
                   setLoadState,
                   dispatch,
                   authState,
-                  url
+                  url,
                 })
               }
               disabled={loadState}
-            />
+            >
+              "Sign in"
+            </Button>
           </form>
           <div className={styles.signup}>
             <Text>

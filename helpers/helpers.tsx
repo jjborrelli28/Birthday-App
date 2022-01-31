@@ -1,7 +1,9 @@
-import { format, add, parseISO } from "date-fns";
+import { format, add, parseISO, parse, startOfWeek, getDay } from "date-fns";
 import { formatInTimeZone } from "date-fns-tz";
 import { NextRouter } from "next/router";
 import { BirthdayElement } from "../modules/home-management/interfaces";
+import { dateFnsLocalizer } from "react-big-calendar";
+import enUS from "date-fns/locale/en-US";
 
 export const getDates = () => {
   const today = format(new Date(), "yyyy-MM-dd");
@@ -139,7 +141,7 @@ export const getEvents = (birthdays: BirthdayElement[]) => {
   });
 };
 
-export const eventStyleGetter = () => {
+export const getEventStyleGetter = () => {
   const style = {
     borderRadius: "0",
     display: "block",
@@ -152,3 +154,13 @@ export const eventStyleGetter = () => {
     style,
   };
 };
+
+export const localizer = dateFnsLocalizer({
+  format,
+  parse,
+  startOfWeek,
+  getDay,
+  locales: {
+    "en-US": enUS,
+  },
+});

@@ -1,18 +1,18 @@
-import React from "react";
+import React, { PropsWithChildren } from "react";
 import { cc } from "../../helpers/helpers";
 import styles from "./index.module.scss";
 import ButtonProps from "./interfaces";
 
 const Button = ({
+  children,
   variant = "primary",
   type = "submit",
-  text,
   onClick,
   onSubmit,
   long = false,
   shadow = false,
   disabled = false,
-}: ButtonProps) => {
+}: PropsWithChildren<ButtonProps>) => {
   return (
     <button
       type={type}
@@ -27,7 +27,7 @@ const Button = ({
       onSubmit={onSubmit}
       disabled={disabled}
     >
-      {text}
+      {children}
     </button>
   );
 };

@@ -130,15 +130,13 @@ const ECard = ({ birthdaySelect }: BirthdaySelectProps) => {
             <Button
               type="button"
               variant="secondary"
-              text={<IoMdArrowRoundBack />}
               onClick={() => router.back()}
-            />
-            <Button
-              variant="email"
-              text={<IoIosSend />}
-              onSubmit={sendECard}
-              disabled={loadState}
-            />
+            >
+              <IoMdArrowRoundBack />
+            </Button>
+            <Button variant="email" onSubmit={sendECard} disabled={loadState}>
+              <IoIosSend />
+            </Button>
           </div>
         </form>
       </Container>

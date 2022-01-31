@@ -91,15 +91,13 @@ export const Form: React.FC<FormProps> = ({
           <Button
             type="button"
             variant="secondary"
-            text={<IoMdArrowRoundBack />}
             onClick={() => router.back()}
-          />
-          <Button
-            variant="success"
-            text={<MdSaveAlt />}
-            onSubmit={onSubmit}
-            disabled={disabled}
-          />
+          >
+            <IoMdArrowRoundBack />
+          </Button>
+          <Button variant="success" onSubmit={onSubmit} disabled={disabled}>
+            <MdSaveAlt />
+          </Button>
         </div>
       </form>
     </Container>

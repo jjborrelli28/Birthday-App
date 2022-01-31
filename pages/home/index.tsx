@@ -86,21 +86,24 @@ const Home = ({ data, url }: DataProps) => {
           <Button
             type="button"
             variant="calendar"
-            text={<BsCalendar3 />}
             onClick={() => router.push("/calendar-view")}
-          />
+          >
+            <BsCalendar3 />
+          </Button>
           <Button
             variant="tertiary"
             shadow={true}
-            text={<FaListUl />}
             onClick={() => router.push("/list?sortBy=recently-added")}
-          />
+          >
+            <FaListUl />
+          </Button>
           <Button
             variant="success"
             shadow={true}
-            text={<IoPersonAddSharp />}
             onClick={() => router.push("/add")}
-          />
+          >
+            <IoPersonAddSharp />
+          </Button>
         </div>
         <div>
           {dobs.length > 0 ? (

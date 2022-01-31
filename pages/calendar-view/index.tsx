@@ -4,17 +4,13 @@ import Layout from "../../components/layout";
 import Line from "../../components/line";
 import Title from "../../components/title";
 import { useAuthContext } from "../../hooks/useAuthContext";
-import { Calendar, dateFnsLocalizer } from "react-big-calendar";
-import format from "date-fns/format";
-import parse from "date-fns/parse";
-import startOfWeek from "date-fns/startOfWeek";
-import getDay from "date-fns/getDay";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import {
-  eventStyleGetter,
+  getEventStyleGetter,
   formatDate,
   getDates,
   getEvents,
+  localizer,
 } from "../../helpers/helpers";
 import { BirthdayElement } from "../../modules/home-management/interfaces";
 import { GetServerSideProps } from "next";
@@ -31,7 +27,7 @@ import {
   initialState,
   reducer,
 } from "../../modules/calendar-management/reducer";
-import enUS from "date-fns/locale/en-US";
+import { Calendar, SlotInfo } from "react-big-calendar";
 
 type DataProps = {
   birthdays: BirthdayElement[];
@@ -60,30 +56,27 @@ const CalendarView = ({ birthdays, url }: DataProps) => {
     initialState
   );
 
-  const locales = {
-    "en-US": enUS,
-  };
-
-  const localizer = dateFnsLocalizer({
-    format,
-    parse,
-    startOfWeek,
-    getDay,
-    locales,
-  });
-
   const events = getEvents(birthdays);
 
-  const onSelectSlot = (e: any) => {
+  const onSelectSlot = (slotInfo: SlotInfo) => {
     dispatch({
       type: "unselect",
       payload: {
-        date: e.slots[0],
+        date: slotInfo.slots[0].toString(),
       },
     });
   };
 
-  const onSelectEvent = (e: any) => {
+  const onSelectEvent = (e: {
+    title: string;
+    start: Date;
+    end: Date;
+    notes: string;
+    user: {
+      id: string;
+      fullName: string;
+    };
+  }) => {
     dispatch({
       type: "select",
       payload: {
@@ -106,14 +99,14 @@ const CalendarView = ({ birthdays, url }: DataProps) => {
           <Button
             variant="secondary"
             shadow={true}
-            text={<IoMdArrowRoundBack />}
             onClick={() => router.push("/home")}
-          />
+          >
+            <IoMdArrowRoundBack />
+          </Button>
           <div className={styles.options}>
             <Button
               variant="danger"
               shadow={true}
-              text={<FaUserSlash />}
               onClick={(e: Event) => {
                 e.preventDefault();
                 setModal({
@@ -126,22 +119,26 @@ const CalendarView = ({ birthdays, url }: DataProps) => {
                 dispatch({ type: "unselect", payload: { date: "" } });
               }}
               disabled={!select}
-            />
+            >
+              <FaUserSlash />
+            </Button>
             <Button
               variant="warning"
               shadow={true}
-              text={<FaUserEdit />}
               onClick={() => router.push(`/edit?id=${user.id}`)}
               disabled={!select}
-            />
+            >
+              <FaUserEdit />
+            </Button>
             <Button
               variant="success"
               shadow={true}
-              text={<IoPersonAddSharp />}
               onClick={() =>
                 router.push(date ? `/add?date=${formatDate(date)}` : "/add")
               }
-            />
+            >
+              <IoPersonAddSharp />
+            </Button>
           </div>
         </div>
         <Line />
@@ -150,7 +147,7 @@ const CalendarView = ({ birthdays, url }: DataProps) => {
           localizer={localizer}
           startAccessor="start"
           endAccessor="end"
-          eventPropGetter={eventStyleGetter}
+          eventPropGetter={getEventStyleGetter}
           style={{ height: 500 }}
           selectable={true}
           onSelectSlot={onSelectSlot}

@@ -1,8 +1,6 @@
-import { ReactNode } from "react";
 interface ButtonProps {
-  type?: "button" | "submit" | "reset" | undefined;
+  type?: "button" | "submit" | "reset";
   variant?: string;
-  text: string | ReactNode;
   onClick?: any;
   onSubmit?: any;
   long?: boolean;

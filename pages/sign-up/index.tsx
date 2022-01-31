@@ -169,17 +169,19 @@ const SignUp = ({ url }: DataProps) => {
             <Button
               type="button"
               variant="secondary"
-              text={<IoMdArrowRoundBack />}
               onClick={() => router.push("/")}
-            />
+            >
+              <IoMdArrowRoundBack />
+            </Button>
             <Button
               variant="primary"
-              text={<MdSaveAlt />}
               onSubmit={(e: FormEvent) =>
                 createUser({ e, values, setLoadState, dispatch, router, url })
               }
               disabled={loadState}
-            />
+            >
+              <MdSaveAlt />
+            </Button>
           </div>
         </form>
       </Container>

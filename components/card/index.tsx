@@ -79,13 +79,13 @@ export const Comands = ({ id, name, router, birthday }: ComandsProps) => {
       <Button
         type="button"
         variant="warning"
-        text={<FaUserEdit />}
         onClick={() => router.push(`/edit?id=${id}`)}
-      />
+      >
+        <FaUserEdit />
+      </Button>
       <Button
         type="button"
         variant="danger"
-        text={<FaUserSlash />}
         onClick={() =>
           setModal({
             ...modal,
@@ -95,15 +95,18 @@ export const Comands = ({ id, name, router, birthday }: ComandsProps) => {
             setModal,
           })
         }
-      />
+      >
+        <FaUserSlash />
+      </Button>
 
       {birthday == today && (
         <Button
           type="button"
           variant="email"
-          text={<HiOutlineMailOpen />}
           onClick={() => router.push(`/eCard?id=${id}`)}
-        />
+        >
+          <HiOutlineMailOpen />
+        </Button>
       )}
     </div>
   );

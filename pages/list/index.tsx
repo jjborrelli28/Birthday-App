@@ -94,15 +94,17 @@ const List = ({ data, url }: DataProps) => {
           <Button
             variant="secondary"
             shadow={true}
-            text={<IoMdArrowRoundBack />}
             onClick={() => router.push("/home")}
-          />
+          >
+            <IoMdArrowRoundBack />
+          </Button>
           <Button
             variant="success"
             shadow={true}
-            text={<IoPersonAddSharp />}
             onClick={() => router.push("/add")}
-          />
+          >
+            <IoPersonAddSharp />
+          </Button>
         </div>
         <Accordion
           open={open}

@@ -33,7 +33,7 @@ export const login = ({
 
     dispatch(setAlert(false, "", ""));
 
-    fetch(`${url}/signup`, {
+    fetch(`${url}/signin`, {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -41,10 +41,7 @@ export const login = ({
       },
       body: JSON.stringify({
         method: "POST",
-        body: {
-          email,
-          password,
-        },
+        body: values,
       }),
     })
       .then((res) => {
