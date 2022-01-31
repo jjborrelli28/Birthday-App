@@ -39,11 +39,12 @@ const Layout = ({
               <nav className={styles.nav}>
                 <Button
                   type="button"
-                  text={<MdLogout />}
                   variant="danger"
                   onClick={(e: Event) => logout(e, router, authState)}
                   shadow={true}
-                />
+                >
+                  <MdLogout />
+                </Button>
               </nav>
             </header>
           )}
