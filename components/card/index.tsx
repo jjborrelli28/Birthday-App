@@ -15,6 +15,7 @@ import { FaUserEdit } from "react-icons/fa";
 import { FaUserSlash } from "react-icons/fa";
 import { getDates } from "../../helpers/helpers";
 import { HiOutlineMailOpen } from "react-icons/hi";
+import Button from "../button";
 
 const Card = ({ children, variant = "primary" }: CardProps) => {
   return <div className={cc(styles.card, styles[variant])}>{children}</div>;
@@ -49,6 +50,14 @@ export const Birthday = ({ children }: DateProps) => {
   );
 };
 
+export const DOB = ({ children }: DateProps) => {
+  return (
+    <p className={styles.text}>
+      <span className={styles.textBold}>Date of birth: </span> {children}
+    </p>
+  );
+};
+
 export const Email = ({ children }: EmailProps) => {
   return (
     <p className={styles.text}>
@@ -67,14 +76,16 @@ export const Comands = ({ id, name, router, birthday }: ComandsProps) => {
 
   return (
     <div className={styles.comands}>
-      <button
-        className={cc(styles.button, styles.edit)}
+      <Button
+        type="button"
+        variant="warning"
         onClick={() => router.push(`/edit?id=${id}`)}
       >
         <FaUserEdit />
-      </button>
-      <button
-        className={cc(styles.button, styles.delete)}
+      </Button>
+      <Button
+        type="button"
+        variant="danger"
         onClick={() =>
           setModal({
             ...modal,
@@ -86,14 +97,16 @@ export const Comands = ({ id, name, router, birthday }: ComandsProps) => {
         }
       >
         <FaUserSlash />
-      </button>
+      </Button>
+
       {birthday == today && (
-        <button
-          className={cc(styles.button, styles.eCard)}
+        <Button
+          type="button"
+          variant="email"
           onClick={() => router.push(`/eCard?id=${id}`)}
         >
           <HiOutlineMailOpen />
-        </button>
+        </Button>
       )}
     </div>
   );
@@ -105,4 +118,5 @@ Card.Avatar = Avatar;
 Card.Email = Email;
 Card.Name = Name;
 Card.Birthday = Birthday;
+Card.DOB = DOB;
 Card.Comands = Comands;

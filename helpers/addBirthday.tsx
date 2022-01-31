@@ -28,14 +28,18 @@ export const addBirthday = ({
   if (firstName && lastName && email && birthday) {
     setLoadState(true);
 
-    fetch(`${process.env.NEXT_PUBLIC_BDA_API_V2}/birthdays/add`, {
+    fetch(`api/bda/birthdays`, {
       method: "POST",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify(values),
+      body: JSON.stringify({
+        method: "POST",
+        token,
+        body: values,
+        id: "add",
+      }),
     })
       .then((res) => {
         return res.json();

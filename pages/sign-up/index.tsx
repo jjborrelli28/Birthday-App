@@ -18,6 +18,8 @@ import Alert from "../../components/alert";
 import { useLoadState } from "../../hooks/useLoadState";
 import { createUser } from "../../helpers/createUser";
 import { useAuthContext } from "../../hooks/useAuthContext";
+import { IoMdArrowRoundBack } from "react-icons/io";
+import { MdSaveAlt } from "react-icons/md";
 
 const SignUp = () => {
   const { auth } = useAuthContext();
@@ -162,17 +164,19 @@ const SignUp = () => {
             <Button
               type="button"
               variant="secondary"
-              text="Cancel"
               onClick={() => router.push("/")}
-            />
+            >
+              <IoMdArrowRoundBack />
+            </Button>
             <Button
               variant="primary"
-              text="Create"
               onSubmit={(e: FormEvent) =>
                 createUser({ e, values, setLoadState, dispatch, router })
               }
               disabled={loadState}
-            />
+            >
+              <MdSaveAlt />
+            </Button>
           </div>
         </form>
       </Container>

@@ -13,6 +13,7 @@ import { BirthdayElement } from "../../modules/home-management/interfaces";
 import {
   formatDate,
   formatName,
+  getURL,
   handleSearch,
   resetSearch,
 } from "../../helpers/helpers";
@@ -27,11 +28,12 @@ import { FormSearch } from "../../components/form-search";
 import Link from "next/link";
 import { Accordion } from "../../components/accordion";
 import { useAuthContext } from "../../hooks/useAuthContext";
-import Cookies from "js-cookie";
+import { IoMdArrowRoundBack } from "react-icons/io";
+import { IoPersonAddSharp } from "react-icons/io5";
 
 const List = ({ data }: DataProps) => {
   const { auth } = useAuthContext();
-  console.log(data);
+
   const router = useRouter();
 
   const { search } = router.query;
@@ -93,15 +95,17 @@ const List = ({ data }: DataProps) => {
           <Button
             variant="secondary"
             shadow={true}
-            text="Home"
             onClick={() => router.push("/home")}
-          />
+          >
+            <IoMdArrowRoundBack />
+          </Button>
           <Button
-            variant="primary"
+            variant="success"
             shadow={true}
-            text="Add"
             onClick={() => router.push("/add")}
-          />
+          >
+            <IoPersonAddSharp />
+          </Button>
         </div>
         <Accordion
           open={open}
@@ -137,7 +141,7 @@ const List = ({ data }: DataProps) => {
                     name={birthday.firstName}
                     surname={birthday.lastName}
                   />
-                  <Card.Birthday>{formatDate(birthday.birthday)}</Card.Birthday>
+                  <Card.DOB>{formatDate(birthday.birthday)}</Card.DOB>
                   <Card.Email>{birthday.email}</Card.Email>
                 </Card.Data>
                 <Card.Comands
@@ -187,18 +191,24 @@ export const getServerSideProps: GetServerSideProps = async ({
   req,
 }) => {
   const sortBy = query.sortBy ? query.sortBy : "recently-added";
-  const search = query.search ? `/${query.search}` : "";
+  const search = query.search ?? "";
   const page = query.page ? query.page : 1;
-  const host = req.headers.host;
   const token = req.cookies.token;
+  const url = getURL(req.headers.host);
 
-  const res = await fetch(`http://${host}/api/full-birthdays-list${search}`, {
+  const res = await fetch(`${url}/birthdays`, {
     method: "POST",
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ page, sortBy, token }),
+    body: JSON.stringify({
+      token,
+      fullBirhdaysList: true,
+      search,
+      sortBy,
+      page,
+    }),
   });
 
   const data = await res.json();

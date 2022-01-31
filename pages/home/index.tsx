@@ -6,6 +6,7 @@ import {
   formatName,
   handleSearch,
   resetSearch,
+  getURL,
 } from "../../helpers/helpers";
 import Button from "../../components/button";
 import { DataProps } from "../../modules/home-management/interfaces";
@@ -28,6 +29,9 @@ import { FormSearch } from "../../components/form-search";
 import { changeValues } from "../../modules/search-management/actions";
 import { TargetProps } from "../../modules/form-management/interfaces";
 import { useAuthContext } from "../../hooks/useAuthContext";
+import { BsCalendar3 } from "react-icons/bs";
+import { IoPersonAddSharp } from "react-icons/io5";
+import { FaListUl } from "react-icons/fa";
 
 const Home = ({ data }: DataProps) => {
   const { auth } = useAuthContext();
@@ -43,6 +47,7 @@ const Home = ({ data }: DataProps) => {
   if (isRefreshing) {
     router.replace(router.asPath);
   }
+
   const { dobs, page, pages } = data;
 
   useEffect(() => {
@@ -80,17 +85,26 @@ const Home = ({ data }: DataProps) => {
         <Line />
         <div className={styles.menu}>
           <Button
+            type="button"
+            variant="calendar"
+            onClick={() => router.push("/calendar-view")}
+          >
+            <BsCalendar3 />
+          </Button>
+          <Button
             variant="tertiary"
             shadow={true}
-            text="List"
             onClick={() => router.push("/list?sortBy=recently-added")}
-          />
+          >
+            <FaListUl />
+          </Button>
           <Button
-            variant="primary"
+            variant="success"
             shadow={true}
-            text="Add"
             onClick={() => router.push("/add")}
-          />
+          >
+            <IoPersonAddSharp />
+          </Button>
         </div>
         <div>
           {dobs.length > 0 ? (
@@ -201,18 +215,23 @@ export const getServerSideProps: GetServerSideProps = async ({
   query,
   req,
 }) => {
-  const search = query.search ? `/${query.search}` : "";
+  const search = query.search ?? "";
   const page = query.page ?? 1;
-  const host = req.headers.host;
   const token = req.cookies.token;
+  const url = getURL(req.headers.host);
 
-  const res = await fetch(`http://${host}/api/upcoming-birthdays${search}`, {
+  const res = await fetch(`${url}/birthdays`, {
     method: "POST",
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ page, token }),
+    body: JSON.stringify({
+      token,
+      upcomingBirthdays: true,
+      search,
+      page,
+    }),
   });
 
   const data = await res.json();

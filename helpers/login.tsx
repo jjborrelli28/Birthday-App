@@ -10,7 +10,6 @@ type LoginProps = {
   values: ValuesProps;
   setLoadState: any;
   dispatch: any;
-  router: NextRouter;
   authState: AuthProps;
 };
 
@@ -19,7 +18,6 @@ export const login = ({
   values,
   dispatch,
   setLoadState,
-  router,
   authState,
 }: LoginProps) => {
   e.preventDefault();
@@ -33,15 +31,15 @@ export const login = ({
 
     dispatch(setAlert(false, "", ""));
 
-    fetch(`${process.env.NEXT_PUBLIC_BDA_API_V2}/signin`, {
+    fetch(`api/bda/signin`, {
       method: "POST",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
-      },
+      },  
       body: JSON.stringify({
-        email,
-        password,
+        method: "POST",
+        body: values,
       }),
     })
       .then((res) => {

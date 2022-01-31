@@ -8,6 +8,8 @@ import Title from "../title";
 import Alert from "../alert";
 import { FormProps } from "./interface";
 import { getDates } from "../../helpers/helpers";
+import { MdSaveAlt } from "react-icons/md";
+import { IoMdArrowRoundBack } from "react-icons/io";
 
 export const Form: React.FC<FormProps> = ({
   title,
@@ -89,15 +91,13 @@ export const Form: React.FC<FormProps> = ({
           <Button
             type="button"
             variant="secondary"
-            text="Cancel"
             onClick={() => router.back()}
-          />
-          <Button
-            variant="primary"
-            text="Save"
-            onSubmit={onSubmit}
-            disabled={disabled}
-          />
+          >
+            <IoMdArrowRoundBack />
+          </Button>
+          <Button variant="success" onSubmit={onSubmit} disabled={disabled}>
+            <MdSaveAlt />
+          </Button>
         </div>
       </form>
     </Container>

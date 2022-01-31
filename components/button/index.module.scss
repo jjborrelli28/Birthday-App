@@ -2,12 +2,15 @@
 @import "../../styles/media_queries";
 
 .button {
-  font-size: 1rem;
+  font-size: 1.2rem;
   font-weight: bold;
-  padding: 0.3rem;
-  width: 5rem;
-  border-radius: 0.6rem;
+  height: 2.6rem;
+  width: 2.6rem;
+  border-radius: 100%;
   transition: all 0.3s;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .button:hover {
@@ -23,66 +26,104 @@
 .primary {
   background-color: $fuchsia;
   color: $white;
-  border: solid $fuchsia 0.1rem;
+  border: solid $fuchsia 0.2rem;
 }
 
 .primary:hover {
   background-color: $white;
   color: $fuchsia;
-  border: solid $fuchsia 0.1rem;
+  border: solid $fuchsia 0.2rem;
 }
 
 .secondary {
   background-color: $dark-gray;
   color: $white;
 
-  border: solid $dark-gray 0.1rem;
+  border: solid $dark-gray 0.2rem;
 }
 
 .secondary:hover {
   background-color: $white;
   color: $dark-gray;
-  border: solid $dark-gray 0.1rem;
+  border: solid $dark-gray 0.2rem;
 }
 
 .tertiary {
   background-color: $brown;
   color: $white;
-  border: solid $brown 0.1rem;
+  border: solid $brown 0.2rem;
 }
 
 .tertiary:hover {
   background-color: $white;
   color: $brown;
-  border: solid $brown 0.1rem;
+  border: solid $brown 0.2rem;
+}
+
+.success {
+  background-color: $green;
+  color: $white;
+  border: solid $green 0.2rem;
+}
+
+.success:hover {
+  background-color: $white;
+  color: $green;
+  border: solid $green 0.2rem;
+}
+
+.warning {
+  background-color: $orange;
+  color: $black;
+  border: solid $orange 0.2rem;
+}
+
+.warning:hover {
+  background-color: $black;
+  color: $orange;
+  border: solid $orange 0.2rem;
 }
 
 .danger {
   background-color: $red;
   color: $white;
-  border: solid $red 0.1rem;
+  border: solid $red 0.2rem;
 }
 
 .danger:hover {
   background-color: $white;
   color: $red;
-  border: solid $red 0.1rem;
+  border: solid $red 0.2rem;
 }
 
 .email {
   background-color: $blue;
   color: $white;
-  border: solid $blue 0.1rem;
+  border: solid $blue 0.2rem;
 }
 
 .email:hover {
   background-color: $white;
   color: $blue;
-  border: solid $blue 0.1rem;
+  border: solid $blue 0.2rem;
+}
+
+.calendar {
+  background-color: lighten($blue, 10);
+  color: $white;
+  border: solid lighten($blue, 10) 0.2rem;
+}
+
+.calendar:hover {
+  background-color: $white;
+  color: lighten($blue, 10);
+  border: solid lighten($blue, 10) 0.2rem;
 }
 
 .long {
+  height: 2.2rem;
   width: 100%;
+  border-radius: 0.6rem;
 }
 
 .disabled {
@@ -99,21 +140,19 @@
 
   .button {
     font-size: 1.1rem;
-    width: 5.5rem;
   }
-}
 
-.long {
-  width: 100%;
+  .long {
+    height: 2.4rem;
+  }
 }
 
 @include desktop {
   .button {
     font-size: 1.2rem;
-    width: 6rem;
   }
 
   .long {
-    width: 100%;
+    height: 2.6rem;
   }
 }

@@ -5,7 +5,7 @@ import { Form } from "../../components/form";
 import Layout from "../../components/layout";
 import { changeValues } from "../../modules/form-management/actions";
 import reducer from "../../modules/form-management/reducer";
-import { formatDate } from "../../helpers/helpers";
+import { formatDate, getURL } from "../../helpers/helpers";
 import { BirthdayElement } from "../../modules/home-management/interfaces";
 import { BirthdaySelectProps } from "../../modules/edit-management/interfaces";
 import { TargetProps } from "../../modules/form-management/interfaces";
@@ -65,14 +65,19 @@ export const getServerSideProps: GetServerSideProps = async ({
   req,
 }) => {
   const token = req.cookies.token;
+  const url = getURL(req.headers.host);
 
-  const res = await fetch(`${process.env.NEXT_PUBLIC_BDA_API_V2}/birthdays`, {
+  const res = await fetch(`${url}/birthdays`, {
+    method: "POST",
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
     },
+    body: JSON.stringify({
+      token,
+    }),
   });
+
   const { birthdays } = await res.json();
 
   const id = query.id;

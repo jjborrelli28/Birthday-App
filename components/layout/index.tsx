@@ -11,6 +11,7 @@ import Button from "../button";
 import { logout } from "../../helpers/logout";
 import { useRouter } from "next/router";
 import { useAuthContext } from "../../hooks/useAuthContext";
+import { MdLogout } from "react-icons/md";
 
 const Layout = ({
   children,
@@ -38,11 +39,12 @@ const Layout = ({
               <nav className={styles.nav}>
                 <Button
                   type="button"
-                  text="Sign out"
-                  variant="tertiary"
+                  variant="danger"
                   onClick={(e: Event) => logout(e, router, authState)}
                   shadow={true}
-                />
+                >
+                  <MdLogout />
+                </Button>
               </nav>
             </header>
           )}

@@ -68,7 +68,6 @@ const SignIn = () => {
                 values,
                 setLoadState,
                 dispatch,
-                router,
                 authState,
               })
             }
@@ -111,19 +110,19 @@ const SignIn = () => {
             <Button
               variant="primary"
               long={true}
-              text="Sign in"
               onSubmit={(e: FormEvent) =>
                 login({
                   e,
                   values,
                   setLoadState,
                   dispatch,
-                  router,
                   authState,
                 })
               }
               disabled={loadState}
-            />
+            >
+              Sign in
+            </Button>
           </form>
           <div className={styles.signup}>
             <Text>

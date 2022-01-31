@@ -1,7 +1,6 @@
 interface ButtonProps {
-  type?: "button" | "submit" | "reset" | undefined;
+  type?: "button" | "submit" | "reset";
   variant?: string;
-  text: string;
   onClick?: any;
   onSubmit?: any;
   long?: boolean;

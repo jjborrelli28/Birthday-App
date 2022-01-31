@@ -1,6 +1,7 @@
 import { GetServerSideProps } from "next";
 import { useRouter } from "next/router";
 import React, { useReducer } from "react";
+import { IoIosSend, IoMdArrowRoundBack } from "react-icons/io";
 import Button from "../../components/button";
 import Container from "../../components/container";
 import Input from "../../components/input";
@@ -9,7 +10,7 @@ import Layout from "../../components/layout";
 import Line from "../../components/line";
 import { Textarea } from "../../components/textarea";
 import Title from "../../components/title";
-import { formatDate } from "../../helpers/helpers";
+import { formatDate, getURL } from "../../helpers/helpers";
 import { useAuthContext } from "../../hooks/useAuthContext";
 import { useLoadState } from "../../hooks/useLoadState";
 import { BirthdaySelectProps } from "../../modules/edit-management/interfaces";
@@ -129,15 +130,13 @@ const ECard = ({ birthdaySelect }: BirthdaySelectProps) => {
             <Button
               type="button"
               variant="secondary"
-              text="Cancel"
               onClick={() => router.back()}
-            />
-            <Button
-              variant="email"
-              text="Send"
-              onSubmit={sendECard}
-              disabled={loadState}
-            />
+            >
+              <IoMdArrowRoundBack />
+            </Button>
+            <Button variant="email" onSubmit={sendECard} disabled={loadState}>
+              <IoIosSend />
+            </Button>
           </div>
         </form>
       </Container>
@@ -150,14 +149,19 @@ export const getServerSideProps: GetServerSideProps = async ({
   req,
 }) => {
   const token = req.cookies.token;
+  const url = getURL(req.headers.host);
 
-  const res = await fetch(`${process.env.NEXT_PUBLIC_BDA_API_V2}/birthdays`, {
+  const res = await fetch(`${url}/birthdays`, {
+    method: "POST",
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
     },
+    body: JSON.stringify({
+      token,
+    }),
   });
+
   const { birthdays } = await res.json();
 
   const id = query.id;

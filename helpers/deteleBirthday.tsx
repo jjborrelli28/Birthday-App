@@ -22,12 +22,17 @@ export const deleteBirthday = ({
 
   setLoadState(true);
 
-  fetch(`${process.env.NEXT_PUBLIC_BDA_API_V2}/birthdays/${payload.id}`, {
-    method: "DELETE",
+  fetch(`api/bda/birthdays`, {
+    method: "POST",
     headers: {
+      Accept: "application/json",
       "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
     },
+    body: JSON.stringify({
+      method: "DELETE",
+      token,
+      id: payload.id,
+    }),
   })
     .then((res) => {
       return res.json();

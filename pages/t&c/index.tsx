@@ -11,6 +11,7 @@ import Picture from "../../components/picture";
 import logo from "../../assets/logo.png";
 import { useAuthContext } from "../../hooks/useAuthContext";
 import Cookies from "js-cookie";
+import { BsCheckLg } from "react-icons/bs";
 
 const TermsAndConditions = () => {
   const authState = useAuthContext();
@@ -74,16 +75,18 @@ const TermsAndConditions = () => {
           <div className={styles.buttons}>
             <Button
               type="button"
-              variant="secondary"
-              text="Decline"
+              variant="danger"
               onClick={(e: Event) => handleDecline(e)}
-            />
+            >
+              ✖
+            </Button>
             <Button
               type="button"
-              variant="primary"
-              text="Agree"
+              variant="success"
               onClick={(e: Event) => handleAgree(e)}
-            />
+            >
+              <BsCheckLg />
+            </Button>
           </div>
         </div>
       </Container>
