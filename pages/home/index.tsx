@@ -33,6 +33,7 @@ import { IoPersonAddSharp } from "react-icons/io5";
 import { FaListUl } from "react-icons/fa";
 
 const Home = ({ data, url }: DataProps) => {
+  console.log(process.env.NEXT_PUBLIC_BDA_API === "production");
   const { auth } = useAuthContext();
 
   const router = useRouter();
@@ -217,7 +218,7 @@ export const getServerSideProps: GetServerSideProps = async ({
   const search = query.search ?? "";
   const page = query.page ?? 1;
   const token = req.cookies.token;
-  const url = `https://${req.headers.host}/api/bda`;
+  const url = `http://${req.headers.host}/api/bda`;
 
   const res = await fetch(`${url}/birthdays`, {
     method: "POST",

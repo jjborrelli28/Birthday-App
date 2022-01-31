@@ -24,7 +24,7 @@ export default function handler(
   const { upcomingBirthdays } = req.body ?? false;
   const { fullBirhdaysList } = req.body ?? false;
 
-  fetch(`${process.env.BDA_API}/${param}${id ? `/${id}` : ``}`, {
+  fetch(`${process.env.NEXT_PUBLIC_BDA_API}/${param}${id ? `/${id}` : ``}`, {
     method,
     headers: {
       Accept: "application/json",

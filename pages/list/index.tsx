@@ -193,7 +193,7 @@ export const getServerSideProps: GetServerSideProps = async ({
   const search = query.search ?? "";
   const page = query.page ? query.page : 1;
   const token = req.cookies.token;
-  const url = `https://${req.headers.host}/api/bda`;
+  const url = `http://${req.headers.host}/api/bda`;
 
   const res = await fetch(`${url}/birthdays`, {
     method: "POST",
