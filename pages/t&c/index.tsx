@@ -76,15 +76,17 @@ const TermsAndConditions = () => {
             <Button
               type="button"
               variant="danger"
-              text="✖"
               onClick={(e: Event) => handleDecline(e)}
-            />
+            >
+              ✖
+            </Button>
             <Button
               type="button"
               variant="success"
-              text={<BsCheckLg />}
               onClick={(e: Event) => handleAgree(e)}
-            />
+            >
+              <BsCheckLg />
+            </Button>
           </div>
         </div>
       </Container>
