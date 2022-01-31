@@ -190,7 +190,7 @@ const SignUp = ({ url }: DataProps) => {
 };
 
 export const getServerSideProps: GetServerSideProps = async ({ req }) => {
-  const url = `http://${req.headers.host}/api/bda`;
+  const url = `https://${req.headers.host}/api/bda`;
 
   return {
     props: { url },

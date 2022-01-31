@@ -168,7 +168,7 @@ const CalendarView = ({ birthdays, url }: DataProps) => {
 
 export const getServerSideProps: GetServerSideProps = async ({ req }) => {
   const token = req.cookies.token;
-  const url = `http://${req.headers.host}/api/bda`;
+  const url = `https://${req.headers.host}/api/bda`;
 
   const res = await fetch(`${url}/birthdays`, {
     method: "POST",
