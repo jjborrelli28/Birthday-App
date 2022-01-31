@@ -11,6 +11,7 @@ import {
   getDates,
   getEvents,
   localizer,
+  getURL,
 } from "../../helpers/helpers";
 import { BirthdayElement } from "../../modules/home-management/interfaces";
 import { GetServerSideProps } from "next";
@@ -168,7 +169,7 @@ const CalendarView = ({ birthdays, url }: DataProps) => {
 
 export const getServerSideProps: GetServerSideProps = async ({ req }) => {
   const token = req.cookies.token;
-  const url = `http://${req.headers.host}/api/bda`;
+  const url = getURL(req.headers.host);
 
   const res = await fetch(`${url}/birthdays`, {
     method: "POST",

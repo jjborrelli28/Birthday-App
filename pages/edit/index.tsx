@@ -5,7 +5,7 @@ import { Form } from "../../components/form";
 import Layout from "../../components/layout";
 import { changeValues } from "../../modules/form-management/actions";
 import reducer from "../../modules/form-management/reducer";
-import { formatDate } from "../../helpers/helpers";
+import { formatDate, getURL } from "../../helpers/helpers";
 import { BirthdayElement } from "../../modules/home-management/interfaces";
 import { BirthdaySelectProps } from "../../modules/edit-management/interfaces";
 import { TargetProps } from "../../modules/form-management/interfaces";
@@ -65,7 +65,7 @@ export const getServerSideProps: GetServerSideProps = async ({
   req,
 }) => {
   const token = req.cookies.token;
-  const url = `http://${req.headers.host}/api/bda`;
+  const url = getURL(req.headers.host);
 
   const res = await fetch(`${url}/birthdays`, {
     method: "POST",

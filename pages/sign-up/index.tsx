@@ -11,7 +11,7 @@ import { Tooltip } from "../../components/tooltip";
 import reducer from "../../modules/form-management/reducer";
 import styles from "./index.module.scss";
 import { initialSignUpState } from "../../modules/form-management/reducer";
-import { getDates } from "../../helpers/helpers";
+import { getDates, getURL } from "../../helpers/helpers";
 import { changeValues } from "../../modules/form-management/actions";
 import { TargetProps } from "../../modules/form-management/interfaces";
 import Alert from "../../components/alert";
@@ -190,7 +190,7 @@ const SignUp = ({ url }: DataProps) => {
 };
 
 export const getServerSideProps: GetServerSideProps = async ({ req }) => {
-  const url = `http://${req.headers.host}/api/bda`;
+  const url = getURL(req.headers.host);
 
   return {
     props: { url },

@@ -13,6 +13,7 @@ import { BirthdayElement } from "../../modules/home-management/interfaces";
 import {
   formatDate,
   formatName,
+  getURL,
   handleSearch,
   resetSearch,
 } from "../../helpers/helpers";
@@ -193,7 +194,7 @@ export const getServerSideProps: GetServerSideProps = async ({
   const search = query.search ?? "";
   const page = query.page ? query.page : 1;
   const token = req.cookies.token;
-  const url = `http://${req.headers.host}/api/bda`;
+  const url = getURL(req.headers.host);
 
   const res = await fetch(`${url}/birthdays`, {
     method: "POST",

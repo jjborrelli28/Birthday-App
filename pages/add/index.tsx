@@ -9,6 +9,7 @@ import { addBirthday } from "../../helpers/addBirthday";
 import { useLoadState } from "../../hooks/useLoadState";
 import { useAuthContext } from "../../hooks/useAuthContext";
 import { GetServerSideProps } from "next";
+import { getURL } from "../../helpers/helpers";
 
 type DataProps = {
   date: string;
@@ -67,7 +68,7 @@ export const getServerSideProps: GetServerSideProps = async ({
   req,
 }) => {
   const date = query.date ?? "";
-  const url = `http://${req.headers.host}/api/bda`;
+  const url = getURL(req.headers.host);
 
   return {
     props: { date, url },

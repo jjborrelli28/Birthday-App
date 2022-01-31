@@ -10,7 +10,7 @@ import Layout from "../../components/layout";
 import Line from "../../components/line";
 import { Textarea } from "../../components/textarea";
 import Title from "../../components/title";
-import { formatDate } from "../../helpers/helpers";
+import { formatDate, getURL } from "../../helpers/helpers";
 import { useAuthContext } from "../../hooks/useAuthContext";
 import { useLoadState } from "../../hooks/useLoadState";
 import { BirthdaySelectProps } from "../../modules/edit-management/interfaces";
@@ -149,7 +149,7 @@ export const getServerSideProps: GetServerSideProps = async ({
   req,
 }) => {
   const token = req.cookies.token;
-  const url = `http://${req.headers.host}/api/bda`;
+  const url = getURL(req.headers.host);
 
   const res = await fetch(`${url}/birthdays`, {
     method: "POST",

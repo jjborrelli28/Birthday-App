@@ -164,3 +164,7 @@ export const localizer = dateFnsLocalizer({
     "en-US": enUS,
   },
 });
+
+export const getURL = (host?: string) => {
+  return `${process.env.NEXT_PUBLIC_URL_PROTOCOL}${host}/api/bda`;
+};

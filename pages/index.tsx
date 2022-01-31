@@ -22,6 +22,7 @@ import { TargetProps } from "../modules/form-management/interfaces";
 import { useAuthContext } from "../hooks/useAuthContext";
 import Cookies from "js-cookie";
 import { GetServerSideProps } from "next";
+import { getURL } from "../helpers/helpers";
 
 type DataProps = {
   url: string;
@@ -146,7 +147,7 @@ const SignIn = ({ url }: DataProps) => {
 };
 
 export const getServerSideProps: GetServerSideProps = async ({ req }) => {
-  const url = `http://${req.headers.host}/api/bda`;
+  const url = getURL(req.headers.host);
 
   return {
     props: { url },
