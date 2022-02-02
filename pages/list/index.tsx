@@ -135,7 +135,10 @@ const List = ({ data }: DataProps) => {
           {dobs.length > 0 ? (
             dobs.map((birthday: BirthdayElement) => (
               <Card variant="tertiary" key={birthday.id}>
-                <Card.Avatar />
+                <Card.Picture
+                  firstName={birthday.firstName}
+                  lastName={birthday.lastName}
+                />
                 <Card.Data>
                   <Card.Name
                     name={birthday.firstName}

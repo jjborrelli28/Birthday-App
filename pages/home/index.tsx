@@ -117,8 +117,16 @@ const Home = ({ data }: DataProps) => {
                   {dobs
                     .filter((dob) => dob.birthday === today)
                     .map((birthday) => (
-                      <Card key={birthday.id}>
-                        <Card.Avatar />
+                      <Card
+                        key={birthday.id}
+                        id={birthday.id}
+                        birthday={birthday.birthday}
+                        router={router}
+                      >
+                        <Card.Picture
+                          firstName={birthday.firstName}
+                          lastName={birthday.lastName}
+                        />
                         <Card.Data>
                           <Card.Name
                             name={birthday.firstName}
@@ -134,7 +142,6 @@ const Home = ({ data }: DataProps) => {
                             birthday.lastName
                           )}
                           router={router}
-                          birthday={birthday.birthday}
                         />
                       </Card>
                     ))}
@@ -151,7 +158,10 @@ const Home = ({ data }: DataProps) => {
                     .filter((dob) => dob.birthday !== today)
                     .map((birthday) => (
                       <Card key={birthday.id}>
-                        <Card.Avatar />
+                        <Card.Picture
+                          firstName={birthday.firstName}
+                          lastName={birthday.lastName}
+                        />
                         <Card.Data>
                           <Card.Name
                             name={birthday.firstName}

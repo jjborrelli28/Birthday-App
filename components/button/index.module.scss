@@ -131,6 +131,10 @@
   pointer-events: none;
 }
 
+.footButton {
+  border-radius: 0 0 0.6rem 0.6rem;
+}
+
 @include tablet {
   .shadow {
     -webkit-box-shadow: none;
