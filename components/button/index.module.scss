@@ -103,9 +103,8 @@
 }
 
 .email:hover {
-  background-color: $white;
-  color: $blue;
-  border: solid $blue 0.2rem;
+  background-color: lighten($blue, 10);
+  border: solid lighten($blue, 10) 0.2rem;
 }
 
 .calendar {
