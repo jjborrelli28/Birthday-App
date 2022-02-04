@@ -12,6 +12,7 @@ const Button = ({
   long = false,
   shadow = false,
   disabled = false,
+  footButton = false,
 }: PropsWithChildren<ButtonProps>) => {
   return (
     <button
@@ -21,7 +22,8 @@ const Button = ({
         styles[variant],
         long && styles.long,
         shadow && styles.shadow,
-        disabled && styles.disabled
+        disabled && styles.disabled,
+        footButton && styles.footButton
       )}
       onClick={onClick}
       onSubmit={onSubmit}

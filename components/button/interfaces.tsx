@@ -6,6 +6,7 @@ interface ButtonProps {
   long?: boolean;
   shadow?: boolean;
   disabled?: boolean;
+  footButton?: boolean;
 }
 
 export default ButtonProps;

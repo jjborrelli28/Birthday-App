@@ -7,29 +7,64 @@ import CardProps, {
   DateProps,
   EmailProps,
   NameProps,
+  PictureProps,
 } from "./interfaces";
-import avatar from "../../assets/avatar.png";
-import Image from "next/image";
 import { DataProps } from "./interfaces";
 import { FaUserEdit } from "react-icons/fa";
 import { FaUserSlash } from "react-icons/fa";
 import { getDates } from "../../helpers/helpers";
-import { HiOutlineMailOpen } from "react-icons/hi";
 import Button from "../button";
+import Avatar from "react-avatar";
+import { RiMailSendLine } from "react-icons/ri";
 
-const Card = ({ children, variant = "primary" }: CardProps) => {
-  return <div className={cc(styles.card, styles[variant])}>{children}</div>;
+const Card = ({
+  children,
+  variant = "primary",
+  birthday,
+  router,
+  id,
+}: CardProps) => {
+  const { today } = getDates();
+  return (
+    <div className={cc(styles.card)}>
+      <div
+        className={cc(
+          styles.cardContainer,
+          styles[variant],
+          birthday === today && styles.cardWithFootButton
+        )}
+      >
+        {children}
+      </div>
+      {birthday === today && (
+        <Button
+          type="button"
+          variant="email"
+          long={true}
+          footButton={true}
+          onClick={() => router?.push(`/eCard?id=${id}`)}
+        >
+          Send eCard&nbsp;
+          <RiMailSendLine />
+        </Button>
+      )}
+    </div>
+  );
 };
 
 const Data = ({ children }: DataProps) => {
   return <div className={styles.data}>{children}</div>;
 };
 
-export const Avatar = () => {
+export const Picture = ({ firstName, lastName }: PictureProps) => {
+  const fullName = `${firstName} ${lastName}`;
+
   return (
-    <picture className={styles.avatar}>
-      <Image src={avatar} alt="avatar" />
-    </picture>
+    <div className={styles.pictureContainer}>
+      <picture className={styles.picture}>
+        <Avatar name={fullName} size={"100%"} round={"0.6rem"} />
+      </picture>
+    </div>
   );
 };
 
@@ -67,12 +102,10 @@ export const Email = ({ children }: EmailProps) => {
   );
 };
 
-export const Comands = ({ id, name, router, birthday }: ComandsProps) => {
+export const Comands = ({ id, name, router }: ComandsProps) => {
   const modal = useModalContext();
 
   const { setModal } = modal;
-
-  const { today } = getDates();
 
   return (
     <div className={styles.comands}>
@@ -98,23 +131,13 @@ export const Comands = ({ id, name, router, birthday }: ComandsProps) => {
       >
         <FaUserSlash />
       </Button>
-
-      {birthday == today && (
-        <Button
-          type="button"
-          variant="email"
-          onClick={() => router.push(`/eCard?id=${id}`)}
-        >
-          <HiOutlineMailOpen />
-        </Button>
-      )}
     </div>
   );
 };
 export default Card;
 
 Card.Data = Data;
-Card.Avatar = Avatar;
+Card.Picture = Picture;
 Card.Email = Email;
 Card.Name = Name;
 Card.Birthday = Birthday;
